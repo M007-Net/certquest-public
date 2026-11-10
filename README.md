@@ -1,4 +1,4 @@
-# CertQuest â€” Realms of Knowledge
+# CertQuest — Realms of Knowledge
 
 ## Quick start with Docker Desktop
 
