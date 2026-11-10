@@ -1,0 +1,9 @@
+{
+  "name": "certquest",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --check dist/specialist-registry.js && node --check dist/specialist-course-data.js && node --check dist/domain-labs.js && node --check dist/domain-lab-data.js && node --check dist/advanced-course-data.js && node --check dist/depth.js && node --check dist/depth-data.js && node --check dist/applied-scenarios.js && node --check dist/certification-registry.js && node --check dist/certification-data.js && node --check dist/cloud-course-data.js && node --check dist/academy-engine.js && node --check dist/aplus-data.js && node --check dist/academy.js && node --check dist/cloud.js && node --check dist/game.js && node --check dist/gear.js && node --check dist/exam.js && node --check dist/powershell-course.js && node --check dist/powershell-runtime.js && node --check dist/bash-course.js && node --check dist/bash-runtime.js && node --check dist/skills.js && node tests/content.cjs && node tests/game.cjs",
+    "start": "docker compose up -d --build --wait"
+  }
+}

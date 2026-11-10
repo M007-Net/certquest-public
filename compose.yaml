@@ -1,0 +1,15 @@
+name: certquest
+services:
+  web:
+    build: .
+    image: certquest:local
+    ports:
+      - "127.0.0.1:${CERTQUEST_PORT:-8095}:8080"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

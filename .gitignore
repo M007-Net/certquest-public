@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+node_modules/
+*.log
+*.tar.gz
+*.zip
+
+__pycache__/
+*.pyc
+
+# Local hosting metadata and browser exports
+.openai/
+certquest-save*.json
+certquest-recovery*.json
+*.pem
+*.key

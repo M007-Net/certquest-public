@@ -1,0 +1,611 @@
+[
+  {
+    "id": "9:1",
+    "core": 9,
+    "domain": 1,
+    "title": "Scope an Azure access and governance plan lab",
+    "goal": "Scope an Azure access and governance plan. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A Contributor can create a VM in one location but receives a policy denial in another. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a subscription with dev and production resource groups.",
+      "Assign a fictional developer resource-management access only to dev; identify who may assign roles.",
+      "Add a policy restricting locations and predict a denied deployment despite valid RBAC.",
+      "Record two positive and two negative authorization tests."
+    ],
+    "checks": [
+      "A dev assignment does not unintentionally cover production.",
+      "The location denial is distinguished from a missing role."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A Contributor can create a VM in one location but receives a policy denial in another."
+  },
+  {
+    "id": "9:2",
+    "core": 9,
+    "domain": 2,
+    "title": "Separate Azure durability, access, and recovery lab",
+    "goal": "Separate Azure durability, access, and recovery. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: An application reaches a private endpoint but cannot read a blob. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create a paper storage design for zone failure and accidental overwrite.",
+      "Choose a redundancy approach and a separate retention/versioning policy.",
+      "Trace a client through DNS, private endpoint, and data authorization.",
+      "Write a restore test with original content, changed content, and an expected recovered version."
+    ],
+    "checks": [
+      "The design names separate availability and deletion-recovery controls.",
+      "The test verifies recovered contents, not just a successful command."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: An application reaches a private endpoint but cannot read a blob."
+  },
+  {
+    "id": "9:3",
+    "core": 9,
+    "domain": 3,
+    "title": "Trace an Azure application failure lab",
+    "goal": "Trace an Azure application failure. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A VM is running, but HTTPS fails after a network-rule update. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a client, subnet, VM, and HTTPS service with port 443.",
+      "Write conflicting NSG rules with priorities 100 and 200 and predict the matching decision.",
+      "Build a failure timeline with one management change and one application symptom.",
+      "Define an alert condition, recipient, and a test proving the alert works."
+    ],
+    "checks": [
+      "Lower numerical NSG priority is evaluated before a higher number.",
+      "The alert test checks notification delivery as well as the metric."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A VM is running, but HTTPS fails after a network-rule update."
+  },
+  {
+    "id": "10:1",
+    "core": 10,
+    "domain": 1,
+    "title": "Design AWS temporary access and trust lab",
+    "goal": "Design AWS temporary access and trust. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A role can read ordinary objects but cannot read a KMS-encrypted object. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a fictional workload role and a single permitted S3 bucket.",
+      "Write a task-to-permission table and identify who can assume the role.",
+      "Add an encrypted object and document the additional key-access dependency.",
+      "Predict an allowed read, denied write, and explicitly denied read."
+    ],
+    "checks": [
+      "The design separates role trust from session permissions.",
+      "No long-lived key is placed in source code."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A role can read ordinary objects but cannot read a KMS-encrypted object."
+  },
+  {
+    "id": "10:2",
+    "core": 10,
+    "domain": 2,
+    "title": "Design for failures across availability zones lab",
+    "goal": "Design for failures across availability zones. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: Web instances span two zones, but carts exist only in local process memory. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw two availability zones, a load balancer, replaceable app instances, and a database.",
+      "Identify all session state and remove single-instance dependencies on paper.",
+      "Add a queue and define how duplicate message processing will be detected.",
+      "Walk through losing one zone and record expected user-visible behavior."
+    ],
+    "checks": [
+      "The design survives instance replacement without losing required session state.",
+      "The duplicate-message case has a deliberate handling strategy."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: Web instances span two zones, but carts exist only in local process memory."
+  },
+  {
+    "id": "10:3",
+    "core": 10,
+    "domain": 3,
+    "title": "Match AWS storage to access and recovery needs lab",
+    "goal": "Match AWS storage to access and recovery needs. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: An archive must support immediate incident retrieval, but the proposed class requires a restore delay. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Classify an image archive, a VM disk, and a shared Linux directory by access interface.",
+      "Write retrieval frequency and maximum acceptable recovery time for each.",
+      "Compare immediate access with delayed archive restoration for the image archive.",
+      "Estimate storage, requests, retrieval, and transfer categories without creating resources."
+    ],
+    "checks": [
+      "The shared directory is not treated as an interchangeable object API.",
+      "The cost comparison includes retrieval behavior."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: An archive must support immediate incident retrieval, but the proposed class requires a restore delay."
+  },
+  {
+    "id": "11:1",
+    "core": 11,
+    "domain": 1,
+    "title": "Distinguish identity, verification, and authorization lab",
+    "goal": "Distinguish identity, verification, and authorization. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A contractor signs in successfully but cannot open a finance application. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "List fictional staff, contractor, and workload identities.",
+      "Build an application access matrix with the minimum required privileges.",
+      "Write normal and risky sign-in scenarios and choose verification requirements.",
+      "Document how policy testing avoids locking out emergency access."
+    ],
+    "checks": [
+      "The matrix separates sign-in success from resource permission.",
+      "Risky and ordinary cases produce justified access decisions."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A contractor signs in successfully but cannot open a finance application."
+  },
+  {
+    "id": "11:2",
+    "core": 11,
+    "domain": 2,
+    "title": "Choose threat protection by the evidence needed lab",
+    "goal": "Choose threat protection by the evidence needed. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A suspicious email and an endpoint alert reference the same user within minutes. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create fictional email, endpoint, and identity alerts for one user.",
+      "Normalize times and identify which signals refer to the same device or session.",
+      "Assign evidence sources to an investigation and write one benign alternative.",
+      "Define a response action with an owner, authority, and verification step."
+    ],
+    "checks": [
+      "The investigation distinguishes a hypothesis from confirmed actions.",
+      "The response names an authorized decision-maker."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A suspicious email and an endpoint alert reference the same user within minutes."
+  },
+  {
+    "id": "11:3",
+    "core": 11,
+    "domain": 3,
+    "title": "Separate classification, retention, and leakage prevention lab",
+    "goal": "Separate classification, retention, and leakage prevention. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A document is labeled Confidential, but external access still works. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create fictional public, internal, and payroll document descriptions.",
+      "Assign a sensitivity category and permitted recipients for each.",
+      "Write a DLP action for an external payroll share and a separate retention rule.",
+      "Test an authorized exception and a false-positive case on paper."
+    ],
+    "checks": [
+      "Retention duration and sharing restrictions are specified separately.",
+      "The test includes legitimate work and an incorrect policy match."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A document is labeled Confidential, but external access still works."
+  },
+  {
+    "id": "12:1",
+    "core": 12,
+    "domain": 1,
+    "title": "Connect cloud choices to business outcomes lab",
+    "goal": "Connect cloud choices to business outcomes. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A company moves idle servers to cloud VMs and its bill increases. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Choose a fictional shop with seasonal traffic and a slow release process.",
+      "Define two measurable business goals and a dependency constraint.",
+      "Compare keeping servers, using managed hosting, and using a hosted application.",
+      "List cost categories and define how the chosen outcome will be measured."
+    ],
+    "checks": [
+      "The proposal includes a measurable outcome rather than only a service name.",
+      "Costs include operation and migration, not just a VM price."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A company moves idle servers to cloud VMs and its bill increases."
+  },
+  {
+    "id": "12:2",
+    "core": 12,
+    "domain": 2,
+    "title": "Choose data and AI approaches responsibly lab",
+    "goal": "Choose data and AI approaches responsibly. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A generated support response sounds confident but invents a product feature. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Describe a sales-reporting task, a demand-prediction task, and a drafting task.",
+      "Choose an approach for each and name the required data.",
+      "Create five fictional evaluation cases including a failure or underrepresented case.",
+      "Define accuracy evidence, privacy boundaries, and a human-review trigger."
+    ],
+    "checks": [
+      "The evaluation uses representative examples beyond the training set.",
+      "No real customer or sensitive records are needed."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A generated support response sounds confident but invents a product feature."
+  },
+  {
+    "id": "12:3",
+    "core": 12,
+    "domain": 3,
+    "title": "Plan Google Cloud responsibility and reliability lab",
+    "goal": "Plan Google Cloud responsibility and reliability. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A team receives a budget notification and assumes all spending has stopped. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw provider and customer responsibility columns for a managed application.",
+      "Define a successful-request indicator and a target.",
+      "Write a backup restore test and distinguish it from automatic failover.",
+      "Assign a cost owner and an action to take when a budget notification arrives."
+    ],
+    "checks": [
+      "The reliability measure and its target are separate statements.",
+      "Recovery and cost ownership have concrete actions."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A team receives a budget notification and assumes all spending has stopped."
+  },
+  {
+    "id": "13:1",
+    "core": 13,
+    "domain": 1,
+    "title": "Read the Terraform change workflow lab",
+    "goal": "Read the Terraform change workflow. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A valid configuration proposes replacing a resource that stores required state. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create a disposable directory or use a paper local_file example.",
+      "Describe a local file resource with a filename and harmless content; identify its provider.",
+      "Predict init, validate, plan, and apply outcomes before running anything.",
+      "Change only the content and compare the planned action with the resulting file."
+    ],
+    "checks": [
+      "The learner can distinguish validation from review of proposed actions.",
+      "Only disposable local resources are used."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A valid configuration proposes replacing a resource that stores required state."
+  },
+  {
+    "id": "13:2",
+    "core": 13,
+    "domain": 2,
+    "title": "Protect Terraform state and coordinate changes lab",
+    "goal": "Protect Terraform state and coordinate changes. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A sensitive output is hidden in console output, so a developer proposes committing the state file. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw two operators sharing one infrastructure workspace.",
+      "List data that state may contain and who should access it.",
+      "Write a sequence where one apply holds a lock while another waits.",
+      "Describe how to investigate an interrupted operation without unlocking an active writer."
+    ],
+    "checks": [
+      "State is excluded from ordinary source commits.",
+      "The lock-recovery plan checks for an active operation."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A sensitive output is hidden in console output, so a developer proposes committing the state file."
+  },
+  {
+    "id": "13:3",
+    "core": 13,
+    "domain": 3,
+    "title": "Build reusable Terraform inputs and outputs lab",
+    "goal": "Build reusable Terraform inputs and outputs. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A team removes the first item from a count-indexed list and sees unexpected instance address changes. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Sketch a local-file module with a filename input and a path output.",
+      "Add a type and a validation rule for an allowed label.",
+      "Compare numeric count addresses with for_each keys for a changing set.",
+      "Write an upgrade checklist covering provider selection and module constraints."
+    ],
+    "checks": [
+      "The input and output contract is explicit.",
+      "The explanation distinguishes provider locking from module version selection."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A team removes the first item from a count-indexed list and sees unexpected instance address changes."
+  },
+  {
+    "id": "14:1",
+    "core": 14,
+    "domain": 1,
+    "title": "Use Linux ownership and permissions deliberately lab",
+    "goal": "Use Linux ownership and permissions deliberately. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A test user has file read permission but cannot open it through a parent directory. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "In a disposable Linux VM, create a dedicated lab directory and harmless text file.",
+      "Record id and ls -l output and explain owner, group, and other permissions.",
+      "Compare directory modes with and without execute using a non-root test identity.",
+      "Restore the lab permissions and document why chmod 777 was unnecessary."
+    ],
+    "checks": [
+      "The test is performed as the intended non-root identity.",
+      "Parent traversal is checked separately from file read permission."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A test user has file read permission but cannot open it through a parent directory."
+  },
+  {
+    "id": "14:2",
+    "core": 14,
+    "domain": 2,
+    "title": "Verify Linux services now and after reboot lab",
+    "goal": "Verify Linux services now and after reboot. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A service works after systemctl start but is absent after a reboot. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Choose a harmless service in a disposable VM and record its current state and enablement.",
+      "Explain the effects of start, stop, enable, and disable before any change.",
+      "Inspect service-specific logs and write a targeted diagnosis of a fictional failed start.",
+      "Verify the intended startup behavior after a controlled VM reboot, then restore the starting settings."
+    ],
+    "checks": [
+      "Runtime and startup states are recorded separately.",
+      "Verification includes the actual service behavior after reboot."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A service works after systemctl start but is absent after a reboot."
+  },
+  {
+    "id": "14:3",
+    "core": 14,
+    "domain": 3,
+    "title": "Plan persistent Linux mounts and storage verification lab",
+    "goal": "Plan persistent Linux mounts and storage verification. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A mount directory exists after reboot, but data is written to the root file system instead. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Use a paper device table or a disposable VM disk clearly marked for this exercise.",
+      "Record the intended device, file-system type, UUID, and mount point.",
+      "Draft an fstab entry and a recovery plan without formatting any existing disk.",
+      "Define checks for actual backing storage, a harmless test file, and mount persistence after reboot."
+    ],
+    "checks": [
+      "The plan never formats an unidentified or shared disk.",
+      "Post-reboot verification identifies the actual mounted source."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A mount directory exists after reboot, but data is written to the root file system instead."
+  },
+  {
+    "id": "9:4",
+    "core": 9,
+    "domain": 4,
+    "title": "Deploy and inspect ARM and Bicep lab",
+    "goal": "Deploy and inspect ARM and Bicep",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A Bicep change moves a resource to another region.",
+    "steps": [
+      "Write a Bicep storage declaration with a location parameter",
+      "Build it locally with az bicep build and inspect generated ARM JSON",
+      "Mark a fictional secret input secure and ensure no output references it",
+      "Compare an intended location change with the existing resource properties"
+    ],
+    "checks": [
+      "A location change can require a new resource and a planned migration.",
+      "Protecting inputs is separate from deciding what a template publishes."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A secret parameter must be passed without displaying its value in deployment output. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "9:5",
+    "core": 9,
+    "domain": 5,
+    "title": "Plan Azure Backup and Site Recovery lab",
+    "goal": "Plan Azure Backup and Site Recovery",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A regional disaster requires bringing replicated workloads online elsewhere.",
+    "steps": [
+      "Define RPO and RTO for a fictional workload",
+      "Choose a backup retention policy and document restore dependencies",
+      "Draft an isolated test-failover network",
+      "Record a checksum and application transaction as recovery evidence"
+    ],
+    "checks": [
+      "Failover requires recoverable workloads, networking and tested procedures.",
+      "Replication can copy corruption. A historical recovery point addresses a different failure."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A file was corrupted yesterday and replication copied the corruption. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "10:4",
+    "core": 10,
+    "domain": 4,
+    "title": "Match compute and data services to a workload lab",
+    "goal": "Match compute and data services to a workload",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A key-value table throttles on a single popular partition key.",
+    "steps": [
+      "List read/write patterns and traffic bursts",
+      "Choose compute, data store and cache independently",
+      "Calculate origin requests with a stated cache hit rate",
+      "Define a load test including p95 latency and cache misses"
+    ],
+    "checks": [
+      "A hot key can concentrate work despite spare aggregate capacity.",
+      "Edge caching reduces repeated origin work and client latency."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Global users repeatedly download the same versioned static assets. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "11:4",
+    "core": 11,
+    "domain": 4,
+    "title": "Distinguish trust, encryption, hashing and governance lab",
+    "goal": "Distinguish trust, encryption, hashing and governance",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A recipient needs to detect tampering with a download.",
+    "steps": [
+      "Build a control matrix for an internal payroll app",
+      "Assign owners to identity, network, data and audit controls",
+      "Compare encryption, digest verification and a digital signature",
+      "Run an assume-breach tabletop with a stolen password"
+    ],
+    "checks": [
+      "A trustworthy expected digest lets the recipient detect alteration.",
+      "A trusted network location does not establish identity or authorization."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An administrator is inside the corporate network and requests privileged access. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:4",
+    "core": 12,
+    "domain": 4,
+    "title": "Choose a Google Cloud modernization path lab",
+    "goal": "Choose a Google Cloud modernization path",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A team has a stateless HTTP container and wants minimal cluster administration.",
+    "steps": [
+      "Inventory an application and its external dependencies",
+      "Compare rehost, replatform and refactor using cost and operational effort",
+      "Pick Compute Engine, GKE or Cloud Run for each component",
+      "Write a rollout and rollback plan with a test transaction"
+    ],
+    "checks": [
+      "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.",
+      "VMs preserve more control over the runtime during rehosting."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A legacy workload needs a custom OS dependency during an initial move. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:5",
+    "core": 12,
+    "domain": 5,
+    "title": "Assign Google Cloud security responsibilities lab",
+    "goal": "Assign Google Cloud security responsibilities",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A workload needs read access only to one bucket.",
+    "steps": [
+      "Draw organization, folder, project and resource boundaries",
+      "Assign a fictional workload identity a narrow role",
+      "Define a negative access test and the audit evidence to retain",
+      "Write a data-location requirement and its verification method"
+    ],
+    "checks": [
+      "Least privilege limits what an identity can do and where.",
+      "Audit logs and billing records serve different purposes."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An investigator needs evidence of a supported administrative change. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:6",
+    "core": 12,
+    "domain": 6,
+    "title": "Manage Google Cloud cost and continuity lab",
+    "goal": "Manage Google Cloud cost and continuity",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A cost alert fires after an unexpected batch workload.",
+    "steps": [
+      "Define a service SLI and an error budget",
+      "Create a fictional billing breakdown using labels",
+      "Write a recovery runbook with RTO and RPO",
+      "Explain which utilization changes reduce wasted capacity"
+    ],
+    "checks": [
+      "An alert informs action but does not itself stop all costs.",
+      "An SLO ties a target to a measurable service indicator."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A customer wants a target for successful requests. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "13:4",
+    "core": 13,
+    "domain": 4,
+    "title": "Operate HCP Terraform workspaces and runs lab",
+    "goal": "Operate HCP Terraform workspaces and runs",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A team wants production changes reviewed before execution.",
+    "steps": [
+      "Sketch dev and production workspaces with different variables",
+      "Choose a run trigger and reviewer for each",
+      "Predict what happens after a pull request and after merge",
+      "Record one policy check and its evidence"
+    ],
+    "checks": [
+      "Approval gates provide a deliberate control before applying.",
+      "Projects group workspaces and support administration at that boundary."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Several workspaces belong to a single product team. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:4",
+    "core": 14,
+    "domain": 4,
+    "title": "Manage RPM, Flatpak and shell automation lab",
+    "goal": "Manage RPM, Flatpak and shell automation",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A command fails because a script argument contains spaces.",
+    "steps": [
+      "Run dnf repolist and inspect an installed RPM with rpm -qi",
+      "Compare the output of flatpak remotes if available",
+      "Write a script that validates a file argument and counts matching lines",
+      "Test a valid path, a path with spaces and a missing file"
+    ],
+    "checks": [
+      "Quoting preserves the argument as a single shell word.",
+      "rpm -qf queries ownership in the RPM database."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An RPM-managed file needs to be traced back to its package. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:5",
+    "core": 14,
+    "domain": 5,
+    "title": "Configure persistent Linux network access lab",
+    "goal": "Configure persistent Linux network access",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A firewall change works until reboot.",
+    "steps": [
+      "Use a disposable VM and keep console access",
+      "Record nmcli connection show, ip route and active firewall zones",
+      "Permit a lab service in the correct zone and verify from a second isolated host",
+      "Reboot and repeat both a permitted and denied test"
+    ],
+    "checks": [
+      "Persistent firewalld changes require correct permanent zone configuration.",
+      "Name resolution can fail while IP routing works."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Name lookups fail but direct IP connections work. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:6",
+    "core": 14,
+    "domain": 6,
+    "title": "Manage identity, sudo and SELinux context lab",
+    "goal": "Manage identity, sudo and SELinux context",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: Files copied into a service directory have an unexpected SELinux type.",
+    "steps": [
+      "Create a disposable lab user and group",
+      "Set and inspect password aging with chage",
+      "Validate a narrow sudoers entry with visudo",
+      "Compare ls -Z before and after restoring a known default context"
+    ],
+    "checks": [
+      "Mode bits and SELinux labels are different checks.",
+      "Scoped elevation limits privilege to the required task."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A support group needs one privileged task. Explain how you would verify the correct outcome."
+  }
+]

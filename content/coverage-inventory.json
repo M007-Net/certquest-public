@@ -1,0 +1,2199 @@
+{
+  "reviewed": "2026-11-06",
+  "scope": "Authored chapter mapping to numbered objectives and task areas; not an independent audit of every exam bullet.",
+  "objectives": [
+    {
+      "topic": "core1-1.1",
+      "core": 1,
+      "objective": "1.1",
+      "title": "Repair mobile hardware safely",
+      "chapters": [
+        "core1-1.1:mobile-service"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-1.2",
+      "core": 1,
+      "objective": "1.2",
+      "title": "Connect accessories with the right capability",
+      "chapters": [
+        "core1-1.2:mobile-connectors"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-1.3",
+      "core": 1,
+      "objective": "1.3",
+      "title": "Support mobile connections and applications",
+      "chapters": [
+        "core1-1.3:mobile-connectivity"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.1",
+      "core": 1,
+      "objective": "2.1",
+      "title": "Read common ports and transport",
+      "chapters": [
+        "core1-2.1:ports-and-transports"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.2",
+      "core": 1,
+      "objective": "2.2",
+      "title": "Choose wireless technology",
+      "chapters": [
+        "core1-2.2:wireless-basics"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.3",
+      "core": 1,
+      "objective": "2.3",
+      "title": "Identify network-host services",
+      "chapters": [
+        "core1-2.4:dns-dhcp-network-config",
+        "core1-2.3:host-service-roles"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.4",
+      "core": 1,
+      "objective": "2.4",
+      "title": "Configure a host network",
+      "chapters": [
+        "core1-2.4:dns-dhcp-network-config",
+        "core1-2.4:ipv4-client-worked"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core1-2.5",
+      "core": 1,
+      "objective": "2.5",
+      "title": "Pick networking hardware by function",
+      "chapters": [
+        "core1-2.5:network-device-boundaries"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.6",
+      "core": 1,
+      "objective": "2.6",
+      "title": "Set up a SOHO network",
+      "chapters": [
+        "core1-2.4:dns-dhcp-network-config",
+        "core1-2.6:soho-baseline"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.7",
+      "core": 1,
+      "objective": "2.7",
+      "title": "Compare connection types",
+      "chapters": [
+        "core1-2.5:network-device-boundaries",
+        "core1-2.7:connection-scope"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-2.8",
+      "core": 1,
+      "objective": "2.8",
+      "title": "Use network tools purposefully",
+      "chapters": [
+        "core1-2.5:network-device-boundaries",
+        "core1-3.2:cable-connector-reference",
+        "core1-2.8:network-tools-decision"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.1",
+      "core": 1,
+      "objective": "3.1",
+      "title": "Match display capabilities",
+      "chapters": [
+        "core1-3.1:display-technology"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.2",
+      "core": 1,
+      "objective": "3.2",
+      "title": "Identify cables and connectors",
+      "chapters": [
+        "core1-3.2:cable-connector-reference"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.3",
+      "core": 1,
+      "objective": "3.3",
+      "title": "Install compatible memory",
+      "chapters": [
+        "core1-3.3:memory-compatibility"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.4",
+      "core": 1,
+      "objective": "3.4",
+      "title": "Choose and protect storage",
+      "chapters": [
+        "core1-3.4:storage-and-raid"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.5",
+      "core": 1,
+      "objective": "3.5",
+      "title": "Build a compatible platform",
+      "chapters": [
+        "core1-3.5:platform-boot-trust",
+        "core1-3.5:expansion-architecture"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core1-3.6",
+      "core": 1,
+      "objective": "3.6",
+      "title": "Size and connect power safely",
+      "chapters": [
+        "core1-3.6:power-budget-safety"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.7",
+      "core": 1,
+      "objective": "3.7",
+      "title": "Deploy printers securely",
+      "chapters": [
+        "core1-3.7:printer-pipeline"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-3.8",
+      "core": 1,
+      "objective": "3.8",
+      "title": "Maintain the print mechanism",
+      "chapters": [
+        "core1-3.8:printer-mechanisms"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-4.1",
+      "core": 1,
+      "objective": "4.1",
+      "title": "Use virtualization with boundaries",
+      "chapters": [
+        "core1-4.1:virtualization-isolation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-4.2",
+      "core": 1,
+      "objective": "4.2",
+      "title": "Compare cloud service models",
+      "chapters": [
+        "core1-4.1:virtualization-isolation",
+        "core1-4.2:cloud-model-comparison"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-5.1",
+      "core": 1,
+      "objective": "5.1",
+      "title": "Diagnose board, memory, CPU, and power",
+      "chapters": [
+        "core1-3.3:memory-compatibility",
+        "core1-3.5:platform-boot-trust",
+        "core1-5.1:hardware-fault-tree"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-5.2",
+      "core": 1,
+      "objective": "5.2",
+      "title": "Protect data while diagnosing storage",
+      "chapters": [
+        "core1-3.4:storage-and-raid",
+        "core1-5.2:storage-diagnostic-boundary"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-5.3",
+      "core": 1,
+      "objective": "5.3",
+      "title": "Find the display failure boundary",
+      "chapters": [
+        "core1-3.1:display-technology",
+        "core1-5.3:display-fault-tree",
+        "core1-5.3:display-symptom-matrix"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core1-5.4",
+      "core": 1,
+      "objective": "5.4",
+      "title": "Diagnose mobile symptoms safely",
+      "chapters": [
+        "core1-1.1:mobile-service",
+        "core1-5.4:mobile-fault-tree"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-5.5",
+      "core": 1,
+      "objective": "5.5",
+      "title": "Locate the network symptom",
+      "chapters": [
+        "core1-2.2:wireless-basics",
+        "core1-5.5:client-connectivity-sequence"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core1-5.6",
+      "core": 1,
+      "objective": "5.6",
+      "title": "Troubleshoot printing by stage",
+      "chapters": [
+        "core1-3.7:printer-pipeline",
+        "core1-3.8:printer-mechanisms",
+        "core1-5.6:printer-fault-boundaries",
+        "core1-5.6:printer-symptom-matrix"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core2-1.1",
+      "core": 2,
+      "objective": "1.1",
+      "title": "Choose the operating-system family",
+      "chapters": [
+        "core2-1.1:filesystem-selection",
+        "core2-1.1:os-family-compatibility"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core2-1.2",
+      "core": 2,
+      "objective": "1.2",
+      "title": "Plan installation and upgrades",
+      "chapters": [
+        "core2-1.2:installation-and-partitioning"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.3",
+      "core": 2,
+      "objective": "1.3",
+      "title": "Match Windows editions to requirements",
+      "chapters": [
+        "core1-3.5:platform-boot-trust",
+        "core2-1.2:installation-and-partitioning",
+        "core2-1.3:windows-editions-and-lifecycle"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.4",
+      "core": 2,
+      "objective": "1.4",
+      "title": "Use Windows utilities as evidence",
+      "chapters": [
+        "core2-1.4:windows-evidence-tools"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.5",
+      "core": 2,
+      "objective": "1.5",
+      "title": "Use commands with a purpose",
+      "chapters": [
+        "core2-1.5:windows-command-map",
+        "core2-1.5:interpret-network-command-output",
+        "core2-1.5:copy-preview-and-policy-evidence"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "core2-1.6",
+      "core": 2,
+      "objective": "1.6",
+      "title": "Configure Windows deliberately",
+      "chapters": [
+        "core2-1.6:windows-settings-map"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.7",
+      "core": 2,
+      "objective": "1.7",
+      "title": "Configure Windows network access",
+      "chapters": [
+        "core1-2.4:dns-dhcp-network-config",
+        "core2-1.7:windows-network-access"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.8",
+      "core": 2,
+      "objective": "1.8",
+      "title": "Support macOS workflows",
+      "chapters": [
+        "core2-1.8:macos-reference",
+        "core2-1.8:macos-update-generation-and-management"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core2-1.9",
+      "core": 2,
+      "objective": "1.9",
+      "title": "Navigate Linux safely",
+      "chapters": [
+        "core2-1.9:linux-reference"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.10",
+      "core": 2,
+      "objective": "1.10",
+      "title": "Install applications with compatibility in mind",
+      "chapters": [
+        "core2-1.10:application-requirements"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-1.11",
+      "core": 2,
+      "objective": "1.11",
+      "title": "Support cloud productivity without oversharing",
+      "chapters": [
+        "core2-1.11:cloud-productivity"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.1",
+      "core": 2,
+      "objective": "2.1",
+      "title": "Layer security controls",
+      "chapters": [
+        "core2-2.1:access-control-layers"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.2",
+      "core": 2,
+      "objective": "2.2",
+      "title": "Apply Windows security boundaries",
+      "chapters": [
+        "core2-1.7:windows-network-access",
+        "core2-2.2:windows-security-boundaries"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.3",
+      "core": 2,
+      "objective": "2.3",
+      "title": "Secure wireless authentication",
+      "chapters": [
+        "core2-2.3:wireless-authentication"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.4",
+      "core": 2,
+      "objective": "2.4",
+      "title": "Recognize malware behavior",
+      "chapters": [
+        "core2-2.4:malware-response"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.5",
+      "core": 2,
+      "objective": "2.5",
+      "title": "Recognize social engineering and weaknesses",
+      "chapters": [
+        "core2-2.5:attack-mechanisms"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.6",
+      "core": 2,
+      "objective": "2.6",
+      "title": "Remediate malware through a controlled process",
+      "chapters": [
+        "core2-2.4:malware-response",
+        "core2-2.6:a-plus-malware-sequence"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.7",
+      "core": 2,
+      "objective": "2.7",
+      "title": "Harden a workstation",
+      "chapters": [
+        "core2-2.2:windows-security-boundaries",
+        "core2-2.7:workstation-hardening"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.8",
+      "core": 2,
+      "objective": "2.8",
+      "title": "Protect mobile data",
+      "chapters": [
+        "core2-2.8:mobile-security-lifecycle"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.9",
+      "core": 2,
+      "objective": "2.9",
+      "title": "Dispose of data appropriately",
+      "chapters": [
+        "core2-2.9:sanitization-and-media"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.10",
+      "core": 2,
+      "objective": "2.10",
+      "title": "Harden the small-office boundary",
+      "chapters": [
+        "core2-2.10:router-hardening"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-2.11",
+      "core": 2,
+      "objective": "2.11",
+      "title": "Protect the browser session",
+      "chapters": [
+        "core2-2.11:browser-boundaries"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-3.1",
+      "core": 2,
+      "objective": "3.1",
+      "title": "Diagnose Windows faults methodically",
+      "chapters": [
+        "core2-1.4:windows-evidence-tools",
+        "core2-3.1:windows-fault-boundaries"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-3.2",
+      "core": 2,
+      "objective": "3.2",
+      "title": "Diagnose mobile application faults",
+      "chapters": [
+        "core2-3.2:mobile-app-diagnosis"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-3.3",
+      "core": 2,
+      "objective": "3.3",
+      "title": "Investigate mobile security symptoms",
+      "chapters": [
+        "core2-2.4:malware-response",
+        "core2-3.3:mobile-compromise-evidence"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-3.4",
+      "core": 2,
+      "objective": "3.4",
+      "title": "Investigate PC security faults",
+      "chapters": [
+        "core2-2.4:malware-response",
+        "core2-3.4:pc-security-diagnosis"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.1",
+      "core": 2,
+      "objective": "4.1",
+      "title": "Leave a useful support record",
+      "chapters": [
+        "core2-4.1:support-records"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.2",
+      "core": 2,
+      "objective": "4.2",
+      "title": "Change systems with accountability",
+      "chapters": [
+        "core2-4.3:backup-chain-worked",
+        "core2-4.2:change-governance"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.3",
+      "core": 2,
+      "objective": "4.3",
+      "title": "Prove backup and recovery",
+      "chapters": [
+        "core2-4.3:backup-chain-worked",
+        "core2-4.3:backup-rotation-placement"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "core2-4.4",
+      "core": 2,
+      "objective": "4.4",
+      "title": "Work safely around equipment",
+      "chapters": [
+        "core2-4.4:safety-and-handling"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.5",
+      "core": 2,
+      "objective": "4.5",
+      "title": "Control environmental risks",
+      "chapters": [
+        "core2-4.5:environment-and-power"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.6",
+      "core": 2,
+      "objective": "4.6",
+      "title": "Respect privacy and licensing",
+      "chapters": [
+        "core2-2.9:sanitization-and-media",
+        "core2-4.6:privacy-license-evidence"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.7",
+      "core": 2,
+      "objective": "4.7",
+      "title": "Communicate as part of the repair",
+      "chapters": [
+        "core2-4.7:professional-support"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.8",
+      "core": 2,
+      "objective": "4.8",
+      "title": "Read scripts before running them",
+      "chapters": [
+        "core2-4.8:scripting-and-ai"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.9",
+      "core": 2,
+      "objective": "4.9",
+      "title": "Support remote access securely",
+      "chapters": [
+        "core2-4.9:remote-access-paths"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "core2-4.10",
+      "core": 2,
+      "objective": "4.10",
+      "title": "Use AI with verification",
+      "chapters": [
+        "core2-4.8:scripting-and-ai",
+        "core2-4.10:ai-output-governance"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert3-1.1",
+      "core": 3,
+      "objective": "1.1",
+      "title": "Follow a packet through the layers",
+      "chapters": [
+        "cert3-1.1:encapsulation-boundaries",
+        "cert3-1.1:session-presentation"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-1.2",
+      "core": 3,
+      "objective": "1.2",
+      "title": "Choose the right network appliance",
+      "chapters": [
+        "cert3-1.2:appliances-placement",
+        "cert3-1.2:cdn-controller-nfv"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-1.3",
+      "core": 3,
+      "objective": "1.3",
+      "title": "Connect cloud networks deliberately",
+      "chapters": [
+        "cert3-1.3:cloud-connectivity",
+        "cert3-1.3:cloud-models-tenancy"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-1.4",
+      "core": 3,
+      "objective": "1.4",
+      "title": "Read protocols, ports, and traffic",
+      "chapters": [
+        "cert3-1.4:tcp-udp-ports",
+        "cert3-1.4:application-port-reference",
+        "cert3-1.4:ip-protocols-traffic-types"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-1.5",
+      "core": 3,
+      "objective": "1.5",
+      "title": "Match the medium to the requirement",
+      "chapters": [
+        "cert3-1.5:media-optics",
+        "cert3-1.5:copper-coax-dac",
+        "cert3-1.5:fiber-connector-rate-matrix",
+        "cert3-1.5:cellular-satellite-wan",
+        "cert3-1.5:category-seven-eight-shielding"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert3-1.6",
+      "core": 3,
+      "objective": "1.6",
+      "title": "Map the topology and failure paths",
+      "chapters": [
+        "cert3-1.6:topology-failure-domains",
+        "cert3-1.6:collapsed-core-flows"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-1.7",
+      "core": 3,
+      "objective": "1.7",
+      "title": "Work out an IPv4 subnet",
+      "chapters": [
+        "cert3-1.7:ipv4-subnet-worked",
+        "cert3-1.7:ipv4-special-classful"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-1.8",
+      "core": 3,
+      "objective": "1.8",
+      "title": "Understand modern network control",
+      "chapters": [
+        "cert3-1.8:network-virtualization",
+        "cert3-1.8:sase-sse-policy",
+        "cert3-1.8:iac-drift-source-control",
+        "cert3-1.8:ipv6-transition-choice"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert3-2.1",
+      "core": 3,
+      "objective": "2.1",
+      "title": "Choose a route",
+      "chapters": [
+        "cert3-2.1:route-selection-nat",
+        "cert3-2.1:routing-protocol-comparison",
+        "cert3-2.1:fhrp-vip-subinterfaces"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-2.2",
+      "core": 3,
+      "objective": "2.2",
+      "title": "Build a switched network",
+      "chapters": [
+        "cert3-2.2:switching-vlan-stp-lacp",
+        "cert3-2.2:svi-voice-stp-mtu"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-2.3",
+      "core": 3,
+      "objective": "2.3",
+      "title": "Tune wireless for the environment",
+      "chapters": [
+        "cert3-2.3:wireless-rf-design",
+        "cert3-2.3:wireless-generations-dfs",
+        "cert3-2.3:wireless-service-sets-antennas"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-2.4",
+      "core": 3,
+      "objective": "2.4",
+      "title": "Install with safety and resilience",
+      "chapters": [
+        "cert3-2.4:physical-install-poe",
+        "cert3-2.4:mdf-idf-environment"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-3.1",
+      "core": 3,
+      "objective": "3.1",
+      "title": "Keep useful operational records",
+      "chapters": [
+        "cert3-3.1:operations-records",
+        "cert3-3.1:lifecycle-sla"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-3.2",
+      "core": 3,
+      "objective": "3.2",
+      "title": "Monitor what matters",
+      "chapters": [
+        "cert3-3.2:telemetry-time",
+        "cert3-3.2:snmp-mib-traps",
+        "cert3-3.2:mirror-api-observation"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-3.3",
+      "core": 3,
+      "objective": "3.3",
+      "title": "Recover network services",
+      "chapters": [
+        "cert3-3.3:recovery-objectives",
+        "cert3-3.3:mttr-mtbf-recovery-sites"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-3.4",
+      "core": 3,
+      "objective": "3.4",
+      "title": "Deliver network configuration and names",
+      "chapters": [
+        "cert3-3.4:dhcp-dns-ntp",
+        "cert3-3.4:ipv6-scope",
+        "cert3-3.4:ipv6-ra-slaac",
+        "cert3-3.4:dns-zones-records",
+        "cert3-3.4:dnssec-doh-dot",
+        "cert3-3.4:time-ntp-ptp-nts",
+        "cert3-3.4:dhcp-leases-capacity"
+      ],
+      "directConceptQuestions": 14
+    },
+    {
+      "topic": "cert3-3.5",
+      "core": 3,
+      "objective": "3.5",
+      "title": "Manage through a controlled path",
+      "chapters": [
+        "cert3-3.5:secure-management-path",
+        "cert3-3.5:vpn-tunnel-scope"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-4.1",
+      "core": 3,
+      "objective": "4.1",
+      "title": "Apply network security fundamentals",
+      "chapters": [
+        "cert3-4.1:aaa-pki-zero-trust",
+        "cert3-4.1:federation-device-aaa",
+        "cert3-4.1:risk-cia-compliance",
+        "cert3-4.1:physical-social-location"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert3-4.2",
+      "core": 3,
+      "objective": "4.2",
+      "title": "Recognize network attack patterns",
+      "chapters": [
+        "cert3-4.2:attack-evidence",
+        "cert3-4.2:mac-dns-vlan-attacks",
+        "cert3-4.2:social-malware-attack-chains"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-4.3",
+      "core": 3,
+      "objective": "4.3",
+      "title": "Enforce network defenses",
+      "chapters": [
+        "cert3-4.3:enforcement-design",
+        "cert3-4.3:hardening-zones-key-lifecycle",
+        "cert3-4.3:web-filtering-certificate-trust"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-5.1",
+      "core": 3,
+      "objective": "5.1",
+      "title": "Troubleshoot with a hypothesis",
+      "chapters": [
+        "cert3-5.1:hypothesis-troubleshooting"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert3-5.2",
+      "core": 3,
+      "objective": "5.2",
+      "title": "Find physical faults",
+      "chapters": [
+        "cert3-5.2:physical-fault-evidence",
+        "cert3-5.2:counters-port-state-faults",
+        "cert3-5.2:lacp-suspended-diagnosis"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert3-5.3",
+      "core": 3,
+      "objective": "5.3",
+      "title": "Separate configuration and service faults",
+      "chapters": [
+        "cert3-5.3:configuration-failure-tree"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert3-5.4",
+      "core": 3,
+      "objective": "5.4",
+      "title": "Diagnose performance without guessing",
+      "chapters": [
+        "cert3-5.4:performance-queues-qos",
+        "cert3-5.4:roaming-tool-interpretation"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert3-5.5",
+      "core": 3,
+      "objective": "5.5",
+      "title": "Choose a diagnostic tool",
+      "chapters": [
+        "cert3-5.5:tool-evidence-limitations",
+        "cert3-5.5:physical-cli-tool-evidence"
+      ],
+      "directConceptQuestions": 5
+    },
+    {
+      "topic": "cert4-1.1",
+      "core": 4,
+      "objective": "1.1",
+      "title": "Choose controls that fit the job",
+      "chapters": [
+        "cert4-1.1:control-purpose-versus-implementation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert4-1.2",
+      "core": 4,
+      "objective": "1.2",
+      "title": "Think in security properties",
+      "chapters": [
+        "cert4-1.2:cia-aaa-zero-trust",
+        "cert4-1.2:physical-access-and-sensors",
+        "cert4-1.2:zero-trust-components-and-deception"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert4-1.3",
+      "core": 4,
+      "objective": "1.3",
+      "title": "Change systems without losing control",
+      "chapters": [
+        "cert4-1.3:change-dependencies-and-rollback"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert4-1.4",
+      "core": 4,
+      "objective": "1.4",
+      "title": "Use cryptography for the right purpose",
+      "chapters": [
+        "cert4-1.4:crypto-key-lifecycle-pki",
+        "cert4-1.4:key-custody-and-hardware",
+        "cert4-1.4:obfuscation-and-ledgers",
+        "cert4-1.4:certificate-issuance-and-validation",
+        "cert4-1.4:encryption-granularity-and-key-stretching"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert4-2.1",
+      "core": 4,
+      "objective": "2.1",
+      "title": "Reason about actors and motives",
+      "chapters": [
+        "cert4-2.1:actor-motive-capability",
+        "cert4-2.1:motivation-ethics-revenge-and-conflict"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-2.2",
+      "core": 4,
+      "objective": "2.2",
+      "title": "Find the entry points",
+      "chapters": [
+        "cert4-2.2:entry-vectors-and-social-engineering",
+        "cert4-2.2:media-channels-and-disinformation"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-2.3",
+      "core": 4,
+      "objective": "2.3",
+      "title": "Recognize the weakness before the exploit",
+      "chapters": [
+        "cert4-2.3:vulnerability-mechanisms-and-boundaries",
+        "cert4-2.3:firmware-injection-and-mobile-boundaries"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-2.4",
+      "core": 4,
+      "objective": "2.4",
+      "title": "Turn indicators into hypotheses",
+      "chapters": [
+        "cert4-2.4:indicator-hypotheses",
+        "cert4-2.4:malware-family-mechanisms",
+        "cert4-2.4:physical-rfid-environmental-attacks",
+        "cert4-2.4:reflection-dns-and-wireless-indicators",
+        "cert4-2.4:forgery-traversal-and-privilege",
+        "cert4-2.4:hash-collisions-and-downgrade",
+        "cert4-2.4:weak-indicators-and-missing-logs"
+      ],
+      "directConceptQuestions": 14
+    },
+    {
+      "topic": "cert4-2.5",
+      "core": 4,
+      "objective": "2.5",
+      "title": "Reduce exposure in layers",
+      "chapters": [
+        "cert4-2.5:layered-mitigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert4-3.1",
+      "core": 4,
+      "objective": "3.1",
+      "title": "Choose an architecture with clear boundaries",
+      "chapters": [
+        "cert4-3.1:architecture-trust-boundaries",
+        "cert4-3.1:distributed-control-and-specialized-platforms"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-3.2",
+      "core": 4,
+      "objective": "3.2",
+      "title": "Design the paths traffic may take",
+      "chapters": [
+        "cert4-3.2:traffic-enforcement-failure-modes",
+        "cert4-3.2:security-appliance-placement",
+        "cert4-3.2:port-authentication-and-eap",
+        "cert4-3.2:secure-connectivity-sase"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert4-3.3",
+      "core": 4,
+      "objective": "3.3",
+      "title": "Protect data throughout its life",
+      "chapters": [
+        "cert4-3.3:data-lifecycle-and-location",
+        "cert4-3.3:classification-versus-data-type"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-3.4",
+      "core": 4,
+      "objective": "3.4",
+      "title": "Design recovery before the outage",
+      "chapters": [
+        "cert4-3.4:rto-rpo-recovery-design",
+        "cert4-3.4:recovery-sites-and-exercises",
+        "cert4-3.4:journaling-diversity-and-multicloud",
+        "cert4-3.4:power-runtime-and-capacity",
+        "cert4-3.4:clustering-versus-load-balancing"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert4-4.1",
+      "core": 4,
+      "objective": "4.1",
+      "title": "Harden systems for their actual role",
+      "chapters": [
+        "cert4-4.1:baseline-mdm-and-application-testing",
+        "cert4-4.1:mobile-ownership-and-connections",
+        "cert4-4.1:wireless-surveys-enterprise-authentication",
+        "cert4-4.1:cookie-signing-and-input-boundaries"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert4-4.2",
+      "core": 4,
+      "objective": "4.2",
+      "title": "Manage assets from arrival to retirement",
+      "chapters": [
+        "cert4-4.2:asset-lifecycle-and-sanitization"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert4-4.3",
+      "core": 4,
+      "objective": "4.3",
+      "title": "Make vulnerability work a cycle",
+      "chapters": [
+        "cert4-4.3:vulnerability-prioritization-and-validation",
+        "cert4-4.3:cvss-disclosure-and-context",
+        "cert4-4.3:threat-feed-quality-and-disclosure"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert4-4.4",
+      "core": 4,
+      "objective": "4.4",
+      "title": "Turn telemetry into useful signals",
+      "chapters": [
+        "cert4-4.4:siem-time-and-alert-quality",
+        "cert4-4.4:scap-benchmarks-and-measurement",
+        "cert4-4.4:snmp-flow-and-packet-evidence"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert4-4.5",
+      "core": 4,
+      "objective": "4.5",
+      "title": "Operate enterprise defenses deliberately",
+      "chapters": [
+        "cert4-4.5:email-authentication-and-rule-order",
+        "cert4-4.5:group-policy-and-selinux",
+        "cert4-4.5:nac-xdr-and-behavior",
+        "cert4-4.5:web-and-dns-filter-mechanisms"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert4-4.6",
+      "core": 4,
+      "objective": "4.6",
+      "title": "Give identities the access they need",
+      "chapters": [
+        "cert4-4.6:iam-federation-and-pam",
+        "cert4-4.6:ldap-saml-oauth-boundaries",
+        "cert4-4.6:password-recovery-and-ephemeral-access",
+        "cert4-4.6:biometrics-tokens-and-error-rates",
+        "cert4-4.6:rule-time-and-attribute-decisions"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert4-4.7",
+      "core": 4,
+      "objective": "4.7",
+      "title": "Automate with guardrails",
+      "chapters": [
+        "cert4-4.7:automation-blast-radius",
+        "cert4-4.7:automation-workflows-and-operating-cost"
+      ],
+      "directConceptQuestions": 5
+    },
+    {
+      "topic": "cert4-4.8",
+      "core": 4,
+      "objective": "4.8",
+      "title": "Respond with evidence and coordination",
+      "chapters": [
+        "cert4-4.8:incident-coordination-and-evidence",
+        "cert4-4.8:forensic-acquisition-and-ediscovery",
+        "cert4-4.8:hunting-root-cause-and-lessons"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert4-4.9",
+      "core": 4,
+      "objective": "4.9",
+      "title": "Investigate across data sources",
+      "chapters": [
+        "cert4-4.9:investigative-correlation",
+        "cert4-4.9:source-semantics-and-investigative-limits"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-5.1",
+      "core": 4,
+      "objective": "5.1",
+      "title": "Connect decisions to governance",
+      "chapters": [
+        "cert4-5.1:governance-documents-and-exceptions",
+        "cert4-5.1:governance-authority-and-structures"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-5.2",
+      "core": 4,
+      "objective": "5.2",
+      "title": "Turn uncertainty into a risk decision",
+      "chapters": [
+        "cert4-5.2:quantitative-risk-and-treatment",
+        "cert4-5.2:reliability-risk-indicators-and-appetite",
+        "cert4-5.2:risk-assessment-cadence-and-triggers"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert4-5.3",
+      "core": 4,
+      "objective": "5.3",
+      "title": "Manage trust in suppliers",
+      "chapters": [
+        "cert4-5.3:supplier-assurance-and-contract-boundaries",
+        "cert4-5.3:agreement-types-and-conflicts"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-5.4",
+      "core": 4,
+      "objective": "5.4",
+      "title": "Handle obligations and privacy deliberately",
+      "chapters": [
+        "cert4-5.4:privacy-obligations-and-legal-holds",
+        "cert4-5.4:care-diligence-and-attestation"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-5.5",
+      "core": 4,
+      "objective": "5.5",
+      "title": "Use assessments to answer the right question",
+      "chapters": [
+        "cert4-5.5:assessment-authorization-and-assurance",
+        "cert4-5.5:offensive-defensive-integrated-assessment"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert4-5.6",
+      "core": 4,
+      "objective": "5.6",
+      "title": "Build habits that survive pressure",
+      "chapters": [
+        "cert4-5.6:awareness-behavior-and-measurement"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-1.1",
+      "core": 5,
+      "objective": "1.1",
+      "title": "Cloud value, elasticity and availability",
+      "chapters": [
+        "cert5-1.1:aws-value-capacity"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-1.2",
+      "core": 5,
+      "objective": "1.2",
+      "title": "Well-Architected tradeoffs",
+      "chapters": [
+        "cert5-1.2:aws-six-pillars",
+        "cert5-1.2:aws-recovery-objectives"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-1.3",
+      "core": 5,
+      "objective": "1.3",
+      "title": "Cloud migration planning",
+      "chapters": [
+        "cert5-1.3:aws-caf-migration",
+        "cert5-1.3:aws-migration-workflow-tools"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-1.4",
+      "core": 5,
+      "objective": "1.4",
+      "title": "Cloud economics and rightsizing",
+      "chapters": [
+        "cert5-1.4:aws-tco-rightsizing"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-2.1",
+      "core": 5,
+      "objective": "2.1",
+      "title": "Shared responsibility by service",
+      "chapters": [
+        "cert5-2.1:aws-responsibility-controls"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-2.2",
+      "core": 5,
+      "objective": "2.2",
+      "title": "Compliance, encryption and evidence",
+      "chapters": [
+        "cert5-2.2:aws-crypto-evidence",
+        "cert5-2.2:aws-secret-lifecycle"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-2.3",
+      "core": 5,
+      "objective": "2.3",
+      "title": "IAM, roles and account protection",
+      "chapters": [
+        "cert5-2.3:aws-iam-evaluation",
+        "cert5-2.3:aws-root-exception"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-2.4",
+      "core": 5,
+      "objective": "2.4",
+      "title": "Security services and audit signals",
+      "chapters": [
+        "cert5-2.4:aws-evidence-tools",
+        "cert5-2.4:aws-security-purpose-map"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-3.1",
+      "core": 5,
+      "objective": "3.1",
+      "title": "Deploying and operating AWS resources",
+      "chapters": [
+        "cert5-3.1:aws-deployment-interfaces"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-3.2",
+      "core": 5,
+      "objective": "3.2",
+      "title": "Regions, zones and edge delivery",
+      "chapters": [
+        "cert5-3.2:recovery-cost-timeline",
+        "cert5-3.2:aws-geography-edge"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-3.3",
+      "core": 5,
+      "objective": "3.3",
+      "title": "Compute, containers and elasticity",
+      "chapters": [
+        "cert5-3.3:aws-compute-purchase",
+        "cert5-3.3:aws-container-compute",
+        "cert5-3.3:aws-instance-families"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert5-3.4",
+      "core": 5,
+      "objective": "3.4",
+      "title": "Databases, caches and migration",
+      "chapters": [
+        "cert5-3.4:choose-document-or-graph",
+        "cert5-3.4:aws-database-cache",
+        "cert5-3.4:aws-dms-schema"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert5-3.5",
+      "core": 5,
+      "objective": "3.5",
+      "title": "VPC networking and connectivity",
+      "chapters": [
+        "cert5-3.5:aws-sg-nacl",
+        "cert5-3.5:aws-nat-endpoint",
+        "cert5-3.5:aws-route53-cloudfront-links",
+        "cert5-3.5:aws-network-service-selection"
+      ],
+      "directConceptQuestions": 8
+    },
+    {
+      "topic": "cert5-3.6",
+      "core": 5,
+      "objective": "3.6",
+      "title": "Object, block and file storage",
+      "chapters": [
+        "cert5-3.6:aws-object-block-file",
+        "cert5-3.6:aws-storage-lifecycle"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-3.7",
+      "core": 5,
+      "objective": "3.7",
+      "title": "Analytics and AI service selection",
+      "chapters": [
+        "cert5-3.7:aws-analytics",
+        "cert5-3.7:aws-ai",
+        "cert5-3.7:aws-ai-input-output"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert5-3.8",
+      "core": 5,
+      "objective": "3.8",
+      "title": "Integration, monitoring and management",
+      "chapters": [
+        "cert5-3.8:aws-event-integration",
+        "cert5-3.8:aws-quotas-capacity",
+        "cert5-3.8:aws-operations-service-map"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert5-4.1",
+      "core": 5,
+      "objective": "4.1",
+      "title": "Purchase models and transfer costs",
+      "chapters": [
+        "cert5-4.1:aws-price-dimensions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert5-4.2",
+      "core": 5,
+      "objective": "4.2",
+      "title": "Billing tools and account organization",
+      "chapters": [
+        "cert5-4.2:aws-organizations-scp",
+        "cert5-4.2:aws-marketplace-billing-evidence"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "cert5-4.3",
+      "core": 5,
+      "objective": "4.3",
+      "title": "Support, health and trusted guidance",
+      "chapters": [
+        "cert5-4.3:aws-current-support"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-1.1",
+      "core": 6,
+      "objective": "1.1",
+      "title": "Cloud computing models and responsibility",
+      "chapters": [
+        "cert6-1.1:azure-models-consumption"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-1.2",
+      "core": 6,
+      "objective": "1.2",
+      "title": "Availability, scalability and cloud benefits",
+      "chapters": [
+        "cert6-1.2:azure-benefits-evidence"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-1.3",
+      "core": 6,
+      "objective": "1.3",
+      "title": "IaaS, PaaS and SaaS choices",
+      "chapters": [
+        "cert6-1.3:azure-service-model-decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-2.1",
+      "core": 6,
+      "objective": "2.1",
+      "title": "Azure geography and resource hierarchy",
+      "chapters": [
+        "cert6-2.1:azure-geography-hierarchy"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-2.2",
+      "core": 6,
+      "objective": "2.2",
+      "title": "Compute, application hosting and networking",
+      "chapters": [
+        "cert6-2.2:azure-availability-placement",
+        "cert6-2.2:azure-scalesets-avd",
+        "cert6-2.2:azure-vm-dependencies",
+        "cert6-2.2:azure-peering-routing",
+        "cert6-2.2:azure-private-endpoint-dns",
+        "cert6-2.2:azure-vpn-expressroute",
+        "cert6-2.2:azure-dns-authority"
+      ],
+      "directConceptQuestions": 14
+    },
+    {
+      "topic": "cert6-2.3",
+      "core": 6,
+      "objective": "2.3",
+      "title": "Storage, redundancy and migration",
+      "chapters": [
+        "cert6-2.3:azure-storage-interfaces-tiers",
+        "cert6-2.3:azure-redundancy",
+        "cert6-2.3:azure-copy-sync",
+        "cert6-2.3:azure-migrate-databox",
+        "cert6-2.3:azure-storage-capability-matrix"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert6-2.4",
+      "core": 6,
+      "objective": "2.4",
+      "title": "Identity, access and defense in depth",
+      "chapters": [
+        "cert6-2.4:azure-entra-domain-external",
+        "cert6-2.4:azure-conditional-access",
+        "cert6-2.4:azure-rbac-scopes",
+        "cert6-2.4:azure-zero-trust-defender",
+        "cert6-2.4:azure-external-tenant-decisions"
+      ],
+      "directConceptQuestions": 10
+    },
+    {
+      "topic": "cert6-3.1",
+      "core": 6,
+      "objective": "3.1",
+      "title": "Cost estimation, budgets and tags",
+      "chapters": [
+        "cert6-3.1:azure-cost-response"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "cert6-3.2",
+      "core": 6,
+      "objective": "3.2",
+      "title": "Governance, compliance and locks",
+      "chapters": [
+        "cert6-3.2:service-trust-report-scope",
+        "cert6-3.2:azure-policy-purview-locks",
+        "cert6-3.2:azure-purview-stewardship"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert6-3.3",
+      "core": 6,
+      "objective": "3.3",
+      "title": "Deployment tools, ARM and Azure Arc",
+      "chapters": [
+        "cert6-3.3:compare-shell-cli-powershell",
+        "cert6-3.3:azure-arm-bicep-arc",
+        "cert6-3.3:azure-read-deployment-intent"
+      ],
+      "directConceptQuestions": 6
+    },
+    {
+      "topic": "cert6-3.4",
+      "core": 6,
+      "objective": "3.4",
+      "title": "Monitoring, service health and recommendations",
+      "chapters": [
+        "cert6-3.4:azure-telemetry-health-advisor",
+        "cert6-3.4:azure-kql-inventory"
+      ],
+      "directConceptQuestions": 4
+    },
+    {
+      "topic": "advanced7-1.6",
+      "core": 7,
+      "objective": "1.6",
+      "title": "Plan and verify IPv4 subnets",
+      "chapters": [
+        "advanced7-1.6:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced7-2.2",
+      "core": 7,
+      "objective": "2.2",
+      "title": "Trace VLAN traffic across trunks",
+      "chapters": [
+        "advanced7-2.2:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced7-3.2",
+      "core": 7,
+      "objective": "3.2",
+      "title": "Choose routes using longest-prefix matching",
+      "chapters": [
+        "advanced7-3.2:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced7-4.6",
+      "core": 7,
+      "objective": "4.6",
+      "title": "Diagnose DHCP relay and address assignment",
+      "chapters": [
+        "advanced7-4.6:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced7-5.6",
+      "core": 7,
+      "objective": "5.6",
+      "title": "Apply access lists without breaking required traffic",
+      "chapters": [
+        "advanced7-5.6:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced7-6.5",
+      "core": 7,
+      "objective": "6.5",
+      "title": "Interpret REST requests and structured network data",
+      "chapters": [
+        "advanced7-6.5:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced8-1.2",
+      "core": 8,
+      "objective": "1.2",
+      "title": "Correlate suspicious activity before declaring an incident",
+      "chapters": [
+        "advanced8-1.2:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced8-2.3",
+      "core": 8,
+      "objective": "2.3",
+      "title": "Prioritize vulnerabilities using exposure and business impact",
+      "chapters": [
+        "advanced8-2.3:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced8-3.2",
+      "core": 8,
+      "objective": "3.2",
+      "title": "Contain incidents while preserving useful evidence",
+      "chapters": [
+        "advanced8-3.2:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "advanced8-4.2",
+      "core": 8,
+      "objective": "4.2",
+      "title": "Turn investigation evidence into actionable reporting",
+      "chapters": [
+        "advanced8-4.2:investigation"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-1",
+      "core": 9,
+      "objective": "1.1",
+      "title": "Scope an Azure access and governance plan",
+      "chapters": [
+        "specialist9-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-2",
+      "core": 9,
+      "objective": "2.1",
+      "title": "Separate Azure durability, access, and recovery",
+      "chapters": [
+        "specialist9-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-3",
+      "core": 9,
+      "objective": "3.1",
+      "title": "Trace an Azure application failure",
+      "chapters": [
+        "specialist9-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-1",
+      "core": 10,
+      "objective": "1.1",
+      "title": "Design AWS temporary access and trust",
+      "chapters": [
+        "specialist10-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-2",
+      "core": 10,
+      "objective": "2.1",
+      "title": "Design for failures across availability zones",
+      "chapters": [
+        "specialist10-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-3",
+      "core": 10,
+      "objective": "3.1",
+      "title": "Match AWS storage to access and recovery needs",
+      "chapters": [
+        "specialist10-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-1",
+      "core": 11,
+      "objective": "1.1",
+      "title": "Distinguish identity, verification, and authorization",
+      "chapters": [
+        "specialist11-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-2",
+      "core": 11,
+      "objective": "2.1",
+      "title": "Choose threat protection by the evidence needed",
+      "chapters": [
+        "specialist11-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-3",
+      "core": 11,
+      "objective": "3.1",
+      "title": "Separate classification, retention, and leakage prevention",
+      "chapters": [
+        "specialist11-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-1",
+      "core": 12,
+      "objective": "1.1",
+      "title": "Connect cloud choices to business outcomes",
+      "chapters": [
+        "specialist12-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-2",
+      "core": 12,
+      "objective": "2.1",
+      "title": "Choose data and AI approaches responsibly",
+      "chapters": [
+        "specialist12-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-3",
+      "core": 12,
+      "objective": "3.1",
+      "title": "Plan Google Cloud responsibility and reliability",
+      "chapters": [
+        "specialist12-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-1",
+      "core": 13,
+      "objective": "1.1",
+      "title": "Read the Terraform change workflow",
+      "chapters": [
+        "specialist13-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-2",
+      "core": 13,
+      "objective": "2.1",
+      "title": "Protect Terraform state and coordinate changes",
+      "chapters": [
+        "specialist13-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-3",
+      "core": 13,
+      "objective": "3.1",
+      "title": "Build reusable Terraform inputs and outputs",
+      "chapters": [
+        "specialist13-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-1",
+      "core": 14,
+      "objective": "1.1",
+      "title": "Use Linux ownership and permissions deliberately",
+      "chapters": [
+        "specialist14-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-2",
+      "core": 14,
+      "objective": "2.1",
+      "title": "Verify Linux services now and after reboot",
+      "chapters": [
+        "specialist14-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-3",
+      "core": 14,
+      "objective": "3.1",
+      "title": "Plan persistent Linux mounts and storage verification",
+      "chapters": [
+        "specialist14-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-4-1",
+      "core": 9,
+      "objective": "4.1",
+      "title": "Deploy and inspect ARM and Bicep",
+      "chapters": [
+        "specialist9-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-4-2",
+      "core": 9,
+      "objective": "4.2",
+      "title": "Choose and operate Azure virtual machines",
+      "chapters": [
+        "specialist9-4-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-4-3",
+      "core": 9,
+      "objective": "4.3",
+      "title": "Run containers and stage App Service releases",
+      "chapters": [
+        "specialist9-4-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-5-1",
+      "core": 9,
+      "objective": "5.1",
+      "title": "Plan Azure Backup and Site Recovery",
+      "chapters": [
+        "specialist9-5-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-4-1",
+      "core": 10,
+      "objective": "4.1",
+      "title": "Match compute and data services to a workload",
+      "chapters": [
+        "specialist10-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-1-2",
+      "core": 10,
+      "objective": "1.2",
+      "title": "Design AWS network isolation",
+      "chapters": [
+        "specialist10-1-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-2-2",
+      "core": 10,
+      "objective": "2.2",
+      "title": "Compare AWS disaster recovery designs",
+      "chapters": [
+        "specialist10-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-4-1",
+      "core": 11,
+      "objective": "4.1",
+      "title": "Distinguish trust, encryption, hashing and governance",
+      "chapters": [
+        "specialist11-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-1-2",
+      "core": 11,
+      "objective": "1.2",
+      "title": "Govern privileged and guest access with Entra",
+      "chapters": [
+        "specialist11-1-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-2-2",
+      "core": 11,
+      "objective": "2.2",
+      "title": "Select Azure infrastructure security controls",
+      "chapters": [
+        "specialist11-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist11-3-2",
+      "core": 11,
+      "objective": "3.2",
+      "title": "Handle audit, discovery and compliance evidence",
+      "chapters": [
+        "specialist11-3-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-4-1",
+      "core": 12,
+      "objective": "4.1",
+      "title": "Choose a Google Cloud modernization path",
+      "chapters": [
+        "specialist12-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-5-1",
+      "core": 12,
+      "objective": "5.1",
+      "title": "Assign Google Cloud security responsibilities",
+      "chapters": [
+        "specialist12-5-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-6-1",
+      "core": 12,
+      "objective": "6.1",
+      "title": "Manage Google Cloud cost and continuity",
+      "chapters": [
+        "specialist12-6-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-4-1",
+      "core": 13,
+      "objective": "4.1",
+      "title": "Operate HCP Terraform workspaces and runs",
+      "chapters": [
+        "specialist13-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-3-2",
+      "core": 13,
+      "objective": "3.2",
+      "title": "Control lifecycle, validation and sensitive values",
+      "chapters": [
+        "specialist13-3-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist13-2-2",
+      "core": 13,
+      "objective": "2.2",
+      "title": "Adopt existing infrastructure and reconcile drift",
+      "chapters": [
+        "specialist13-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-4-1",
+      "core": 14,
+      "objective": "4.1",
+      "title": "Manage RPM, Flatpak and shell automation",
+      "chapters": [
+        "specialist14-4-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-5-1",
+      "core": 14,
+      "objective": "5.1",
+      "title": "Configure persistent Linux network access",
+      "chapters": [
+        "specialist14-5-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-6-1",
+      "core": 14,
+      "objective": "6.1",
+      "title": "Manage identity, sudo and SELinux context",
+      "chapters": [
+        "specialist14-6-1:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-2-2",
+      "core": 14,
+      "objective": "2.2",
+      "title": "Schedule jobs and verify boot behavior",
+      "chapters": [
+        "specialist14-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-3-2",
+      "core": 14,
+      "objective": "3.2",
+      "title": "Practice LVM, swap and network mounts",
+      "chapters": [
+        "specialist14-3-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-1-2",
+      "core": 9,
+      "objective": "1.2",
+      "title": "Administer Entra users, groups and password recovery",
+      "chapters": [
+        "specialist9-1-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-2-2",
+      "core": 9,
+      "objective": "2.2",
+      "title": "Delegate and manage Azure Storage access",
+      "chapters": [
+        "specialist9-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist9-3-2",
+      "core": 9,
+      "objective": "3.2",
+      "title": "Route and balance Azure network traffic",
+      "chapters": [
+        "specialist9-3-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist10-3-2",
+      "core": 10,
+      "objective": "3.2",
+      "title": "Optimize AWS spend by workload behavior",
+      "chapters": [
+        "specialist10-3-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist12-2-2",
+      "core": 12,
+      "objective": "2.2",
+      "title": "Design a Google Cloud analytics pipeline",
+      "chapters": [
+        "specialist12-2-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-1-2",
+      "core": 14,
+      "objective": "1.2",
+      "title": "Work with Linux archives, links and text filters",
+      "chapters": [
+        "specialist14-1-2:decisions"
+      ],
+      "directConceptQuestions": 2
+    },
+    {
+      "topic": "specialist14-2-3",
+      "core": 14,
+      "objective": "2.3",
+      "title": "Investigate processes and system boot",
+      "chapters": [
+        "specialist14-2-3:decisions"
+      ],
+      "directConceptQuestions": 2
+    }
+  ]
+}

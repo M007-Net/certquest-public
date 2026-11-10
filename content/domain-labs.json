@@ -1,0 +1,1413 @@
+[
+  {
+    "id": "0:1",
+    "core": 0,
+    "domain": 1,
+    "title": "Open a support case",
+    "goal": "Practice a repeatable troubleshooting process before changing a system.",
+    "time": "30–60 minutes",
+    "setup": "Paper or a spare computer; use the scenario “a display stopped working after a cable was moved.”",
+    "steps": [
+      "Write three questions about symptoms and recent changes.",
+      "Rank three possible causes and choose a reversible test for each.",
+      "Record the result of each test and decide what you would try next."
+    ],
+    "checks": [
+      "A case note distinguishes observation from assumption.",
+      "Your proposed fix includes a verification and rollback step."
+    ],
+    "cleanup": "Restore any cables you moved and save the case note.",
+    "stretch": "Repeat with a printer that stopped working after a network change."
+  },
+  {
+    "id": "0:2",
+    "core": 0,
+    "domain": 2,
+    "title": "Map the workshop",
+    "goal": "Identify how parts, power, and networking support one working device.",
+    "time": "30–60 minutes",
+    "setup": "Your own computer viewed externally, its specifications, and paper; opening the case is optional and unnecessary.",
+    "steps": [
+      "List CPU, memory, storage, power input, and network adapter from specifications or system information.",
+      "Draw the path from wall power to the device and from device to router.",
+      "Choose one plausible failure at each point and name the evidence you would collect."
+    ],
+    "checks": [
+      "A labeled diagram names at least five components.",
+      "Each failure hypothesis has a discriminating test."
+    ],
+    "cleanup": "Close information tools; do not change firmware or wiring.",
+    "stretch": "Explain why a storage failure and a memory shortage can both feel like a slow PC."
+  },
+  {
+    "id": "0:3",
+    "core": 0,
+    "domain": 3,
+    "title": "Make and restore a practice backup",
+    "goal": "Demonstrate recovery rather than only making a copy.",
+    "time": "30–60 minutes",
+    "setup": "A folder of disposable text files and a second folder on your own device.",
+    "steps": [
+      "Create three test files with different contents and record their names.",
+      "Copy them to the backup folder, change one original, and restore it from the backup.",
+      "Compare the restored contents and record how you verified success."
+    ],
+    "checks": [
+      "The restored file matches the original content.",
+      "Your notes explain why a second folder on one disk does not protect against disk failure."
+    ],
+    "cleanup": "Keep or remove only your disposable practice folders.",
+    "stretch": "Design an offline or off-device copy and a schedule for restore testing."
+  },
+  {
+    "id": "1:1",
+    "core": 1,
+    "domain": 1,
+    "title": "Mobile device intake and support plan",
+    "goal": "Turn a vague mobile fault into a service decision.",
+    "time": "30–60 minutes",
+    "setup": "Your own phone or laptop and its public service/specification page; do not open a battery enclosure.",
+    "steps": [
+      "Record model, OS version, charging connector, and supported accessories without personal identifiers.",
+      "Choose a symptom such as intermittent charging and list cable, charger, port, and battery hypotheses.",
+      "Test a known-good compatible accessory if available; otherwise write the expected observations for each case.",
+      "Create a repair-versus-escalation recommendation with a backup and privacy plan."
+    ],
+    "checks": [
+      "A compatibility table separates connector shape from power/data capability.",
+      "Your diagnosis states what evidence would distinguish an accessory fault from a device fault."
+    ],
+    "cleanup": "Return settings and accessories to their original state. Stop handling any swollen or damaged battery and use qualified service.",
+    "stretch": "Compare the support plan for a personally owned and an organization-managed device."
+  },
+  {
+    "id": "1:2",
+    "core": 1,
+    "domain": 2,
+    "title": "Trace a home network connection",
+    "goal": "Identify local addressing and distinguish IP connectivity from name resolution.",
+    "time": "30–60 minutes",
+    "setup": "Your own connected computer and read-only network information tools; a paper topology works if no device is available.",
+    "steps": [
+      "Record local address, prefix, gateway, and DNS server without sharing public identifiers.",
+      "Draw computer → access point/switch → router → internet.",
+      "Test gateway reachability, then compare a DNS lookup with access to an approved website.",
+      "Write what a working gateway test does and does not prove."
+    ],
+    "checks": [
+      "A labeled topology matches the observed settings.",
+      "Your notes distinguish a failed name lookup from a failed local link."
+    ],
+    "cleanup": "Close tools; leave router and adapter settings unchanged.",
+    "stretch": "Explain how DHCP supplies settings and what evidence would indicate a wrong gateway."
+  },
+  {
+    "id": "1:3",
+    "core": 1,
+    "domain": 3,
+    "title": "Plan a compatible hardware upgrade",
+    "goal": "Select parts using compatibility evidence and a verification plan.",
+    "time": "30–60 minutes",
+    "setup": "A real or fictional desktop model, its motherboard manual, and component specifications; no purchase required.",
+    "steps": [
+      "Inventory memory type/slots, storage interfaces, power capacity, and physical space.",
+      "Choose a memory and storage upgrade and document compatibility checks.",
+      "Write the safe installation sequence, data protection steps, and post-installation tests."
+    ],
+    "checks": [
+      "The plan cites actual supported interfaces and limits.",
+      "Tests include capacity recognition and a relevant functional check."
+    ],
+    "cleanup": "No hardware changes are required; keep the parts checklist.",
+    "stretch": "Explain why a physically fitting module or connector may still be incompatible."
+  },
+  {
+    "id": "1:4",
+    "core": 1,
+    "domain": 4,
+    "title": "Build an isolated VM plan",
+    "goal": "Understand host resources, guest resources, and network isolation.",
+    "time": "30–60 minutes",
+    "setup": "An existing hypervisor and disposable VM, or a paper design if virtualization is unavailable.",
+    "steps": [
+      "Allocate guest CPU, RAM, and disk while leaving resources for the host.",
+      "Choose an isolated or host-only network and explain how it differs from bridged networking.",
+      "Boot a disposable guest if available, record resource use, and create a recovery point before a small test change.",
+      "Restore or describe restoring that change and verify the intended state."
+    ],
+    "checks": [
+      "A resource table avoids exhausting host memory/storage.",
+      "Your notes distinguish a snapshot from an independent backup."
+    ],
+    "cleanup": "Shut down the disposable guest; remove only resources created for this exercise if no longer needed.",
+    "stretch": "Design how a second guest could communicate locally without being exposed to the household LAN."
+  },
+  {
+    "id": "1:5",
+    "core": 1,
+    "domain": 5,
+    "title": "Find the fault with a test matrix",
+    "goal": "Troubleshoot a hardware/network symptom using the least disruptive evidence.",
+    "time": "30–60 minutes",
+    "setup": "Paper case: a PC powers on, has network link, reaches its gateway, but cannot resolve names.",
+    "steps": [
+      "Build a matrix of power, link, IP configuration, gateway reachability, and DNS results.",
+      "Write the next two tests and predict what each result would imply.",
+      "Choose a targeted correction and write a before/after verification plan.",
+      "Repeat with a second case where the gateway test also fails."
+    ],
+    "checks": [
+      "The DNS-only case does not lead immediately to replacing hardware.",
+      "The second case produces a different investigation order."
+    ],
+    "cleanup": "No production changes; keep the test matrix.",
+    "stretch": "Add a case where one application fails while others work."
+  },
+  {
+    "id": "2:1",
+    "core": 2,
+    "domain": 1,
+    "title": "Create a system baseline",
+    "goal": "Document operating-system state before making a reversible change.",
+    "time": "30–60 minutes",
+    "setup": "Your own computer with read-only tools, or a disposable VM for changes.",
+    "steps": [
+      "Record OS edition/version, available storage, running services, and update state.",
+      "Identify one startup application and explain its purpose before considering a change.",
+      "In a disposable VM, change one nonessential startup setting and compare restart behavior; otherwise write the predicted result.",
+      "Record a rollback procedure."
+    ],
+    "checks": [
+      "Baseline and changed-state notes make the difference clear.",
+      "Your rollback restores the original setting."
+    ],
+    "cleanup": "Restore the test setting and keep the baseline; do not disable required security services.",
+    "stretch": "Compare how you would collect the same baseline on Windows and Linux."
+  },
+  {
+    "id": "2:2",
+    "core": 2,
+    "domain": 2,
+    "title": "Test least privilege on practice files",
+    "goal": "Verify both permitted and denied access.",
+    "time": "30–60 minutes",
+    "setup": "Two disposable local accounts in a VM and a folder of dummy files; alternatively a paper permissions table.",
+    "steps": [
+      "Define an owner who can edit and a reader who should only view.",
+      "Set or model the permissions and test reading, modifying, and deleting with each identity.",
+      "Document which permissions are inherited and how effective access is determined."
+    ],
+    "checks": [
+      "The reader can view but cannot perform an unauthorized write.",
+      "The owner retains intended access and a recovery path."
+    ],
+    "cleanup": "Restore permissions and remove only the disposable accounts/files you created.",
+    "stretch": "Add a group membership and predict whether it changes effective access."
+  },
+  {
+    "id": "2:3",
+    "core": 2,
+    "domain": 3,
+    "title": "Investigate a slow application",
+    "goal": "Use observations to distinguish resource pressure from an application fault.",
+    "time": "30–60 minutes",
+    "setup": "Your own device with a resource monitor, or a supplied-style paper case with CPU, memory, and disk readings.",
+    "steps": [
+      "Record idle CPU, memory, and disk use.",
+      "Open an ordinary application and compare its resource use during the symptom; avoid stress testing.",
+      "Identify whether the evidence supports CPU load, memory pressure, storage delay, or an app-specific issue.",
+      "Write one targeted action and a repeatable retest."
+    ],
+    "checks": [
+      "The recommendation follows measured evidence rather than “reinstall everything.”",
+      "A retest uses the same workload and records its outcome."
+    ],
+    "cleanup": "Close test applications and restore any temporary settings.",
+    "stretch": "Explain what additional evidence you need if resource use looks normal."
+  },
+  {
+    "id": "2:4",
+    "core": 2,
+    "domain": 4,
+    "title": "Write a change and recovery ticket",
+    "goal": "Practice approvals, rollback, documentation, and customer communication.",
+    "time": "30–60 minutes",
+    "setup": "Paper scenario: update a lab workstation driver after a reported fault.",
+    "steps": [
+      "Write scope, expected benefit, risk, owner, and maintenance window.",
+      "List backup/recovery prerequisites and a rollback trigger.",
+      "Define functional checks, user confirmation, and the final ticket note."
+    ],
+    "checks": [
+      "Another technician could follow the plan without guessing the rollback condition.",
+      "The final note distinguishes proposed actions from completed ones."
+    ],
+    "cleanup": "No actual driver update is required.",
+    "stretch": "Add a failed verification result and write the handoff to the next technician."
+  },
+  {
+    "id": "3:1",
+    "core": 3,
+    "domain": 1,
+    "title": "Design a small office address plan",
+    "goal": "Connect subnet sizing, gateways, and service placement.",
+    "time": "30–60 minutes",
+    "setup": "Paper or a diagram editor; use 192.168.40.0/24 for 50 staff and 20 guest devices.",
+    "steps": [
+      "Choose non-overlapping subnets that fit each group and its gateway.",
+      "List network, usable range, broadcast, and gateway for each.",
+      "Place DHCP and DNS on the diagram and identify traffic that needs routing."
+    ],
+    "checks": [
+      "Every assigned address is inside its intended usable range.",
+      "Staff and guest allocations do not overlap."
+    ],
+    "cleanup": "Save the diagram; no live addressing changes.",
+    "stretch": "Reserve growth space and explain the cost of a too-small subnet."
+  },
+  {
+    "id": "3:2",
+    "core": 3,
+    "domain": 2,
+    "title": "Build two isolated VLANs",
+    "goal": "Translate an addressing plan into switch and router behavior.",
+    "time": "30–60 minutes",
+    "setup": "Packet Tracer or another existing simulator; alternatively draw the frame/packet path.",
+    "steps": [
+      "Create two VLANs with one host each and assign distinct subnets.",
+      "Configure access membership and a router or Layer 3 path for authorized inter-VLAN traffic.",
+      "Test same-VLAN and cross-VLAN cases, then remove one required VLAN from a trunk and predict the result.",
+      "Restore the trunk and retest."
+    ],
+    "checks": [
+      "The diagram and port membership agree.",
+      "Failure and repair evidence identifies the missing forwarding condition."
+    ],
+    "cleanup": "Restore the simulator configuration and save a clean copy.",
+    "stretch": "Add a guest restriction and test one allowed and one denied service."
+  },
+  {
+    "id": "3:3",
+    "core": 3,
+    "domain": 3,
+    "title": "Create an operations runbook",
+    "goal": "Make a network service observable and recoverable.",
+    "time": "30–60 minutes",
+    "setup": "A fictional branch office with one router, switch, access point, and DHCP service.",
+    "steps": [
+      "Inventory devices, management addresses, owners, and configuration backup locations.",
+      "Define three monitoring signals and what would trigger investigation.",
+      "Write an outage runbook with initial checks, escalation, recovery, and verification."
+    ],
+    "checks": [
+      "Each alert has a meaningful threshold or baseline and an owner.",
+      "The runbook includes a configuration-restore validation step."
+    ],
+    "cleanup": "Keep synthetic details only; do not put passwords in the runbook.",
+    "stretch": "Add a maintenance change and describe how you avoid mistaking it for an outage."
+  },
+  {
+    "id": "3:4",
+    "core": 3,
+    "domain": 4,
+    "title": "Design guest isolation",
+    "goal": "Limit guest access while retaining required services.",
+    "time": "30–60 minutes",
+    "setup": "Paper topology or a network simulator with staff, guest, and server segments.",
+    "steps": [
+      "List what guests must reach, such as DHCP, DNS, and approved internet access.",
+      "Create a traffic policy separating guest-to-staff denial from required service permissions.",
+      "Test or trace one allowed flow and two denied flows, including management access."
+    ],
+    "checks": [
+      "Policy permits necessary services without broad internal access.",
+      "Tests identify source, destination, protocol, and expected outcome."
+    ],
+    "cleanup": "Restore any lab-only ACL changes after saving evidence.",
+    "stretch": "Consider printer access and justify a narrow exception instead of opening the staff network."
+  },
+  {
+    "id": "3:5",
+    "core": 3,
+    "domain": 5,
+    "title": "Troubleshoot three network failures",
+    "goal": "Choose diagnostic tests that separate layers.",
+    "time": "30–60 minutes",
+    "setup": "Paper cases or a simulator: wrong gateway, missing DNS, and a VLAN absent from a trunk.",
+    "steps": [
+      "Record expected host settings for all three cases.",
+      "For each case, predict link status, local ping, gateway ping, and name-lookup behavior.",
+      "Use the results to choose one correction, then repeat the tests."
+    ],
+    "checks": [
+      "The three faults produce distinguishable evidence.",
+      "Your notes show why the chosen correction targets the fault."
+    ],
+    "cleanup": "Restore all simulated fault injections.",
+    "stretch": "Add packet loss and describe what extra interface or path evidence you need."
+  },
+  {
+    "id": "4:1",
+    "core": 4,
+    "domain": 1,
+    "title": "Compare confidentiality, integrity, and availability",
+    "goal": "Choose controls for the actual security goal.",
+    "time": "30–60 minutes",
+    "setup": "Two disposable text files and a hashing tool, or a paper demonstration.",
+    "steps": [
+      "Record a file hash, edit the file, and compare the new hash.",
+      "Describe how encryption and key management would protect its confidentiality.",
+      "Make and restore a copy to demonstrate availability, then map each action to its security purpose."
+    ],
+    "checks": [
+      "A changed hash is treated as a change indicator, not proof of who changed the file.",
+      "Your explanation separates hashing, encryption, and backup roles."
+    ],
+    "cleanup": "Remove only disposable files or retain the evidence.",
+    "stretch": "Explain what would happen if the encryption key and all backups were lost."
+  },
+  {
+    "id": "4:2",
+    "core": 4,
+    "domain": 2,
+    "title": "Triage a synthetic phishing report",
+    "goal": "Evaluate a suspicious message without interacting with a malicious destination.",
+    "time": "30–60 minutes",
+    "setup": "Write a fake message requesting a password reset at accounts.example.test; use no real links or credentials.",
+    "steps": [
+      "Annotate sender, urgency, requested action, and destination mismatch clues.",
+      "Write how you would verify the request through a known independent channel.",
+      "Create a user response and an internal reporting note; distinguish suspicious clues from confirmed compromise."
+    ],
+    "checks": [
+      "The procedure never requires clicking the suspicious link.",
+      "The report preserves useful message details without sharing secrets."
+    ],
+    "cleanup": "Keep the synthetic message labeled as training data.",
+    "stretch": "Add a legitimate-looking message and explain why appearance alone is insufficient."
+  },
+  {
+    "id": "4:3",
+    "core": 4,
+    "domain": 3,
+    "title": "Threat-model a simple web application",
+    "goal": "Identify trust boundaries and protective controls.",
+    "time": "30–60 minutes",
+    "setup": "Paper diagram of browser, web service, database, administrator, and backup storage.",
+    "steps": [
+      "Draw data flows and label public/private trust boundaries.",
+      "Identify one threat to credentials, stored data, and service availability.",
+      "Place preventive and detective controls and document one remaining risk per threat."
+    ],
+    "checks": [
+      "Every proposed control addresses a named flow or asset.",
+      "The design includes recovery and least-privilege access."
+    ],
+    "cleanup": "Save the diagram with synthetic names only.",
+    "stretch": "Describe the impact of a compromised application identity on database access."
+  },
+  {
+    "id": "4:4",
+    "core": 4,
+    "domain": 4,
+    "title": "Run an account-compromise tabletop",
+    "goal": "Coordinate containment, evidence, and recovery.",
+    "time": "30–60 minutes",
+    "setup": "Synthetic events: repeated failures at 09:00, success at 09:04, forwarding rule at 09:06.",
+    "steps": [
+      "Build a timeline and list evidence needed to link the events to one session.",
+      "Choose approved containment actions covering credentials, sessions, and unauthorized changes.",
+      "Write recovery checks and escalation criteria."
+    ],
+    "checks": [
+      "Facts and hypotheses are clearly separated.",
+      "Recovery includes verification of session revocation and monitoring for recurrence."
+    ],
+    "cleanup": "No real accounts are changed; preserve the tabletop notes.",
+    "stretch": "Add a critical business dependency and explain how it changes containment timing."
+  },
+  {
+    "id": "4:5",
+    "core": 4,
+    "domain": 5,
+    "title": "Build a small risk register",
+    "goal": "Translate technical findings into accountable decisions.",
+    "time": "30–60 minutes",
+    "setup": "Paper scenario: an unsupported server, weak backup testing, and an overprivileged service account.",
+    "steps": [
+      "For each risk, record asset, threat, likelihood rationale, and impact.",
+      "Choose a treatment and assign an owner, due date, and evidence of completion.",
+      "Write one time-limited exception with residual risk and a review date."
+    ],
+    "checks": [
+      "Priorities reflect impact and exposure rather than severity words alone.",
+      "Every action has an accountable owner and measurable acceptance criteria."
+    ],
+    "cleanup": "Keep all entries fictional.",
+    "stretch": "Compare accepting, transferring, avoiding, and mitigating one of the risks."
+  },
+  {
+    "id": "5:1",
+    "core": 5,
+    "domain": 1,
+    "title": "Choose a cloud operating model",
+    "goal": "Explain when elasticity and managed services help a workload.",
+    "time": "30–60 minutes",
+    "setup": "Paper case: a shop has steady daytime traffic and a large weekly sales spike; no cloud account required.",
+    "steps": [
+      "Compare an on-premises server, a fixed cloud VM, and an elastic managed design.",
+      "List who handles capacity, operating-system updates, and application data in each option.",
+      "Recommend one approach and state assumptions and tradeoffs."
+    ],
+    "checks": [
+      "The recommendation distinguishes elasticity from merely moving a server.",
+      "Responsibilities and availability requirements are explicit."
+    ],
+    "cleanup": "No resources are deployed.",
+    "stretch": "Add a requirement for data residency and revise the design."
+  },
+  {
+    "id": "5:2",
+    "core": 5,
+    "domain": 2,
+    "title": "Draft a least-privilege AWS access plan",
+    "goal": "Separate identity, permissions, and shared responsibilities.",
+    "time": "30–60 minutes",
+    "setup": "Paper scenario: an application reads one object-storage prefix and an administrator maintains the deployment.",
+    "steps": [
+      "List the exact operations each identity needs and the resources they apply to.",
+      "Create an access matrix with allowed and denied examples; avoid broad all-action permissions.",
+      "Assign responsibility for application data, guest OS patching on a VM, and physical infrastructure.",
+      "Write an audit and credential-recovery plan."
+    ],
+    "checks": [
+      "The application cannot modify unrelated data or administer the account.",
+      "The responsibility table changes appropriately between a VM and a managed service."
+    ],
+    "cleanup": "No AWS identities or resources are created; use fake identifiers.",
+    "stretch": "Explain how short-lived workload credentials differ from embedded access keys."
+  },
+  {
+    "id": "5:3",
+    "core": 5,
+    "domain": 3,
+    "title": "Draw a resilient AWS web workload",
+    "goal": "Connect service choices to failure behavior.",
+    "time": "30–60 minutes",
+    "setup": "Paper or a diagram tool; use a browser, load balancer, two compute instances, database, and object storage.",
+    "steps": [
+      "Place compute across two Availability Zones and label request/data flows.",
+      "Explain which component handles traffic distribution, durable objects, and structured records.",
+      "Simulate losing one compute instance and then one zone; document expected behavior and remaining dependencies.",
+      "Add monitoring and backup/restore checks."
+    ],
+    "checks": [
+      "Every service has a named purpose and a failure assumption.",
+      "The design distinguishes high availability from backup recovery."
+    ],
+    "cleanup": "No cloud resources are deployed.",
+    "stretch": "Describe which changes are needed for a regional outage."
+  },
+  {
+    "id": "5:4",
+    "core": 5,
+    "domain": 4,
+    "title": "Estimate a cloud workload budget",
+    "goal": "Build an estimate with visible assumptions and compare alternatives.",
+    "time": "30–60 minutes",
+    "setup": "Public AWS Pricing Calculator, or a spreadsheet using published prices; no AWS account or deployment required.",
+    "steps": [
+      "Define a region, two small compute instances, 730 monthly hours, storage size, and expected outbound traffic.",
+      "Enter the assumptions in the public calculator and record the estimate date and service choices.",
+      "Compare continuous operation with a scheduled usage pattern, keeping other assumptions constant.",
+      "List excluded costs and a budget-alert plan; explain that an alert is not a spending cap."
+    ],
+    "checks": [
+      "The estimate can be reproduced from the recorded inputs.",
+      "You explain which change caused the price difference and what remains uncertain."
+    ],
+    "cleanup": "Save/export the estimate only; do not provision the resources.",
+    "stretch": "Add a second region or backup retention and quantify its effect."
+  },
+  {
+    "id": "6:1",
+    "core": 6,
+    "domain": 1,
+    "title": "Sort cloud responsibilities and service models",
+    "goal": "Distinguish IaaS, PaaS, and SaaS through practical ownership decisions.",
+    "time": "30–60 minutes",
+    "setup": "Paper table with a VM, managed web application, and hosted productivity service.",
+    "steps": [
+      "Assign operating-system, application, identity, data, and physical-hardware responsibilities.",
+      "Choose a model for a team with no capacity to patch guest operating systems.",
+      "Explain availability and cost tradeoffs for that recommendation."
+    ],
+    "checks": [
+      "The table does not assume the provider owns all security tasks.",
+      "The chosen model matches the team operational constraints."
+    ],
+    "cleanup": "No Azure subscription is required.",
+    "stretch": "Compare public, private, and hybrid deployment choices for a data-location requirement."
+  },
+  {
+    "id": "6:2",
+    "core": 6,
+    "domain": 2,
+    "title": "Map an Azure application and its access boundaries",
+    "goal": "Explain how identity, networking, compute, and storage work together.",
+    "time": "30–60 minutes",
+    "setup": "Paper diagram containing a subscription, resource group, virtual network, application, and storage account.",
+    "steps": [
+      "Place resources inside the intended administrative and network boundaries.",
+      "Define separate operator and application identities with limited responsibilities.",
+      "Trace a user request and a storage access, indicating where authentication and authorization occur.",
+      "Describe what happens when one service becomes unavailable."
+    ],
+    "checks": [
+      "The diagram distinguishes resource organization from network isolation.",
+      "Each identity has a defined scope and a denied action."
+    ],
+    "cleanup": "No resources are created.",
+    "stretch": "Add a second deployment location and identify what data must be replicated."
+  },
+  {
+    "id": "6:3",
+    "core": 6,
+    "domain": 3,
+    "title": "Plan Azure governance and costs",
+    "goal": "Combine estimates, policy intent, and monitoring without deployment.",
+    "time": "30–60 minutes",
+    "setup": "Azure Pricing Calculator and paper, or a spreadsheet using current published rates.",
+    "steps": [
+      "Estimate one small application with compute, storage, region, and traffic assumptions.",
+      "Write a tag standard, permitted-region rule, and ownership convention.",
+      "Define budget alerts and one health alert with an owner and response.",
+      "Explain how access roles, policies, and resource locks solve different problems."
+    ],
+    "checks": [
+      "The estimate records assumptions and its date.",
+      "The governance plan has a clear owner and does not mistake budget alerts for a hard cap."
+    ],
+    "cleanup": "Save the estimate and plan only; no Azure deployment is needed.",
+    "stretch": "Compare a cheaper option with a more resilient option and justify the tradeoff."
+  },
+  {
+    "id": "7:1",
+    "core": 7,
+    "domain": 1,
+    "title": "Subnet a three-department office",
+    "goal": "Calculate an address plan and verify it against host requirements.",
+    "time": "30–60 minutes",
+    "setup": "Paper or Packet Tracer; allocate 192.168.60.0/24 for 60, 30, and 14 hosts including gateways.",
+    "steps": [
+      "Allocate a /26, /27, and /28 without overlap, leaving the rest reserved.",
+      "List masks, network addresses, usable ranges, broadcasts, and gateways.",
+      "Assign two example hosts per department and decide which destinations require a router.",
+      "Test the plan in a simulator or independently recalculate each boundary."
+    ],
+    "checks": [
+      "Every department fits its required host count.",
+      "There are no overlapping allocations or assigned network/broadcast addresses."
+    ],
+    "cleanup": "Save the addressing table and restore any simulator changes.",
+    "stretch": "Add 20 more hosts to the smallest department and propose a migration plan."
+  },
+  {
+    "id": "7:2",
+    "core": 7,
+    "domain": 2,
+    "title": "Repair a broken VLAN trunk",
+    "goal": "Use VLAN-specific evidence to diagnose interswitch connectivity.",
+    "time": "30–60 minutes",
+    "setup": "Packet Tracer with two switches and two hosts, or a paper port/allowed-list table.",
+    "steps": [
+      "Create VLAN 20 on both switches and place a host access port in it on each.",
+      "Make the interswitch link a trunk; record allowed/native VLANs and connectivity.",
+      "Remove VLAN 20 from the allowed list at one end and compare local versus cross-switch behavior.",
+      "Restore it and capture trunk and VLAN evidence."
+    ],
+    "checks": [
+      "Both hosts communicate once the intended VLAN is allowed end-to-end.",
+      "You explain why a trunk cannot route between different VLAN subnets."
+    ],
+    "cleanup": "Restore the intended allowed list and save a clean topology.",
+    "stretch": "Add a native-VLAN mismatch and explain how its symptom differs."
+  },
+  {
+    "id": "7:3",
+    "core": 7,
+    "domain": 3,
+    "title": "Prove longest-prefix routing",
+    "goal": "Separate route installation preferences from forwarding decisions.",
+    "time": "30–60 minutes",
+    "setup": "Paper route table or a three-router simulator.",
+    "steps": [
+      "Create installed routes for 0.0.0.0/0, 10.0.0.0/8, and 10.20.0.0/16 with distinct next hops.",
+      "Predict routes for 10.20.3.8, 10.30.1.1, and 192.0.2.10.",
+      "Remove the /16 and predict the new path for 10.20.3.8.",
+      "Explain how a higher-distance backup for the same prefix differs from a less-specific route."
+    ],
+    "checks": [
+      "The /16 wins for its matching destination while present.",
+      "Your reasoning uses administrative distance only in the appropriate same-prefix comparison."
+    ],
+    "cleanup": "Restore the removed lab route.",
+    "stretch": "Add a /24 and a host /32 and repeat the forwarding decisions."
+  },
+  {
+    "id": "7:4",
+    "core": 7,
+    "domain": 4,
+    "title": "Relay DHCP across a router",
+    "goal": "Identify the dependencies of remote address assignment.",
+    "time": "30–60 minutes",
+    "setup": "Packet Tracer with two client VLANs and a remote DHCP server, or a paper message trace.",
+    "steps": [
+      "Define a separate pool for each client subnet and appropriate gateway/DNS options.",
+      "Place relay configuration on the client-facing Layer 3 interfaces.",
+      "Trace or observe discover, offer, request, and acknowledgment through the relay.",
+      "Remove one relay, compare the two VLANs, then restore it."
+    ],
+    "checks": [
+      "Each client receives an address from the correct pool.",
+      "Your evidence distinguishes a missing relay from an exhausted pool or bad DNS option."
+    ],
+    "cleanup": "Restore the relay and remove only disposable simulated resources if finished.",
+    "stretch": "Introduce a missing return route and identify how you would detect it."
+  },
+  {
+    "id": "7:5",
+    "core": 7,
+    "domain": 5,
+    "title": "Verify a narrow HTTPS ACL",
+    "goal": "Test both intended access and unintended access.",
+    "time": "30–60 minutes",
+    "setup": "Packet Tracer or a paper ACL with source 192.168.10.0/24 and server 192.168.20.10.",
+    "steps": [
+      "Write a policy permitting TCP 443 to the server and denying other traffic from the test source as intended.",
+      "Choose interface and direction and explain rule order and wildcard matching.",
+      "Test the permitted flow and a prohibited service; inspect or predict rule counters.",
+      "Move a broad permit above a deny and explain the changed outcome."
+    ],
+    "checks": [
+      "The allowed service works and the prohibited flow does not.",
+      "Your notes explain implicit deny and a management-access rollback plan."
+    ],
+    "cleanup": "Restore the intended ACL or the simulator baseline.",
+    "stretch": "Consider return traffic and explain how a basic ACL differs from a stateful firewall."
+  },
+  {
+    "id": "7:6",
+    "core": 7,
+    "domain": 6,
+    "title": "Review a mock network API change",
+    "goal": "Interpret structured data, permissions, and asynchronous work.",
+    "time": "30–60 minutes",
+    "setup": "Text editor; use mock JSON and responses only, with no live controller credentials.",
+    "steps": [
+      "Write valid JSON for two devices with name, address, and enabled fields.",
+      "Choose suitable HTTP operations for reading inventory and proposing a change.",
+      "For responses 401, 403, and 202 with a job ID, write the correct next action.",
+      "Design a retry check for a timed-out create request that avoids duplicates."
+    ],
+    "checks": [
+      "JSON uses appropriate string, array, and boolean types.",
+      "A 202 response is not reported as completed deployment."
+    ],
+    "cleanup": "Keep mock files labeled and remove any accidentally included real identifiers.",
+    "stretch": "Add an existing conflicting resource and describe semantic checks beyond JSON validity."
+  },
+  {
+    "id": "8:1",
+    "core": 8,
+    "domain": 1,
+    "title": "Investigate a synthetic account timeline",
+    "goal": "Correlate evidence and label uncertainty.",
+    "time": "30–60 minutes",
+    "setup": "Create four fictional events: failed login 08:58, VPN login 09:00, new device login 09:03, forwarding rule 09:05.",
+    "steps": [
+      "Add user, device, session, and time-zone fields to each event.",
+      "Normalize timestamps while preserving the originals.",
+      "Write one benign and one malicious explanation, then list evidence that distinguishes them.",
+      "Create a concise analyst handoff with confidence and missing telemetry."
+    ],
+    "checks": [
+      "The conclusion is supported by linked actions rather than geolocation alone.",
+      "The handoff separates observations, hypotheses, and unknowns."
+    ],
+    "cleanup": "Keep synthetic logs only; no real account investigation is required.",
+    "stretch": "Introduce a five-minute clock offset and revise the timeline."
+  },
+  {
+    "id": "8:2",
+    "core": 8,
+    "domain": 2,
+    "title": "Rank a vulnerability backlog",
+    "goal": "Prioritize remediation using evidence and business context.",
+    "time": "30–60 minutes",
+    "setup": "Paper findings: exposed gateway with known exploitation, isolated test flaw with higher severity, and an uncertain version-banner result.",
+    "steps": [
+      "Record exposure, asset importance, exploitation evidence, and confidence for each finding.",
+      "Rank actions and explain why severity alone is insufficient.",
+      "Define a validation step for the banner result and a temporary mitigation for the gateway.",
+      "Assign owners and post-remediation verification criteria."
+    ],
+    "checks": [
+      "Each priority has a documented rationale.",
+      "A clean unauthenticated rescan is not automatically treated as proof of a fix."
+    ],
+    "cleanup": "Keep the backlog fictional; do not scan outside a dedicated authorized lab.",
+    "stretch": "Add an expiring exception and define its review trigger."
+  },
+  {
+    "id": "8:3",
+    "core": 8,
+    "domain": 3,
+    "title": "Run a containment-and-recovery tabletop",
+    "goal": "Balance ongoing harm, evidence, and service dependencies.",
+    "time": "30–60 minutes",
+    "setup": "Paper scenario: a workstation communicates with a suspicious destination and its user has an active stolen session.",
+    "steps": [
+      "List response authority, evidence to preserve, and business dependencies.",
+      "Choose containment for endpoint and identity access separately.",
+      "Write eradication and recovery steps addressing the initial weakness and persistence.",
+      "Define service verification and recurrence monitoring before closure."
+    ],
+    "checks": [
+      "The plan covers active sessions rather than only password reset.",
+      "Recovery requires both trusted state and working service checks."
+    ],
+    "cleanup": "No real isolation or account changes; save the tabletop decisions.",
+    "stretch": "Add a safety-critical dependency and revise the escalation and containment plan."
+  },
+  {
+    "id": "8:4",
+    "core": 8,
+    "domain": 4,
+    "title": "Write a decision-ready incident report",
+    "goal": "Communicate impact, evidence, uncertainty, and accountable next steps.",
+    "time": "30–60 minutes",
+    "setup": "Use the synthetic incident from the response lab; no sensitive data.",
+    "steps": [
+      "Write a five-sentence executive summary with impact, status, uncertainty, and requested decision.",
+      "Add a technical timeline and evidence references for responders.",
+      "Calculate the mean for detection times of 10, 20, and 90 minutes and explain what it hides.",
+      "Assign actions with owners, due dates, and acceptance criteria."
+    ],
+    "checks": [
+      "The arithmetic mean is 40 minutes and the outlier is discussed.",
+      "The report does not claim missing evidence proves no data loss."
+    ],
+    "cleanup": "Redact any real identifiers before saving or sharing the practice report.",
+    "stretch": "Create a second version for a shift handoff and explain what detail changes."
+  },
+  {
+    "id": "9:1",
+    "core": 9,
+    "domain": 1,
+    "title": "Scope an Azure access and governance plan lab",
+    "goal": "Scope an Azure access and governance plan. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A Contributor can create a VM in one location but receives a policy denial in another. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a subscription with dev and production resource groups.",
+      "Assign a fictional developer resource-management access only to dev; identify who may assign roles.",
+      "Add a policy restricting locations and predict a denied deployment despite valid RBAC.",
+      "Record two positive and two negative authorization tests."
+    ],
+    "checks": [
+      "A dev assignment does not unintentionally cover production.",
+      "The location denial is distinguished from a missing role."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A Contributor can create a VM in one location but receives a policy denial in another."
+  },
+  {
+    "id": "9:2",
+    "core": 9,
+    "domain": 2,
+    "title": "Separate Azure durability, access, and recovery lab",
+    "goal": "Separate Azure durability, access, and recovery. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: An application reaches a private endpoint but cannot read a blob. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create a paper storage design for zone failure and accidental overwrite.",
+      "Choose a redundancy approach and a separate retention/versioning policy.",
+      "Trace a client through DNS, private endpoint, and data authorization.",
+      "Write a restore test with original content, changed content, and an expected recovered version."
+    ],
+    "checks": [
+      "The design names separate availability and deletion-recovery controls.",
+      "The test verifies recovered contents, not just a successful command."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: An application reaches a private endpoint but cannot read a blob."
+  },
+  {
+    "id": "9:3",
+    "core": 9,
+    "domain": 3,
+    "title": "Trace an Azure application failure lab",
+    "goal": "Trace an Azure application failure. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A VM is running, but HTTPS fails after a network-rule update. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a client, subnet, VM, and HTTPS service with port 443.",
+      "Write conflicting NSG rules with priorities 100 and 200 and predict the matching decision.",
+      "Build a failure timeline with one management change and one application symptom.",
+      "Define an alert condition, recipient, and a test proving the alert works."
+    ],
+    "checks": [
+      "Lower numerical NSG priority is evaluated before a higher number.",
+      "The alert test checks notification delivery as well as the metric."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A VM is running, but HTTPS fails after a network-rule update."
+  },
+  {
+    "id": "10:1",
+    "core": 10,
+    "domain": 1,
+    "title": "Design AWS temporary access and trust lab",
+    "goal": "Design AWS temporary access and trust. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A role can read ordinary objects but cannot read a KMS-encrypted object. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw a fictional workload role and a single permitted S3 bucket.",
+      "Write a task-to-permission table and identify who can assume the role.",
+      "Add an encrypted object and document the additional key-access dependency.",
+      "Predict an allowed read, denied write, and explicitly denied read."
+    ],
+    "checks": [
+      "The design separates role trust from session permissions.",
+      "No long-lived key is placed in source code."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A role can read ordinary objects but cannot read a KMS-encrypted object."
+  },
+  {
+    "id": "10:2",
+    "core": 10,
+    "domain": 2,
+    "title": "Design for failures across availability zones lab",
+    "goal": "Design for failures across availability zones. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: Web instances span two zones, but carts exist only in local process memory. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw two availability zones, a load balancer, replaceable app instances, and a database.",
+      "Identify all session state and remove single-instance dependencies on paper.",
+      "Add a queue and define how duplicate message processing will be detected.",
+      "Walk through losing one zone and record expected user-visible behavior."
+    ],
+    "checks": [
+      "The design survives instance replacement without losing required session state.",
+      "The duplicate-message case has a deliberate handling strategy."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: Web instances span two zones, but carts exist only in local process memory."
+  },
+  {
+    "id": "10:3",
+    "core": 10,
+    "domain": 3,
+    "title": "Match AWS storage to access and recovery needs lab",
+    "goal": "Match AWS storage to access and recovery needs. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: An archive must support immediate incident retrieval, but the proposed class requires a restore delay. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Classify an image archive, a VM disk, and a shared Linux directory by access interface.",
+      "Write retrieval frequency and maximum acceptable recovery time for each.",
+      "Compare immediate access with delayed archive restoration for the image archive.",
+      "Estimate storage, requests, retrieval, and transfer categories without creating resources."
+    ],
+    "checks": [
+      "The shared directory is not treated as an interchangeable object API.",
+      "The cost comparison includes retrieval behavior."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: An archive must support immediate incident retrieval, but the proposed class requires a restore delay."
+  },
+  {
+    "id": "11:1",
+    "core": 11,
+    "domain": 1,
+    "title": "Distinguish identity, verification, and authorization lab",
+    "goal": "Distinguish identity, verification, and authorization. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A contractor signs in successfully but cannot open a finance application. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "List fictional staff, contractor, and workload identities.",
+      "Build an application access matrix with the minimum required privileges.",
+      "Write normal and risky sign-in scenarios and choose verification requirements.",
+      "Document how policy testing avoids locking out emergency access."
+    ],
+    "checks": [
+      "The matrix separates sign-in success from resource permission.",
+      "Risky and ordinary cases produce justified access decisions."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A contractor signs in successfully but cannot open a finance application."
+  },
+  {
+    "id": "11:2",
+    "core": 11,
+    "domain": 2,
+    "title": "Choose threat protection by the evidence needed lab",
+    "goal": "Choose threat protection by the evidence needed. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A suspicious email and an endpoint alert reference the same user within minutes. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create fictional email, endpoint, and identity alerts for one user.",
+      "Normalize times and identify which signals refer to the same device or session.",
+      "Assign evidence sources to an investigation and write one benign alternative.",
+      "Define a response action with an owner, authority, and verification step."
+    ],
+    "checks": [
+      "The investigation distinguishes a hypothesis from confirmed actions.",
+      "The response names an authorized decision-maker."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A suspicious email and an endpoint alert reference the same user within minutes."
+  },
+  {
+    "id": "11:3",
+    "core": 11,
+    "domain": 3,
+    "title": "Separate classification, retention, and leakage prevention lab",
+    "goal": "Separate classification, retention, and leakage prevention. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A document is labeled Confidential, but external access still works. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create fictional public, internal, and payroll document descriptions.",
+      "Assign a sensitivity category and permitted recipients for each.",
+      "Write a DLP action for an external payroll share and a separate retention rule.",
+      "Test an authorized exception and a false-positive case on paper."
+    ],
+    "checks": [
+      "Retention duration and sharing restrictions are specified separately.",
+      "The test includes legitimate work and an incorrect policy match."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A document is labeled Confidential, but external access still works."
+  },
+  {
+    "id": "12:1",
+    "core": 12,
+    "domain": 1,
+    "title": "Connect cloud choices to business outcomes lab",
+    "goal": "Connect cloud choices to business outcomes. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A company moves idle servers to cloud VMs and its bill increases. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Choose a fictional shop with seasonal traffic and a slow release process.",
+      "Define two measurable business goals and a dependency constraint.",
+      "Compare keeping servers, using managed hosting, and using a hosted application.",
+      "List cost categories and define how the chosen outcome will be measured."
+    ],
+    "checks": [
+      "The proposal includes a measurable outcome rather than only a service name.",
+      "Costs include operation and migration, not just a VM price."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A company moves idle servers to cloud VMs and its bill increases."
+  },
+  {
+    "id": "12:2",
+    "core": 12,
+    "domain": 2,
+    "title": "Choose data and AI approaches responsibly lab",
+    "goal": "Choose data and AI approaches responsibly. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A generated support response sounds confident but invents a product feature. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Describe a sales-reporting task, a demand-prediction task, and a drafting task.",
+      "Choose an approach for each and name the required data.",
+      "Create five fictional evaluation cases including a failure or underrepresented case.",
+      "Define accuracy evidence, privacy boundaries, and a human-review trigger."
+    ],
+    "checks": [
+      "The evaluation uses representative examples beyond the training set.",
+      "No real customer or sensitive records are needed."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A generated support response sounds confident but invents a product feature."
+  },
+  {
+    "id": "12:3",
+    "core": 12,
+    "domain": 3,
+    "title": "Plan Google Cloud responsibility and reliability lab",
+    "goal": "Plan Google Cloud responsibility and reliability. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A team receives a budget notification and assumes all spending has stopped. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw provider and customer responsibility columns for a managed application.",
+      "Define a successful-request indicator and a target.",
+      "Write a backup restore test and distinguish it from automatic failover.",
+      "Assign a cost owner and an action to take when a budget notification arrives."
+    ],
+    "checks": [
+      "The reliability measure and its target are separate statements.",
+      "Recovery and cost ownership have concrete actions."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A team receives a budget notification and assumes all spending has stopped."
+  },
+  {
+    "id": "13:1",
+    "core": 13,
+    "domain": 1,
+    "title": "Read the Terraform change workflow lab",
+    "goal": "Read the Terraform change workflow. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A valid configuration proposes replacing a resource that stores required state. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Create a disposable directory or use a paper local_file example.",
+      "Describe a local file resource with a filename and harmless content; identify its provider.",
+      "Predict init, validate, plan, and apply outcomes before running anything.",
+      "Change only the content and compare the planned action with the resulting file."
+    ],
+    "checks": [
+      "The learner can distinguish validation from review of proposed actions.",
+      "Only disposable local resources are used."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A valid configuration proposes replacing a resource that stores required state."
+  },
+  {
+    "id": "13:2",
+    "core": 13,
+    "domain": 2,
+    "title": "Protect Terraform state and coordinate changes lab",
+    "goal": "Protect Terraform state and coordinate changes. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A sensitive output is hidden in console output, so a developer proposes committing the state file. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Draw two operators sharing one infrastructure workspace.",
+      "List data that state may contain and who should access it.",
+      "Write a sequence where one apply holds a lock while another waits.",
+      "Describe how to investigate an interrupted operation without unlocking an active writer."
+    ],
+    "checks": [
+      "State is excluded from ordinary source commits.",
+      "The lock-recovery plan checks for an active operation."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A sensitive output is hidden in console output, so a developer proposes committing the state file."
+  },
+  {
+    "id": "13:3",
+    "core": 13,
+    "domain": 3,
+    "title": "Build reusable Terraform inputs and outputs lab",
+    "goal": "Build reusable Terraform inputs and outputs. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A team removes the first item from a count-indexed list and sees unexpected instance address changes. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Sketch a local-file module with a filename input and a path output.",
+      "Add a type and a validation rule for an allowed label.",
+      "Compare numeric count addresses with for_each keys for a changing set.",
+      "Write an upgrade checklist covering provider selection and module constraints."
+    ],
+    "checks": [
+      "The input and output contract is explicit.",
+      "The explanation distinguishes provider locking from module version selection."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A team removes the first item from a count-indexed list and sees unexpected instance address changes."
+  },
+  {
+    "id": "14:1",
+    "core": 14,
+    "domain": 1,
+    "title": "Use Linux ownership and permissions deliberately lab",
+    "goal": "Use Linux ownership and permissions deliberately. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A test user has file read permission but cannot open it through a parent directory. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "In a disposable Linux VM, create a dedicated lab directory and harmless text file.",
+      "Record id and ls -l output and explain owner, group, and other permissions.",
+      "Compare directory modes with and without execute using a non-root test identity.",
+      "Restore the lab permissions and document why chmod 777 was unnecessary."
+    ],
+    "checks": [
+      "The test is performed as the intended non-root identity.",
+      "Parent traversal is checked separately from file read permission."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A test user has file read permission but cannot open it through a parent directory."
+  },
+  {
+    "id": "14:2",
+    "core": 14,
+    "domain": 2,
+    "title": "Verify Linux services now and after reboot lab",
+    "goal": "Verify Linux services now and after reboot. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A service works after systemctl start but is absent after a reboot. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Choose a harmless service in a disposable VM and record its current state and enablement.",
+      "Explain the effects of start, stop, enable, and disable before any change.",
+      "Inspect service-specific logs and write a targeted diagnosis of a fictional failed start.",
+      "Verify the intended startup behavior after a controlled VM reboot, then restore the starting settings."
+    ],
+    "checks": [
+      "Runtime and startup states are recorded separately.",
+      "Verification includes the actual service behavior after reboot."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A service works after systemctl start but is absent after a reboot."
+  },
+  {
+    "id": "14:3",
+    "core": 14,
+    "domain": 3,
+    "title": "Plan persistent Linux mounts and storage verification lab",
+    "goal": "Plan persistent Linux mounts and storage verification. Explain your decisions and verify them using the success checks.",
+    "time": "30–60 minutes",
+    "setup": "Scenario: A mount directory exists after reboot, but data is written to the root file system instead. Use a paper design; no paid cloud account is required. Optional commands belong only in an isolated disposable lab.",
+    "steps": [
+      "Use a paper device table or a disposable VM disk clearly marked for this exercise.",
+      "Record the intended device, file-system type, UUID, and mount point.",
+      "Draft an fstab entry and a recovery plan without formatting any existing disk.",
+      "Define checks for actual backing storage, a harmless test file, and mount persistence after reboot."
+    ],
+    "checks": [
+      "The plan never formats an unidentified or shared disk.",
+      "Post-reboot verification identifies the actual mounted source."
+    ],
+    "cleanup": "Keep your evidence notes. Restore only lab settings you changed; remove only disposable resources created for this exercise. If using a cloud account, check for remaining billable resources.",
+    "stretch": "Repeat the worked case with one changed assumption and explain which decision changes: A mount directory exists after reboot, but data is written to the root file system instead."
+  },
+  {
+    "id": "9:4",
+    "core": 9,
+    "domain": 4,
+    "title": "Deploy and inspect ARM and Bicep lab",
+    "goal": "Deploy and inspect ARM and Bicep",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A Bicep change moves a resource to another region.",
+    "steps": [
+      "Write a Bicep storage declaration with a location parameter",
+      "Build it locally with az bicep build and inspect generated ARM JSON",
+      "Mark a fictional secret input secure and ensure no output references it",
+      "Compare an intended location change with the existing resource properties"
+    ],
+    "checks": [
+      "A location change can require a new resource and a planned migration.",
+      "Protecting inputs is separate from deciding what a template publishes."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A secret parameter must be passed without displaying its value in deployment output. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "9:5",
+    "core": 9,
+    "domain": 5,
+    "title": "Plan Azure Backup and Site Recovery lab",
+    "goal": "Plan Azure Backup and Site Recovery",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A regional disaster requires bringing replicated workloads online elsewhere.",
+    "steps": [
+      "Define RPO and RTO for a fictional workload",
+      "Choose a backup retention policy and document restore dependencies",
+      "Draft an isolated test-failover network",
+      "Record a checksum and application transaction as recovery evidence"
+    ],
+    "checks": [
+      "Failover requires recoverable workloads, networking and tested procedures.",
+      "Replication can copy corruption. A historical recovery point addresses a different failure."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A file was corrupted yesterday and replication copied the corruption. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "10:4",
+    "core": 10,
+    "domain": 4,
+    "title": "Match compute and data services to a workload lab",
+    "goal": "Match compute and data services to a workload",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A key-value table throttles on a single popular partition key.",
+    "steps": [
+      "List read/write patterns and traffic bursts",
+      "Choose compute, data store and cache independently",
+      "Calculate origin requests with a stated cache hit rate",
+      "Define a load test including p95 latency and cache misses"
+    ],
+    "checks": [
+      "A hot key can concentrate work despite spare aggregate capacity.",
+      "Edge caching reduces repeated origin work and client latency."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Global users repeatedly download the same versioned static assets. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "11:4",
+    "core": 11,
+    "domain": 4,
+    "title": "Distinguish trust, encryption, hashing and governance lab",
+    "goal": "Distinguish trust, encryption, hashing and governance",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A recipient needs to detect tampering with a download.",
+    "steps": [
+      "Build a control matrix for an internal payroll app",
+      "Assign owners to identity, network, data and audit controls",
+      "Compare encryption, digest verification and a digital signature",
+      "Run an assume-breach tabletop with a stolen password"
+    ],
+    "checks": [
+      "A trustworthy expected digest lets the recipient detect alteration.",
+      "A trusted network location does not establish identity or authorization."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An administrator is inside the corporate network and requests privileged access. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:4",
+    "core": 12,
+    "domain": 4,
+    "title": "Choose a Google Cloud modernization path lab",
+    "goal": "Choose a Google Cloud modernization path",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A team has a stateless HTTP container and wants minimal cluster administration.",
+    "steps": [
+      "Inventory an application and its external dependencies",
+      "Compare rehost, replatform and refactor using cost and operational effort",
+      "Pick Compute Engine, GKE or Cloud Run for each component",
+      "Write a rollout and rollback plan with a test transaction"
+    ],
+    "checks": [
+      "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.",
+      "VMs preserve more control over the runtime during rehosting."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A legacy workload needs a custom OS dependency during an initial move. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:5",
+    "core": 12,
+    "domain": 5,
+    "title": "Assign Google Cloud security responsibilities lab",
+    "goal": "Assign Google Cloud security responsibilities",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A workload needs read access only to one bucket.",
+    "steps": [
+      "Draw organization, folder, project and resource boundaries",
+      "Assign a fictional workload identity a narrow role",
+      "Define a negative access test and the audit evidence to retain",
+      "Write a data-location requirement and its verification method"
+    ],
+    "checks": [
+      "Least privilege limits what an identity can do and where.",
+      "Audit logs and billing records serve different purposes."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An investigator needs evidence of a supported administrative change. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "12:6",
+    "core": 12,
+    "domain": 6,
+    "title": "Manage Google Cloud cost and continuity lab",
+    "goal": "Manage Google Cloud cost and continuity",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A cost alert fires after an unexpected batch workload.",
+    "steps": [
+      "Define a service SLI and an error budget",
+      "Create a fictional billing breakdown using labels",
+      "Write a recovery runbook with RTO and RPO",
+      "Explain which utilization changes reduce wasted capacity"
+    ],
+    "checks": [
+      "An alert informs action but does not itself stop all costs.",
+      "An SLO ties a target to a measurable service indicator."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A customer wants a target for successful requests. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "13:4",
+    "core": 13,
+    "domain": 4,
+    "title": "Operate HCP Terraform workspaces and runs lab",
+    "goal": "Operate HCP Terraform workspaces and runs",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A team wants production changes reviewed before execution.",
+    "steps": [
+      "Sketch dev and production workspaces with different variables",
+      "Choose a run trigger and reviewer for each",
+      "Predict what happens after a pull request and after merge",
+      "Record one policy check and its evidence"
+    ],
+    "checks": [
+      "Approval gates provide a deliberate control before applying.",
+      "Projects group workspaces and support administration at that boundary."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Several workspaces belong to a single product team. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:4",
+    "core": 14,
+    "domain": 4,
+    "title": "Manage RPM, Flatpak and shell automation lab",
+    "goal": "Manage RPM, Flatpak and shell automation",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A command fails because a script argument contains spaces.",
+    "steps": [
+      "Run dnf repolist and inspect an installed RPM with rpm -qi",
+      "Compare the output of flatpak remotes if available",
+      "Write a script that validates a file argument and counts matching lines",
+      "Test a valid path, a path with spaces and a missing file"
+    ],
+    "checks": [
+      "Quoting preserves the argument as a single shell word.",
+      "rpm -qf queries ownership in the RPM database."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "An RPM-managed file needs to be traced back to its package. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:5",
+    "core": 14,
+    "domain": 5,
+    "title": "Configure persistent Linux network access lab",
+    "goal": "Configure persistent Linux network access",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: A firewall change works until reboot.",
+    "steps": [
+      "Use a disposable VM and keep console access",
+      "Record nmcli connection show, ip route and active firewall zones",
+      "Permit a lab service in the correct zone and verify from a second isolated host",
+      "Reboot and repeat both a permitted and denied test"
+    ],
+    "checks": [
+      "Persistent firewalld changes require correct permanent zone configuration.",
+      "Name resolution can fail while IP routing works."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "Name lookups fail but direct IP connections work. Explain how you would verify the correct outcome."
+  },
+  {
+    "id": "14:6",
+    "core": 14,
+    "domain": 6,
+    "title": "Manage identity, sudo and SELinux context lab",
+    "goal": "Manage identity, sudo and SELinux context",
+    "time": "30–60 minutes",
+    "setup": "Use a paper design for cloud services or a disposable VM for Linux commands. Scenario: Files copied into a service directory have an unexpected SELinux type.",
+    "steps": [
+      "Create a disposable lab user and group",
+      "Set and inspect password aging with chage",
+      "Validate a narrow sudoers entry with visudo",
+      "Compare ls -Z before and after restoring a known default context"
+    ],
+    "checks": [
+      "Mode bits and SELinux labels are different checks.",
+      "Scoped elevation limits privilege to the required task."
+    ],
+    "cleanup": "Restore the disposable lab to its initial state and retain only sanitized evidence.",
+    "stretch": "A support group needs one privileged task. Explain how you would verify the correct outcome."
+  }
+]

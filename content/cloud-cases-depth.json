@@ -1,0 +1,232 @@
+[
+  {
+    "topic": "cert5-3.4",
+    "key": "choose-document-or-graph",
+    "title": "Choose a document or graph database by the query",
+    "explanation": "Start with what a request needs to traverse. A document workload often reads and updates a record containing nested attributes; a product catalog can store related fields together and filter by attributes inside the document. A graph workload is often centered on paths through relationships, such as discovering whether accounts share devices and shipping addresses across several connections. For this workload the relationships are first-class data, rather than just incidental references between records. A relational design may still be appropriate when structured tables and familiar SQL transactions dominate. A key-value design is a different fit when the access paths are known and keyed requests dominate. NoSQL alone is too broad a requirement to select a service. Specify the access patterns, evaluate compatibility with any existing client and validate representative queries before committing to a migration.",
+    "distinctions": [
+      "DocumentDB supports a document model with MongoDB compatibility; validate required features.",
+      "Neptune is suited to queries built around connected entities and relationships."
+    ],
+    "diagram": [
+      "List the actual queries",
+      "Classify document reads versus relationship traversal",
+      "Validate client and query assumptions"
+    ],
+    "example": {
+      "situation": "An investigation team must find accounts connected through multiple shared devices.",
+      "reasoning": "The query follows links between accounts and devices through several hops.",
+      "result": "Evaluate Neptune with a small synthetic graph."
+    },
+    "lab": [
+      "Sketch three accounts and two devices with shared links. Write a two-hop query in plain language.",
+      "Model a product catalog as nested sample documents. Explain why its usual reads are different from the investigation query."
+    ],
+    "sources": [
+      {
+        "title": "AWS database decision guide",
+        "url": "https://docs.aws.amazon.com/decision-guides/latest/decision-guides/databases-on-aws-how-to-choose.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Which service fits a catalog that must preserve compatible MongoDB clients and filter nested documents, subject to compatibility testing?",
+        "options": [
+          "Amazon DocumentDB",
+          "Amazon Neptune",
+          "Amazon ElastiCache"
+        ],
+        "answer": 0,
+        "explanation": "The workload is a document access pattern with an explicit client compatibility requirement.",
+        "tier": 3
+      },
+      {
+        "prompt": "Choose two workload-to-service pairings that fit the main data model.",
+        "options": [
+          "Multi-hop fraud relationships → Amazon Neptune",
+          "MongoDB-compatible nested catalog queries → Amazon DocumentDB",
+          "Traditional SQL joins → Amazon ElastiCache",
+          "Graph path traversal → Amazon RDS solely because it is managed"
+        ],
+        "answer": [
+          0,
+          1
+        ],
+        "explanation": "Neptune fits graph traversal; DocumentDB fits document queries. A service being managed does not select its data model.",
+        "tier": 3,
+        "kind": "multi"
+      }
+    ]
+  },
+  {
+    "topic": "cert6-3.3",
+    "key": "compare-shell-cli-powershell",
+    "title": "Compare Azure Cloud Shell, Azure CLI, and Azure PowerShell",
+    "explanation": "Separate where a command runs from which management tool issues it. Cloud Shell provides a hosted browser terminal for Azure work. Azure CLI is a command-line tool using az commands, and Azure PowerShell exposes Az module cmdlets. These tools can also be used in appropriate local environments; a browser-hosted shell is a convenient execution environment rather than a separate permission model. Before reading or changing resources, identify the active identity, tenant and subscription. A successful login can still point to the wrong subscription or lack the role for a particular action. Inspect the current context and run the smallest relevant inventory query before a change. CLI output formats and PowerShell objects support different scripting workflows. Pick a tool compatible with the team’s existing automation, and distinguish a read from a command that creates or updates resources.",
+    "distinctions": [
+      "Hosted terminal and management client are separate choices.",
+      "An authenticated shell does not grant extra rights or select the correct subscription automatically for every task."
+    ],
+    "diagram": [
+      "Identify the intended tenant and subscription",
+      "Choose the shell and management tool",
+      "Inspect context",
+      "Query the expected resource scope"
+    ],
+    "example": {
+      "situation": "A team uses Az cmdlets and needs a browser-only terminal to check inventory.",
+      "reasoning": "The team needs the PowerShell workflow in a hosted terminal; resource rights still come from its identity.",
+      "result": "Use the PowerShell experience in Cloud Shell and inspect Get-AzContext before listing resources."
+    },
+    "lab": [
+      "On paper, compare the scope shown by az account show and Get-AzContext.",
+      "Given a fictional inventory in two subscriptions, explain how to detect and correct the target before any change."
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: Azure command-line tool selection",
+        "url": "https://learn.microsoft.com/en-us/cli/azure/choose-the-right-azure-command-line-tool"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A teammate must reuse an existing Az cmdlet and has no local admin installation. Which setup best fits?",
+        "options": [
+          "PowerShell in Azure Cloud Shell",
+          "Azure CLI syntax pasted unchanged from the cmdlet",
+          "Azure Advisor recommendations"
+        ],
+        "answer": 0,
+        "explanation": "Cloud Shell provides a hosted PowerShell environment; an Az cmdlet is not interchangeable with az CLI syntax.",
+        "tier": 3
+      },
+      {
+        "prompt": "A read command shows no resource groups although the portal shows several. What should you compare first?",
+        "options": [
+          "Active tenant, subscription and identity in each view",
+          "The cost estimates for the listed groups",
+          "Whether ARM templates were originally used"
+        ],
+        "answer": 0,
+        "explanation": "The tool may be authenticated in a different context or lack access at that scope.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "cert6-3.2",
+    "key": "service-trust-report-scope",
+    "title": "Use Service Trust Portal evidence without overclaiming compliance",
+    "explanation": "Supplier assurance and customer configuration answer different audit questions. The Microsoft Service Trust Portal publishes Microsoft cloud compliance information, including audit material where available. The audit reader must confirm that a report covers the relevant service, scope and period. A provider report can support evidence for controls operated by that provider; it does not establish how a particular customer configured identities, retention or public exposure. To assess a workload, pair the provider evidence with evidence of the customer’s own responsibilities. Azure Policy can help assess supported resource configuration rules, while inventory and logs can support the workload evidence. A lock and an access role serve different operational goals again. A defensible review states the report's coverage, who owns each control and what remains to be tested rather than treating a badge as a universal compliance decision.",
+    "distinctions": [
+      "Service Trust Portal provides provider evidence; Azure Policy evaluates supported resource configuration.",
+      "A covered provider control does not prove customer settings or procedures."
+    ],
+    "diagram": [
+      "Identify the control owner",
+      "Check report scope and period",
+      "Collect customer evidence",
+      "Record unresolved obligations"
+    ],
+    "example": {
+      "situation": "An auditor asks for the provider’s independent assurance report and evidence that customer storage follows a configuration rule.",
+      "reasoning": "The two requests concern different control owners and evidence sources.",
+      "result": "Use applicable Service Trust Portal material and separately evaluate the customer resource rule."
+    },
+    "lab": [
+      "Create a fictional control matrix with provider and customer owners.",
+      "For each row, list the evidence source, relevant period and one reason it could be out of scope."
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: Service Trust Portal",
+        "url": "https://learn.microsoft.com/en-us/purview/get-started-with-service-trust-portal"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Where should an auditor start looking for Microsoft's cloud service audit report?",
+        "options": [
+          "Microsoft Service Trust Portal",
+          "Azure Service Health",
+          "Azure Advisor"
+        ],
+        "answer": 0,
+        "explanation": "The portal provides provider compliance materials; the other tools address operational health or recommendations.",
+        "tier": 3
+      },
+      {
+        "prompt": "Which additional evidence helps establish that a customer storage resource meets its configuration rule?",
+        "options": [
+          "An evaluation of the specific resource against the applicable policy",
+          "A provider audit report without the customer configuration",
+          "A budget alert for the storage subscription"
+        ],
+        "answer": 0,
+        "explanation": "A provider report does not observe the customer resource’s effective settings.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "cert5-3.2",
+    "key": "recovery-cost-timeline",
+    "title": "Evaluate recovery time, data loss, and standby cost together",
+    "explanation": "Choose a recovery design by testing the complete recovery sequence. A usable recovery point might be older than the most recent scheduled backup if the last copy failed or depends on a missing key. The time to restore also includes detection, declaring the incident, provisioning capacity, restoring data and proving the application is available. Recovery point objective limits tolerated data loss in time; recovery time objective limits tolerated service interruption. Multi-zone placement can address some local failures without establishing recovery from a region-wide outage or corrupted data. Compare standby costs only among options that can meet the stated targets and failure scope. For a classroom estimate, use explicitly hypothetical monthly fixed charges and usage units. Verify the cheapest eligible option in a drill and retain a record of both measured times, not just the price or the architecture name.",
+    "distinctions": [
+      "RPO compares failure time to the usable recovery point.",
+      "RTO compares failure time to verified service restoration."
+    ],
+    "diagram": [
+      "Name the failure",
+      "Calculate acceptable windows",
+      "Discard plans that miss either target",
+      "Compare hypothetical costs",
+      "Test recovery"
+    ],
+    "example": {
+      "situation": "Failure is 10:00; usable data is from 09:50; service returns at 10:35. Limits are 15 minutes of data loss and 30 minutes of downtime.",
+      "reasoning": "Data loss is 10 minutes; interruption is 35 minutes.",
+      "result": "The test meets the data objective and misses the downtime objective."
+    },
+    "lab": [
+      "Draw a timeline including detection, data recovery and validation.",
+      "Compare a fictional $80/month backup plan with 50-minute recovery and a $200/month standby with 25-minute recovery against a 30-minute target; list what remains to prove about data loss."
+    ],
+    "sources": [
+      {
+        "title": "AWS Well-Architected: disaster recovery planning",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel-13.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Choose two measurements from an incident at 14:00, last usable copy at 13:42 and verified restoration at 14:25.",
+        "options": [
+          "Data loss window is 18 minutes",
+          "Service interruption is 25 minutes",
+          "Data loss window is 25 minutes",
+          "Service interruption is 43 minutes"
+        ],
+        "answer": [
+          0,
+          1
+        ],
+        "explanation": "Calculate each interval independently against the failure time.",
+        "tier": 3,
+        "kind": "multi"
+      },
+      {
+        "prompt": "Only a tested standby meets both recovery targets. A cheaper backup plan meets the data-loss limit but takes twice the allowed recovery time. What is the right comparison?",
+        "options": [
+          "Compare costs among designs that meet both targets",
+          "Select the cheapest plan solely because it meets RPO",
+          "Average downtime and data loss to decide compliance"
+        ],
+        "answer": 0,
+        "explanation": "The two targets are independent requirements. A cheap plan that misses one is not equivalent.",
+        "tier": 3
+      }
+    ]
+  }
+]

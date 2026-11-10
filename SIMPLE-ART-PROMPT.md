@@ -1,0 +1,7 @@
+# Simplified character art
+
+Created using the built-in OpenAI image generation tool, editing each of the six original character illustrations separately. The identity, main colors, and signature props were retained. Final files replace `dist/assets/mira.png`, `lyra.png`, `vesper.png`, `bram.png`, `rowan.png`, and `orin.png`. The original generated files remain available in their original generated-images location and in Git history.
+
+## Exact prompt used for each character
+
+Use case: style-transfer. Edit the supplied fantasy character into a VERY SIMPLE charming 2D indie game cartoon. Preserve their identity, skin tone, hair color, species, main outfit color and one signature prop, but radically reduce visual detail. Hand-inked slightly imperfect bold dark outlines, simple friendly face, dot-like eyes, rounded shapes, compact proportions about four heads tall, flat muted colors with at most one hard-edged shadow per shape. Simplify clothing to a few clear shapes; remove filigree, embroidery, buckles, tiny accessories and excess equipment. No realistic rendering, no gradients on the figure, no glossy materials, no cinematic lighting, no glow or floating particles, no painterly textures. Full body centered from head to boots with generous margin, plain solid muted dark green background (#20352c). Looks like a modest hand-drawn tabletop game character illustration rather than polished fantasy concept art. One character, no lettering, no border, no UI.

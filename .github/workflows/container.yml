@@ -1,0 +1,80 @@
+name: Test and publish container
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: container-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Build and smoke-test the actual container
+        run: |
+          docker compose up -d --build --wait
+          curl --fail http://127.0.0.1:8095/healthz
+          curl --fail http://127.0.0.1:8095/ | grep -q 'CertQuest'
+          curl --fail http://127.0.0.1:8095/game.js > /dev/null
+          curl --fail http://127.0.0.1:8095/cloud.js > /dev/null
+          curl --fail http://127.0.0.1:8095/exam.js > /dev/null
+          curl --fail http://127.0.0.1:8095/aplus-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/academy-engine.js > /dev/null
+          curl --fail http://127.0.0.1:8095/certification-registry.js > /dev/null
+          curl --fail http://127.0.0.1:8095/certification-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/cloud-course-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/specialist-registry.js > /dev/null
+          curl --fail http://127.0.0.1:8095/specialist-course-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/domain-lab-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/applied-scenarios.js > /dev/null
+          curl --fail http://127.0.0.1:8095/depth-data.js > /dev/null
+          curl --fail http://127.0.0.1:8095/depth.js > /dev/null
+          curl --fail http://127.0.0.1:8095/powershell-course.js > /dev/null
+          curl --fail http://127.0.0.1:8095/powershell-runtime.js > /dev/null
+          curl --fail http://127.0.0.1:8095/bash-course.js > /dev/null
+          curl --fail http://127.0.0.1:8095/bash-runtime.js > /dev/null
+          curl --fail http://127.0.0.1:8095/skills.js > /dev/null
+          curl --fail http://127.0.0.1:8095/skills.css > /dev/null
+          curl --fail http://127.0.0.1:8095/assets/mira.png > /dev/null
+      - if: always()
+        run: docker compose logs && docker compose down
+  publish:
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set image name
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+      - name: Authenticate with GitHub Container Registry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - name: Build and publish
+        run: |
+          docker build -t "$IMAGE:sha-$GITHUB_SHA" .
+          docker push "$IMAGE:sha-$GITHUB_SHA"
+          if [ "$GITHUB_REF" = refs/heads/main ]; then
+            docker tag "$IMAGE:sha-$GITHUB_SHA" "$IMAGE:latest"
+            docker push "$IMAGE:latest"
+          fi
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            docker tag "$IMAGE:sha-$GITHUB_SHA" "$IMAGE:$GITHUB_REF_NAME"
+            docker push "$IMAGE:$GITHUB_REF_NAME"
+          fi

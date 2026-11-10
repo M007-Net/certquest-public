@@ -1,0 +1,253 @@
+[
+  {
+    "topic": "core2-1.5",
+    "key": "interpret-network-command-output",
+    "title": "Read network command output without confusing a listener with service health",
+    "explanation": "Interpret command output as a set of observations with limits. A host address, mask, gateway and resolver list describe configuration; they do not establish that another endpoint is reachable. Compare the address with the intended subnet before changing it. A 169.254 address on a client expected to receive a normal DHCP lease suggests an acquisition problem to investigate. A wrong gateway can leave same-subnet access working while remote networks fail. A failed name lookup with successful access to a known test IP shifts attention toward the resolver path, but does not prove the application itself is healthy. A listening socket is another boundary: an application can accept connections while its database is unavailable. Correlate numeric endpoints and process identity with an actual permitted application request. Record the time and network interface so results from a VPN, Wi-Fi adapter and disconnected Ethernet interface are not accidentally combined.",
+    "distinctions": [
+      "Configuration output describes a selected interface; it is not an end-to-end transaction.",
+      "LISTENING means a local socket is waiting; ESTABLISHED describes a transport connection, not business success."
+    ],
+    "reference": [
+      {
+        "term": "ipconfig /all",
+        "meaning": "Inspect adapter configuration, DHCP and resolver details before changing the network."
+      },
+      {
+        "term": "netstat -ano",
+        "meaning": "Inspect numeric endpoints and process IDs alongside listening/connection state."
+      },
+      {
+        "term": "nslookup",
+        "meaning": "Investigate DNS answers independently from an application request."
+      }
+    ],
+    "diagram": [
+      "Choose the affected interface",
+      "Compare address, prefix, gateway and DNS",
+      "Test one boundary at a time",
+      "Correlate socket/process evidence",
+      "Verify the actual application transaction"
+    ],
+    "example": {
+      "situation": "A PC is 192.168.40.23/24 with gateway 192.168.41.1. A same-subnet printer works; an approved remote service does not.",
+      "reasoning": "The configured gateway is outside the ordinary local /24. Local printing does not exercise routing to the remote service.",
+      "result": "Verify the intended gateway and configuration source before changing the host; retest the remote transaction afterward."
+    },
+    "lab": [
+      "In an authorized test PC, record ipconfig /all output with adapter names and timestamps.",
+      "For a documented local service, correlate netstat -ano output with its process in Task Manager.",
+      "Write what each observation proves, what it leaves unknown and which test would discriminate the next hypothesis."
+    ],
+    "questions": [
+      {
+        "prompt": "A test service shows LISTENING on TCP 443, but its web request returns a database error. What has been established?",
+        "options": [
+          "A local socket is listening; the application dependency can still be failing",
+          "The host firewall has permitted the client to reach TCP 443",
+          "The server certificate chain has been validated by the client"
+        ],
+        "answer": 0,
+        "explanation": "A socket observation is narrower than a successful end-to-end request. Investigate the reported dependency.",
+        "tier": 3
+      },
+      {
+        "prompt": "A PC is 10.20.5.12/24, its intended router is 10.20.5.1, and its configured gateway is 10.20.6.1. Local file access works but remote access fails. Which evidence deserves verification first?",
+        "options": [
+          "The default gateway differs from the expected on-link router",
+          "The DNS suffix must be changed because a local resource succeeds",
+          "The client requires a second address in the remote service subnet"
+        ],
+        "answer": 0,
+        "explanation": "Local access does not test the remote routing path. Verify the documented addressing source and gateway.",
+        "tier": 3
+      },
+      {
+        "prompt": "You need numeric socket endpoints and the owning PID on a Windows test machine. Which output is most directly useful?",
+        "options": [
+          "netstat -ano",
+          "ipconfig /all",
+          "gpresult /r"
+        ],
+        "answer": 0,
+        "explanation": "The numeric and PID options let you correlate endpoints with a process; this still does not establish application health.",
+        "tier": 2
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: ipconfig",
+        "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig"
+      },
+      {
+        "title": "Microsoft: netstat",
+        "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netstat"
+      }
+    ]
+  },
+  {
+    "topic": "core2-1.5",
+    "key": "copy-preview-and-policy-evidence",
+    "title": "Preview copy scope and distinguish policy evidence from policy refresh",
+    "explanation": "Read a command from left to right as an operation over a defined scope. Source and destination order matters, and a familiar tool name does not make every switch harmless. Copying subdirectories, copying empty directories, preserving selected metadata and deleting destination-only files are separate decisions. A mirror operation can remove destination content that is absent from the source; that behavior is useful only when explicitly intended. Inspect a preview and reconcile the path, file selection and proposed actions before authorizing a real job. Permission and ownership behavior also need review when moving data between systems. Policy work follows the same evidence-first discipline: the currently effective policy and the act of requesting a refresh answer different questions. Check the user/computer scope and applied policy information before assuming that another refresh will repair an incorrectly assigned rule. Save a sanitized observation and a verification plan rather than treating a zero-looking status or a completed process as proof that the user's problem is solved.",
+    "distinctions": [
+      "A copy preview reports intended actions; it does not create a recovery copy.",
+      "Policy reporting explains effective settings; refreshing asks for processing and does not correct the wrong scope."
+    ],
+    "reference": [
+      {
+        "term": "robocopy source destination /E /L",
+        "meaning": "List the proposed tree copy, including empty directories, without performing it."
+      },
+      {
+        "term": "/MIR",
+        "meaning": "Mirror semantics can purge destination-only content; inspect scope and authorization."
+      },
+      {
+        "term": "gpresult /r",
+        "meaning": "Report Resultant Set of Policy summary information."
+      },
+      {
+        "term": "gpupdate",
+        "meaning": "Request policy processing; it is not a report of why a setting was selected."
+      }
+    ],
+    "diagram": [
+      "Establish desired outcome and scope",
+      "Read the proposed operation and switches",
+      "Inspect a preview or effective-state report",
+      "Approve only the intended change",
+      "Verify data or policy behavior"
+    ],
+    "example": {
+      "situation": "A proposed mirror from a staging folder to an archive would remove older archive-only files. The request only authorizes adding new reports.",
+      "reasoning": "A purge is outside the requested outcome; a preview exposes that mismatch before data changes.",
+      "result": "Revise and review an additive copy plan and verify the copied files, without treating a mirror as a backup."
+    },
+    "lab": [
+      "On paper, draw source/destination trees with a common file and a destination-only file.",
+      "Predict the difference between an additive tree copy and a mirror, then inspect a documented /L preview in disposable test folders.",
+      "Compare the purpose of gpresult /r with a policy refresh; do not alter a managed device simply to complete a study exercise."
+    ],
+    "questions": [
+      {
+        "prompt": "A copy preview proposes deleting destination-only records, but the task is to add new records while retaining history. What should you do?",
+        "options": [
+          "Revise the copy scope and switches before execution",
+          "Continue the mirror because archive-only records are redundant copies",
+          "Reverse source and destination so only the newest files are retained"
+        ],
+        "answer": 0,
+        "explanation": "The proposed deletion contradicts the requested retention. Review an additive plan and verification before execution.",
+        "tier": 3
+      },
+      {
+        "prompt": "A user receives the wrong managed setting after several refreshes. Which next step produces more useful evidence?",
+        "options": [
+          "Inspect effective policy and the user/computer targeting",
+          "Force another refresh before examining which policy applies",
+          "Recreate the local profile before comparing the policy scope"
+        ],
+        "answer": 0,
+        "explanation": "Processing again does not establish which rule applies. Effective-state and scope evidence can expose a targeting or precedence problem.",
+        "tier": 3
+      },
+      {
+        "prompt": "Which statement about robocopy /L is accurate?",
+        "options": [
+          "It lists proposed actions and does not itself make the copy",
+          "It copies the files but leaves their attributes unchanged",
+          "It copies only files that are absent from the destination"
+        ],
+        "answer": 0,
+        "explanation": "A listing is a review aid. It cannot substitute for actually creating and verifying an authorized recovery copy.",
+        "tier": 2
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: Robocopy",
+        "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy"
+      },
+      {
+        "title": "Microsoft: gpresult",
+        "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/gpresult"
+      }
+    ]
+  },
+  {
+    "topic": "core2-1.8",
+    "key": "macos-update-generation-and-management",
+    "title": "Translate exam-era macOS settings into the actual supported version",
+    "explanation": "A support procedure must name the installed macOS version rather than assuming that a screenshot from a course matches every Mac. Older material can refer to System Preferences where newer versions use System Settings. The objective's Rapid Security Response terminology belongs to a versioned update mechanism; current Apple guidance also describes Background Security Improvements between software updates. The useful skill is to find the applicable control and establish its state for the actual device. Separate a full OS upgrade, a routine update, a background security improvement and application updates. They have different scope and may have different activation requirements. A setting being enabled does not establish that a particular fix is installed or active. Check the installed version, relevant update history and the vendor's release information, then verify the affected application. On a managed Mac, compare the organization's permitted update policy and support instructions before changing local controls. Preserve a useful recovery plan for authorized upgrades.",
+    "distinctions": [
+      "Exam terminology and current interface labels can differ; identify the version before following a path.",
+      "Automatic-update configuration, installed update evidence and activation of a fix are separate observations."
+    ],
+    "reference": [
+      {
+        "term": "System Preferences / System Settings",
+        "meaning": "Different generations of the macOS settings interface; use version-specific support instructions."
+      },
+      {
+        "term": "Rapid Security Response / Background Security Improvements",
+        "meaning": "Recognize the course terminology and consult current Apple guidance for the installed release."
+      },
+      {
+        "term": "System Information: Installations",
+        "meaning": "A source of installed-software evidence; correlate it with the relevant release and activation requirements."
+      }
+    ],
+    "diagram": [
+      "Identify OS version and management context",
+      "Locate version-appropriate update controls",
+      "Compare configuration with installation evidence",
+      "Confirm any required activation step",
+      "Retest the affected function"
+    ],
+    "example": {
+      "situation": "A learner cannot find the exact Rapid Security Response control shown in an older lesson on a newer managed Mac.",
+      "reasoning": "The interface and security-update mechanism can vary by version. An absent old label does not establish that security updating is unavailable.",
+      "result": "Use the installed version and current Apple instructions, then verify management policy and update evidence."
+    },
+    "lab": [
+      "Record the OS version and inspect its matching Apple support instructions without changing settings.",
+      "Identify where settings, installation evidence and release notes provide different information.",
+      "Write a version-specific verification plan, including any required app relaunch or restart from the actual release guidance."
+    ],
+    "questions": [
+      {
+        "prompt": "An older guide says System Preferences, but the supported Mac uses System Settings. What should determine the support procedure?",
+        "options": [
+          "The installed OS version and its current vendor instructions",
+          "The hardware model year alone, using its original factory OS procedure",
+          "The newest interface screenshot, regardless of the installed OS version"
+        ],
+        "answer": 0,
+        "explanation": "Translate the objective into the actual version rather than treating the absence of an old label as a failure.",
+        "tier": 2
+      },
+      {
+        "prompt": "Automatic security updates are enabled. Which evidence is still needed before concluding that a particular fix is active?",
+        "options": [
+          "Installed release information and any activation requirement for that fix",
+          "The automatic-update checkbox alone, because it establishes the active build",
+          "The application version alone, without checking which component the fix addresses"
+        ],
+        "answer": 0,
+        "explanation": "Configuration is different from installation and activation. Verify the relevant release and retest the affected behavior.",
+        "tier": 3
+      }
+    ],
+    "sources": [
+      {
+        "title": "Apple: background updates in macOS",
+        "url": "https://support.apple.com/101591"
+      },
+      {
+        "title": "Apple: Background Security Improvements",
+        "url": "https://support.apple.com/102657"
+      }
+    ]
+  }
+]

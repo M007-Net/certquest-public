@@ -1,0 +1,2705 @@
+[
+  {
+    "topic": "specialist9-1",
+    "key": "decisions",
+    "title": "Scope an Azure access and governance plan — worked decisions",
+    "explanation": "Azure RBAC assigns a role to a security principal at a scope. Management group, subscription, resource group, and resource scopes form an inheritance hierarchy. Start with the task and smallest useful scope rather than assigning Owner to make an error disappear. Contributor can manage resources but cannot generally assign Azure RBAC roles. Reader can inspect resources without changing them. A management role does not automatically grant every data-plane permission; reading a storage account configuration differs from reading its blobs.\n\nAzure Policy evaluates resource configuration against organizational rules. A policy can audit or deny configurations, but it does not give a user permission to create resources. Resource locks protect against certain management changes and are not a replacement for authorization or backups. An administrator diagnosing a denied operation should examine the identity, effective role assignment, scope, policy result, and locks. Record which control caused the decision before changing access. Use fictional identities and a paper scope diagram before experimenting in an isolated subscription.",
+    "distinctions": [
+      "RBAC controls who can act; Policy evaluates allowed resource configurations.",
+      "Management-plane access and data-plane access can require different roles."
+    ],
+    "diagram": [
+      "Identify task",
+      "Choose principal and scope",
+      "Inspect roles and policy",
+      "Test allowed and denied actions"
+    ],
+    "lab": [
+      "Draw a subscription with dev and production resource groups.",
+      "Assign a fictional developer resource-management access only to dev; identify who may assign roles.",
+      "Add a policy restricting locations and predict a denied deployment despite valid RBAC.",
+      "Record two positive and two negative authorization tests."
+    ],
+    "example": {
+      "situation": "A Contributor can create a VM in one location but receives a policy denial in another.",
+      "reasoning": "RBAC permits the action; a separate location rule constrains the resource.",
+      "result": "Use an allowed location or obtain an approved policy exception, rather than granting Owner."
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A role was assigned at subscription scope, but only dev access was intended. What change reduces excess privilege?",
+        "options": [
+          "Move the assignment to the dev resource group after checking dependencies",
+          "Add an identical assignment at tenant scope",
+          "Rename the user",
+          "Add a cost tag"
+        ],
+        "answer": 0,
+        "explanation": "Scope limits the set of resources affected by a role assignment.",
+        "tier": 3
+      },
+      {
+        "prompt": "A delete action fails although the operator has the required role. A resource has a delete lock. What should be investigated?",
+        "options": [
+          "The browser language",
+          "Whether Reader would grant more permissions",
+          "The billing currency",
+          "The lock and its approved removal process"
+        ],
+        "answer": 3,
+        "explanation": "Locks and RBAC are separate management controls; identify the actual cause before changing either.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-2",
+    "key": "decisions",
+    "title": "Separate Azure durability, access, and recovery — worked decisions",
+    "explanation": "An Azure storage design has several independent decisions: the data service, redundancy, access control, network reachability, and recovery policy. Locally redundant storage maintains copies within a location, while zone-redundant storage spreads copies across availability zones in the primary region. Availability and service support vary, so verify the selected region and account capabilities before deployment. Replication is not the same as a backup: an authorized deletion or bad overwrite may be replicated too.\n\nBlob versioning and soft delete can help recover from supported deletion or overwrite scenarios when configured in advance. Retention choices determine the recovery window and cost. A private endpoint gives a service a private network interface, but clients still need working DNS and authorization. Disabling public access without a tested private path can break legitimate clients. A useful acceptance test reads a permitted object, rejects an unauthorized identity, resolves the expected endpoint, and restores a deliberately modified test object. Keep recovery evidence and remove temporary objects after the exercise.",
+    "distinctions": [
+      "Replication helps durability and availability; recovery settings address supported deletion scenarios.",
+      "A private network path does not replace authentication and authorization."
+    ],
+    "diagram": [
+      "Define failure",
+      "Choose redundancy",
+      "Configure access",
+      "Test recovery"
+    ],
+    "lab": [
+      "Create a paper storage design for zone failure and accidental overwrite.",
+      "Choose a redundancy approach and a separate retention/versioning policy.",
+      "Trace a client through DNS, private endpoint, and data authorization.",
+      "Write a restore test with original content, changed content, and an expected recovered version."
+    ],
+    "example": {
+      "situation": "An application reaches a private endpoint but cannot read a blob.",
+      "reasoning": "Network reachability does not establish data authorization.",
+      "result": "Inspect the application identity and blob permissions before broadening network exposure."
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A team plans to disable public storage networking. Which validation should precede the change?",
+        "options": [
+          "Test client DNS, private routing, and authorized data access",
+          "Only rename the account",
+          "Remove identity roles to simplify testing",
+          "Assume private DNS works automatically in every network"
+        ],
+        "answer": 0,
+        "explanation": "Private endpoint success depends on the actual client path and DNS design.",
+        "tier": 3
+      },
+      {
+        "prompt": "A restore operation reports success. What provides stronger evidence of application recovery?",
+        "options": [
+          "Check only the storage account name",
+          "Delete the recovery log",
+          "Assume redundancy guarantees the desired version",
+          "Read the restored test object and compare expected content"
+        ],
+        "answer": 3,
+        "explanation": "Successful operation status alone does not prove the restored content is the required version.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-3",
+    "key": "decisions",
+    "title": "Trace an Azure application failure — worked decisions",
+    "explanation": "Troubleshooting a cloud application starts with the failing conversation, not a random restart. Identify source, destination, protocol, port, and name resolution. Azure network security groups evaluate rules using priority; lower numeric values have higher priority. Check effective rules at relevant interfaces and subnets as well as routes and service configuration. An open rule does not create a listener, and a healthy VM power state does not prove an application is serving requests.\n\nAzure Monitor metrics summarize numeric measurements over time. Logs provide records that can be queried and correlated, when collection has been configured. The Activity Log helps investigate management-plane events such as a configuration change; it is not a complete record of every application request. An alert needs a condition, evaluation settings, and a useful response destination such as an action group. Compare an observed failure to a known baseline and validate both the symptom and telemetry after a targeted correction. Avoid opening all inbound ports as a diagnostic shortcut.",
+    "distinctions": [
+      "A network allow rule does not start an application listener.",
+      "Activity Log management events differ from application request logs."
+    ],
+    "diagram": [
+      "Resolve name",
+      "Trace routes and rules",
+      "Check listener",
+      "Correlate metrics and logs",
+      "Verify repair"
+    ],
+    "lab": [
+      "Draw a client, subnet, VM, and HTTPS service with port 443.",
+      "Write conflicting NSG rules with priorities 100 and 200 and predict the matching decision.",
+      "Build a failure timeline with one management change and one application symptom.",
+      "Define an alert condition, recipient, and a test proving the alert works."
+    ],
+    "example": {
+      "situation": "A VM is running, but HTTPS fails after a network-rule update.",
+      "reasoning": "Power state does not establish end-to-end service availability.",
+      "result": "Compare effective rules, the route, and the listener; verify an actual HTTPS request after repair."
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "HTTPS fails after an NSG change while the VM remains running. Which evidence best narrows the cause?",
+        "options": [
+          "Effective rules, routing, and a listener check for the failing path",
+          "Only CPU model information",
+          "A successful ping from an unrelated network",
+          "The subscription display name"
+        ],
+        "answer": 0,
+        "explanation": "Follow the actual source-destination conversation and its dependencies.",
+        "tier": 3
+      },
+      {
+        "prompt": "The Activity Log shows no configuration changes during an application error. What follows?",
+        "options": [
+          "The application could not have failed",
+          "All user requests succeeded",
+          "No further evidence can exist",
+          "Application logs and other telemetry are still needed"
+        ],
+        "answer": 3,
+        "explanation": "Management activity is not a complete record of application behavior.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-1",
+    "key": "decisions",
+    "title": "Design AWS temporary access and trust — worked decisions",
+    "explanation": "AWS IAM policies describe allowed or denied actions on resources, sometimes with conditions. The effective decision depends on applicable policies and evaluation rules; an explicit deny overrides an allow. A role has a trust policy describing who may assume it and permission policies describing what the resulting session may do. These are different questions. A workload should normally use a suitable role and temporary credentials rather than a long-lived access key embedded in application code.\n\nFor cross-account access, examine both sides of the relationship and the applicable resource policy or role-assumption design. An allow statement in one place does not guarantee end-to-end authorization. Encryption adds another dependency: reading an object encrypted with a customer managed KMS key may require permission to use that key as well as permission to read the object. Test with the actual workload identity and record denied actions. Do not resolve errors by adding wildcard administrator access; narrow the missing permission or incorrect trust relationship and retest the intended operation.",
+    "distinctions": [
+      "Role trust determines who can assume a role; permissions determine what its session can do.",
+      "Data access and KMS key access can be separate dependencies."
+    ],
+    "diagram": [
+      "Identify workload",
+      "Establish trust",
+      "Grant narrow actions",
+      "Obtain temporary session",
+      "Test effective access"
+    ],
+    "lab": [
+      "Draw a fictional workload role and a single permitted S3 bucket.",
+      "Write a task-to-permission table and identify who can assume the role.",
+      "Add an encrypted object and document the additional key-access dependency.",
+      "Predict an allowed read, denied write, and explicitly denied read."
+    ],
+    "example": {
+      "situation": "A role can read ordinary objects but cannot read a KMS-encrypted object.",
+      "reasoning": "Object permission alone may not authorize use of the encryption key.",
+      "result": "Inspect KMS permissions and key policy alongside the S3 permission."
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A role has the required S3 policy, but an external account cannot assume it. Which part needs inspection?",
+        "options": [
+          "The role trust and caller assumption permissions",
+          "Only the S3 storage class",
+          "The billing contact name",
+          "The application logo"
+        ],
+        "answer": 0,
+        "explanation": "Session permissions cannot help until the caller can legitimately assume the role.",
+        "tier": 3
+      },
+      {
+        "prompt": "A developer fixes an AccessDenied error by attaching administrator access. What is the better lasting correction?",
+        "options": [
+          "Embed the new credentials permanently",
+          "Disable encryption on every bucket",
+          "Remove all logging",
+          "Identify the denied action and grant only the necessary scope"
+        ],
+        "answer": 3,
+        "explanation": "Use the failure evidence to correct narrowly scoped authorization and verify the intended task.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-2",
+    "key": "decisions",
+    "title": "Design for failures across availability zones — worked decisions",
+    "explanation": "A resilient application must tolerate failures in each dependency, not just duplicate its web servers. An Application Load Balancer can distribute requests to healthy targets across configured availability zones. An Auto Scaling group can replace unhealthy capacity, but the application should avoid keeping essential session state only on a replaceable instance. Externalize state in a suitable shared service and make request handling resilient to retries.\n\nDatabase availability and read scaling are different needs. A conventional RDS Multi-AZ DB instance deployment uses a standby for failover rather than as a read replica. Other RDS deployment types have different capabilities, so identify the actual product and deployment model. A queue can decouple producers and consumers, allowing work to wait during a temporary processing disruption. Consumers should handle possible redelivery and use idempotent processing where required. Define recovery time and acceptable data loss, then test a component failure. A diagram with two icons is insufficient evidence that the application still works when one dependency disappears.",
+    "distinctions": [
+      "High availability and read scaling solve different problems.",
+      "Queue redelivery requires safe consumer behavior, not an assumption of exactly-once business effects."
+    ],
+    "diagram": [
+      "Define failure target",
+      "Distribute capacity",
+      "Externalize state",
+      "Decouple work",
+      "Test failover"
+    ],
+    "lab": [
+      "Draw two availability zones, a load balancer, replaceable app instances, and a database.",
+      "Identify all session state and remove single-instance dependencies on paper.",
+      "Add a queue and define how duplicate message processing will be detected.",
+      "Walk through losing one zone and record expected user-visible behavior."
+    ],
+    "example": {
+      "situation": "Web instances span two zones, but carts exist only in local process memory.",
+      "reasoning": "Replacing a failed instance loses its users’ carts.",
+      "result": "Move required session state to an appropriate shared service and test recovery."
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A multi-zone web tier loses user carts during instance replacement. Which dependency was overlooked?",
+        "options": [
+          "Session state stored on individual instances",
+          "The count of region names",
+          "The DNS record comment",
+          "The cost allocation tag"
+        ],
+        "answer": 0,
+        "explanation": "Compute redundancy alone does not preserve local state.",
+        "tier": 3
+      },
+      {
+        "prompt": "A failover test restores service in twelve minutes, but the target is five. What should the team conclude?",
+        "options": [
+          "Two zones guarantee the target regardless of test results",
+          "The target refers only to backup size",
+          "The test should be discarded",
+          "The tested design misses the recovery-time target"
+        ],
+        "answer": 3,
+        "explanation": "Measured recovery must be compared with the required recovery objective.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-3",
+    "key": "decisions",
+    "title": "Match AWS storage to access and recovery needs — worked decisions",
+    "explanation": "Storage selection starts with how an application accesses data. S3 provides object storage, EBS provides block volumes for supported compute use cases, and EFS provides a shared file system. An application expecting file-system operations cannot always be moved to an object API without changes. Durability, access latency, sharing, capacity, and recovery requirements all matter. A low storage price alone does not establish the lowest total cost.\n\nLifecycle transitions can move eligible objects to different storage classes, but retrieval patterns, minimum storage duration charges, and restore latency must be considered. Some archive classes require a restore before data can be read. Backups and versioning address recovery scenarios distinct from ordinary replication. Document the required recovery point and recovery time, then verify a sample restore. Transfer, requests, and retrieval charges may dominate a rarely accessed dataset that is unexpectedly read in bulk. Use a workload estimate and current pricing rather than assuming every archival class is interchangeable. A paper design is sufficient for this introductory exercise; no paid resources are required.",
+    "distinctions": [
+      "Object, block, and file storage expose different interfaces.",
+      "Low stored-byte cost does not imply low retrieval cost or immediate access."
+    ],
+    "diagram": [
+      "Identify interface",
+      "Estimate access pattern",
+      "Choose storage",
+      "Model total cost",
+      "Test restore"
+    ],
+    "lab": [
+      "Classify an image archive, a VM disk, and a shared Linux directory by access interface.",
+      "Write retrieval frequency and maximum acceptable recovery time for each.",
+      "Compare immediate access with delayed archive restoration for the image archive.",
+      "Estimate storage, requests, retrieval, and transfer categories without creating resources."
+    ],
+    "example": {
+      "situation": "An archive must support immediate incident retrieval, but the proposed class requires a restore delay.",
+      "reasoning": "The storage price is lower but the access requirement is not met.",
+      "result": "Select an appropriate access class or revise the recovery requirement explicitly."
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A program requires block-device semantics for its instance disk. Why is S3 not a drop-in replacement?",
+        "options": [
+          "Object API operations differ from block-device operations",
+          "S3 has no durability",
+          "S3 can only store text",
+          "EBS is an identity service"
+        ],
+        "answer": 0,
+        "explanation": "Storage interfaces affect how applications read, write, and manage data.",
+        "tier": 3
+      },
+      {
+        "prompt": "A backup exists, but nobody has tested reading restored data. What remains unproven?",
+        "options": [
+          "Whether the backup has a name",
+          "Whether a cost tag can be added",
+          "Whether a region has a console",
+          "Whether the restore meets content and recovery-time requirements"
+        ],
+        "answer": 3,
+        "explanation": "Backup existence is weaker evidence than a validated restore.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-1",
+    "key": "decisions",
+    "title": "Distinguish identity, verification, and authorization — worked decisions",
+    "explanation": "An identity identifies a person, workload, or device. Authentication establishes confidence in that identity; authorization determines what it may access. Microsoft Entra ID is a cloud identity service. Multifactor authentication combines suitable factors and reduces risks from a stolen password, but it does not replace appropriate access permissions or protect every possible session compromise. Single sign-on reduces repeated sign-ins across supported applications without removing the need for access decisions.\n\nConditional Access evaluates signals and applies access controls according to policy. A policy might require stronger authentication for a sensitive application or restrict access based on device conditions. These decisions require deliberate scoping, licensing awareness, and testing. Zero Trust principles include verifying explicitly, using least privilege, and assuming breach; a corporate network location alone is not sufficient trust. For a beginner exercise, create a fictional access matrix and test normal, elevated-risk, and emergency-access scenarios on paper. The objective is to explain the decision path, not to configure a live tenant or risk locking out an administrator.",
+    "distinctions": [
+      "Authentication establishes identity; authorization grants access.",
+      "Single sign-on reduces repeated prompts but does not grant every application permission."
+    ],
+    "diagram": [
+      "Identify actor",
+      "Authenticate",
+      "Evaluate access policy",
+      "Authorize resource",
+      "Monitor session"
+    ],
+    "lab": [
+      "List fictional staff, contractor, and workload identities.",
+      "Build an application access matrix with the minimum required privileges.",
+      "Write normal and risky sign-in scenarios and choose verification requirements.",
+      "Document how policy testing avoids locking out emergency access."
+    ],
+    "example": {
+      "situation": "A contractor signs in successfully but cannot open a finance application.",
+      "reasoning": "Authentication succeeded; application authorization may still be absent.",
+      "result": "Verify the intended assignment rather than treating all successful sign-ins as universal access."
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A contractor can sign in but cannot use the finance app. What should be checked?",
+        "options": [
+          "The intended application authorization and assignment",
+          "Whether successful authentication must bypass policy",
+          "Only the browser theme",
+          "The office printer queue"
+        ],
+        "answer": 0,
+        "explanation": "An authenticated identity still requires the appropriate resource access.",
+        "tier": 3
+      },
+      {
+        "prompt": "A policy change may affect every administrator. What is an appropriate rollout approach?",
+        "options": [
+          "Apply broadly with no recovery plan",
+          "Remove all monitoring first",
+          "Share one permanent password",
+          "Test scope and emergency-access behavior before broad enforcement"
+        ],
+        "answer": 3,
+        "explanation": "Access controls require validation so a misconfiguration does not prevent legitimate recovery.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-2",
+    "key": "decisions",
+    "title": "Choose threat protection by the evidence needed — worked decisions",
+    "explanation": "Security products address different evidence and response needs. Microsoft Defender capabilities cover areas such as endpoints, email, identities, and cloud workloads. Extended detection and response correlates signals across supported security domains. Microsoft Sentinel is a cloud-native SIEM and SOAR platform that can collect and analyze data from multiple sources and support response workflows. The name of a product alone does not mean that every source is connected or every response is enabled.\n\nAn alert is a signal to investigate, while an incident can group related activity for analysis and response. A good analyst asks what telemetry supports the hypothesis, how timestamps and entities relate, and what evidence is missing. Automation should have appropriate permissions and escalation boundaries. Blocking an account can contain harm but also interrupt legitimate work, so response actions need context and authority. In this introductory exercise, use invented events and classify them by source. Write a short investigation that separates confirmed actions from uncertain conclusions and identifies the next useful evidence.",
+    "distinctions": [
+      "SIEM centralizes and analyzes logs; endpoint protection acts on endpoint threats.",
+      "An alert is evidence to investigate, not automatic proof of compromise."
+    ],
+    "diagram": [
+      "Collect signals",
+      "Correlate entities",
+      "Investigate incident",
+      "Authorize response",
+      "Verify result"
+    ],
+    "lab": [
+      "Create fictional email, endpoint, and identity alerts for one user.",
+      "Normalize times and identify which signals refer to the same device or session.",
+      "Assign evidence sources to an investigation and write one benign alternative.",
+      "Define a response action with an owner, authority, and verification step."
+    ],
+    "example": {
+      "situation": "A suspicious email and an endpoint alert reference the same user within minutes.",
+      "reasoning": "Correlation strengthens an investigation but still needs entity and time validation.",
+      "result": "Inspect linked evidence before declaring the scope or automating disruptive containment."
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Two alerts share a username but have inconsistent time zones. What should be done first?",
+        "options": [
+          "Normalize timestamps and validate linked entities",
+          "Declare a confirmed sequence immediately",
+          "Delete one alert",
+          "Ignore every identity signal"
+        ],
+        "answer": 0,
+        "explanation": "Reliable correlation depends on comparable times and identity context.",
+        "tier": 3
+      },
+      {
+        "prompt": "Sentinel is enabled but a required data source is not connected. What is the consequence?",
+        "options": [
+          "All its events are automatically available anyway",
+          "Every endpoint is isolated",
+          "The source stops generating events",
+          "That source can remain a visibility gap"
+        ],
+        "answer": 3,
+        "explanation": "Product deployment does not prove telemetry ingestion or detection coverage.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-3",
+    "key": "decisions",
+    "title": "Separate classification, retention, and leakage prevention — worked decisions",
+    "explanation": "Data protection begins by understanding what data exists and how it should be handled. Sensitivity labels can classify content and, when configured, apply protection such as encryption or access restrictions. The label name alone does not prove a particular protection setting. Data loss prevention policies can identify sensitive content and apply actions to risky handling across supported locations. A policy must be scoped and tested so legitimate work is not unnecessarily disrupted.\n\nRetention controls govern how long content is kept or when it is deleted. They solve a different problem from preventing an inappropriate share. Investigation and legal processes may impose additional preservation requirements, so a user deleting a file does not necessarily determine whether all retained copies disappear. Use fictional documents for a tabletop exercise: classify a public announcement, an internal plan, and a payroll sheet, then define sharing and retention behavior separately. Record the intended policy outcome and a test for a false positive. Regulatory requirements must be established by the organization; a training classification is not a legal compliance determination.",
+    "distinctions": [
+      "Sensitivity, DLP, and retention answer different handling questions.",
+      "A label name is not evidence that encryption is configured."
+    ],
+    "diagram": [
+      "Discover data",
+      "Classify sensitivity",
+      "Set sharing controls",
+      "Set retention",
+      "Test outcomes"
+    ],
+    "lab": [
+      "Create fictional public, internal, and payroll document descriptions.",
+      "Assign a sensitivity category and permitted recipients for each.",
+      "Write a DLP action for an external payroll share and a separate retention rule.",
+      "Test an authorized exception and a false-positive case on paper."
+    ],
+    "example": {
+      "situation": "A document is labeled Confidential, but external access still works.",
+      "reasoning": "The label may not be configured with the assumed enforcement.",
+      "result": "Inspect actual label protection and sharing policies instead of relying on its name."
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "An external share succeeds despite a Confidential label. What should be inspected?",
+        "options": [
+          "Configured label protection and applicable sharing policies",
+          "Only the file icon",
+          "Only the document title",
+          "The user monitor size"
+        ],
+        "answer": 0,
+        "explanation": "Names do not prove technical enforcement.",
+        "tier": 3
+      },
+      {
+        "prompt": "A team wants to prevent leakage and keep records for an approved period. What design fits?",
+        "options": [
+          "Use a longer password as the only control",
+          "Assume retention blocks all sharing",
+          "Assume DLP sets every retention period",
+          "Define both handling restrictions and retention rules"
+        ],
+        "answer": 3,
+        "explanation": "Preservation and inappropriate disclosure are different requirements.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-1",
+    "key": "decisions",
+    "title": "Connect cloud choices to business outcomes — worked decisions",
+    "explanation": "Cloud transformation is a business change supported by technology, not simply moving the same machines elsewhere. Define the outcome first: shorter release cycles, improved resilience, flexible capacity, or better access to data. Infrastructure as a service leaves more operating-system and application responsibilities with the customer. Managed platforms can reduce some operational work, while software as a service offers an application with a different control and responsibility boundary. Every model still requires appropriate customer decisions about data and access.\n\nElastic capacity can follow variable demand, but it does not guarantee lower cost. Idle resources, data transfer, inefficient software, and duplicated systems can increase spending. A total-cost comparison includes migration, operations, staff effort, and ongoing usage. Some workloads may remain on premises because of dependencies or requirements; hybrid designs introduce their own connectivity and management needs. Use a small fictional organization and compare alternatives against measurable goals. Avoid selecting services only because they are newer. State tradeoffs and identify what evidence would change the recommendation.",
+    "distinctions": [
+      "Elasticity changes capacity with demand; it does not guarantee savings.",
+      "A managed service changes responsibilities rather than removing all customer responsibility."
+    ],
+    "diagram": [
+      "Define outcome",
+      "Identify constraints",
+      "Compare operating models",
+      "Estimate total cost",
+      "Measure results"
+    ],
+    "lab": [
+      "Choose a fictional shop with seasonal traffic and a slow release process.",
+      "Define two measurable business goals and a dependency constraint.",
+      "Compare keeping servers, using managed hosting, and using a hosted application.",
+      "List cost categories and define how the chosen outcome will be measured."
+    ],
+    "example": {
+      "situation": "A company moves idle servers to cloud VMs and its bill increases.",
+      "reasoning": "Migration alone did not right-size resources or change operating practices.",
+      "result": "Measure utilization and redesign capacity against the business need."
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Cloud spending rises after unchanged idle servers are migrated. What is the most useful next step?",
+        "options": [
+          "Measure utilization and right-size the design",
+          "Assume all cloud services are free",
+          "Add more idle replicas immediately",
+          "Remove cost visibility"
+        ],
+        "answer": 0,
+        "explanation": "Lift-and-shift does not automatically optimize resources or operations.",
+        "tier": 3
+      },
+      {
+        "prompt": "A workload depends on a local device with a strict latency requirement. What should influence the migration plan?",
+        "options": [
+          "Only the marketing category",
+          "Only the billing contact",
+          "Only the number of developers",
+          "The dependency and measured latency constraints"
+        ],
+        "answer": 3,
+        "explanation": "Architecture must meet actual workload requirements, potentially including hybrid operation.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-2",
+    "key": "decisions",
+    "title": "Choose data and AI approaches responsibly — worked decisions",
+    "explanation": "Data projects begin with a question and trustworthy information. An analytical warehouse supports large-scale analysis, while a transactional application database is designed around operational reads and writes. BigQuery is Google Cloud's managed analytics warehouse; selecting it does not by itself fix missing, biased, duplicated, or poorly governed data. Identify source quality, ownership, access rights, and update needs before drawing conclusions from a dashboard.\n\nMachine learning learns patterns from examples, while generative AI produces content based on learned patterns and context. Generated text can be plausible but incorrect. Evaluate a system against representative tasks and define human review where consequences require it. A baseline without AI may be simpler and more reliable for some problems. Avoid training and evaluating on the same examples when the goal is generalization. Protect sensitive information, consider who is represented in the data, and monitor results after deployment. An introductory tabletop can compare a sales dashboard, a prediction task, and a drafting assistant without uploading any real customer data.",
+    "distinctions": [
+      "Analytics reports on data; predictive and generative tasks need their own evaluation.",
+      "Fluent generated output is not evidence of factual correctness."
+    ],
+    "diagram": [
+      "Define question",
+      "Check data quality",
+      "Select approach",
+      "Evaluate on representative cases",
+      "Monitor and review"
+    ],
+    "lab": [
+      "Describe a sales-reporting task, a demand-prediction task, and a drafting task.",
+      "Choose an approach for each and name the required data.",
+      "Create five fictional evaluation cases including a failure or underrepresented case.",
+      "Define accuracy evidence, privacy boundaries, and a human-review trigger."
+    ],
+    "example": {
+      "situation": "A generated support response sounds confident but invents a product feature.",
+      "reasoning": "Fluency is not a correctness check.",
+      "result": "Validate against an approved knowledge source and require review for unsupported claims."
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "An assistant invents a product capability. Which response improves reliability?",
+        "options": [
+          "Check approved references and route unsupported claims for review",
+          "Publish because the prose is confident",
+          "Remove all evaluation cases",
+          "Use real secrets as prompts"
+        ],
+        "answer": 0,
+        "explanation": "Correctness requires evidence and appropriate review.",
+        "tier": 3
+      },
+      {
+        "prompt": "A rule-based process already solves a narrow task accurately. What should an AI proposal demonstrate?",
+        "options": [
+          "That AI is mandatory for every task",
+          "Only a longer model name",
+          "That evaluation is unnecessary",
+          "A measurable benefit against that baseline"
+        ],
+        "answer": 3,
+        "explanation": "A simpler baseline is a useful comparison for cost, reliability, and benefit.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-3",
+    "key": "decisions",
+    "title": "Plan Google Cloud responsibility and reliability — worked decisions",
+    "explanation": "Cloud providers secure parts of the underlying platform, but customers retain responsibilities that depend on the service. Identity permissions, data handling, and application configuration remain central. IAM roles should match actual duties at appropriate scopes, and identities used by workloads need deliberate permissions too. Do not equate provider infrastructure security with a correctly secured application. Logging and monitoring must provide evidence relevant to the service's operation.\n\nReliability is a measurable service property. A service-level indicator is a measurement such as successful request proportion. A service-level objective is a target for that measurement, while an agreement can define contractual commitments. A backup addresses recovery but is not equivalent to automatic high availability. Design around the business impact of interruptions and data loss, and test recovery rather than assuming it. Cost governance includes ownership, budgets, and reviewing usage; a budget notification should not be treated as a universal hard spending cap. Use fictional figures and a paper service plan for this beginner lab.",
+    "distinctions": [
+      "An SLI measures behavior; an SLO sets a target.",
+      "Budget notifications are not a universal automatic spending limit."
+    ],
+    "diagram": [
+      "Assign responsibilities",
+      "Limit access",
+      "Choose reliability measure",
+      "Set target",
+      "Test recovery and review cost"
+    ],
+    "lab": [
+      "Draw provider and customer responsibility columns for a managed application.",
+      "Define a successful-request indicator and a target.",
+      "Write a backup restore test and distinguish it from automatic failover.",
+      "Assign a cost owner and an action to take when a budget notification arrives."
+    ],
+    "example": {
+      "situation": "A team receives a budget notification and assumes all spending has stopped.",
+      "reasoning": "A notification is not a universal hard cap.",
+      "result": "Inspect usage and apply the intended cost-control actions explicitly."
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A Google Cloud budget notification is delivered. What should the owner assume?",
+        "options": [
+          "Usage must be reviewed; notification alone is not a universal spending cap",
+          "All billable resources have necessarily stopped",
+          "Every charge is invalid",
+          "The project is automatically deleted"
+        ],
+        "answer": 0,
+        "explanation": "Budget alerts support cost management; actions must match the actual configuration.",
+        "tier": 3
+      },
+      {
+        "prompt": "A service has backups but no redundant serving capacity. What is unproven?",
+        "options": [
+          "Whether data can have a name",
+          "Whether users can be assigned roles",
+          "Whether a project has an owner",
+          "Automatic continuity during a serving failure"
+        ],
+        "answer": 3,
+        "explanation": "Backups support recovery; availability requires an appropriate serving design.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-1",
+    "key": "decisions",
+    "title": "Read the Terraform change workflow — worked decisions",
+    "explanation": "Terraform describes desired infrastructure in configuration and uses providers to interact with platform APIs. A provider implements resource and data-source operations. A resource represents something Terraform manages; a data source reads information for use in configuration. Initialization prepares the working directory and required providers or modules. Validation checks configuration consistency, but it does not establish that a proposed infrastructure change is safe or permitted by a remote API.\n\nA plan compares configuration, state, and observed information to propose actions. Review creates, updates, replacements, and destroys before applying. A replacement can interrupt service even if the resource name remains familiar. A saved plan can preserve the reviewed proposal, but still requires secure handling and a suitable execution workflow. Apply makes changes and can incur costs or remove resources. For this introductory exercise use only the local provider and disposable files, or a paper plan; no cloud account is required. Observe how changing an input affects the plan, then compare the resulting file to the requested configuration.",
+    "distinctions": [
+      "Validate checks configuration; plan proposes infrastructure actions.",
+      "A resource manages an object; a data source reads information."
+    ],
+    "diagram": [
+      "Write configuration",
+      "Initialize",
+      "Validate",
+      "Review plan",
+      "Apply in lab",
+      "Verify result"
+    ],
+    "lab": [
+      "Create a disposable directory or use a paper local_file example.",
+      "Describe a local file resource with a filename and harmless content; identify its provider.",
+      "Predict init, validate, plan, and apply outcomes before running anything.",
+      "Change only the content and compare the planned action with the resulting file."
+    ],
+    "example": {
+      "situation": "A valid configuration proposes replacing a resource that stores required state.",
+      "reasoning": "Syntax validity does not establish acceptable operational impact.",
+      "result": "Review the replacement and recovery requirements before applying."
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A reviewed plan includes replacement of a data-bearing resource. What should happen before apply?",
+        "options": [
+          "Assess disruption and recovery requirements",
+          "Ignore replacement because syntax is valid",
+          "Delete every backup",
+          "Assume names prevent data loss"
+        ],
+        "answer": 0,
+        "explanation": "Replacement is a material lifecycle action requiring impact review.",
+        "tier": 3
+      },
+      {
+        "prompt": "A beginner wants to learn Terraform without cloud charges. Which exercise fits?",
+        "options": [
+          "Deploy a large paid cluster by default",
+          "Store production credentials in configuration",
+          "Run destroy against a shared workspace",
+          "Manage a harmless disposable local file with the local provider"
+        ],
+        "answer": 3,
+        "explanation": "A local-only example teaches the workflow without creating cloud infrastructure.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-2",
+    "key": "decisions",
+    "title": "Protect Terraform state and coordinate changes — worked decisions",
+    "explanation": "Terraform state maps configuration addresses to managed objects and records information needed for subsequent operations. It can contain sensitive values. Marking an output sensitive suppresses ordinary display but is not a guarantee that the value is absent from state. Protect state access and storage, and avoid committing state or secrets to a source repository. Configuration belongs in version control; state needs its own controlled handling.\n\nA backend determines where state is stored and may provide locking depending on its type and configuration. Locking helps prevent concurrent operations from corrupting coordination, but it does not replace review or permissions. A remote backend does not automatically make all data secure. Confirm encryption, access, recovery, and supported lock behavior. If an operation is interrupted, establish whether it is still running before considering lock recovery. Force-unlocking another active operation can create conflicting writes. For a tabletop exercise, model two operators trying to change the same workspace, and explain how ownership, serialization, and recovery evidence prevent accidental conflicts.",
+    "distinctions": [
+      "Sensitive display suppression is different from excluding secrets from state.",
+      "Remote storage and locking depend on backend capabilities and configuration."
+    ],
+    "diagram": [
+      "Identify state",
+      "Restrict access",
+      "Coordinate writers",
+      "Review plan",
+      "Verify and preserve recovery"
+    ],
+    "lab": [
+      "Draw two operators sharing one infrastructure workspace.",
+      "List data that state may contain and who should access it.",
+      "Write a sequence where one apply holds a lock while another waits.",
+      "Describe how to investigate an interrupted operation without unlocking an active writer."
+    ],
+    "example": {
+      "situation": "A sensitive output is hidden in console output, so a developer proposes committing the state file.",
+      "reasoning": "Suppressed display does not mean the state excludes the value.",
+      "result": "Keep state in a controlled backend and review secret exposure separately."
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A teammate wants to commit tfstate because sensitive outputs are hidden. What is the correction?",
+        "options": [
+          "State can still contain secrets and needs controlled storage",
+          "Hidden outputs guarantee a secret-free file",
+          "Rename the extension to make it safe",
+          "Publish it only during working hours"
+        ],
+        "answer": 0,
+        "explanation": "Display behavior does not protect the underlying state contents.",
+        "tier": 3
+      },
+      {
+        "prompt": "A backend is remote. What still needs verification?",
+        "options": [
+          "Nothing; remote means automatically secure",
+          "Only the resource color",
+          "Only the project slogan",
+          "Access control, protection, recovery, and locking behavior"
+        ],
+        "answer": 3,
+        "explanation": "Backend capabilities and configuration determine actual security and coordination.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-3",
+    "key": "decisions",
+    "title": "Build reusable Terraform inputs and outputs — worked decisions",
+    "explanation": "A Terraform module groups configuration into a reusable unit. Input variables define values supplied by a caller, while outputs expose selected results. Clear variable types and validation rules help catch unintended values before changes are applied. A module should have an understandable contract rather than requiring callers to inspect every internal resource. Provider requirements and version constraints help communicate compatibility.\n\nThe dependency lock file records selected provider versions and checksums. It is not the same as Terraform state, and it does not lock every remote module version. Choose module version constraints deliberately and review upgrades. Resource relationships can often be inferred from references; explicit depends_on is useful for dependencies that are not otherwise expressed, but unnecessary broad dependencies can reduce parallelism and obscure intent. Count and for_each create multiple instances with different addressing behavior. Stable keys help avoid unintended address changes when a collection evolves. Use a disposable local module to observe input, output, and addressing changes before applying these ideas to real infrastructure.",
+    "distinctions": [
+      "Inputs configure a module; outputs expose selected results.",
+      "The provider dependency lock file is not Terraform state or a universal module lock."
+    ],
+    "diagram": [
+      "Define module contract",
+      "Validate inputs",
+      "Select versions",
+      "Reference outputs",
+      "Review instance addresses"
+    ],
+    "lab": [
+      "Sketch a local-file module with a filename input and a path output.",
+      "Add a type and a validation rule for an allowed label.",
+      "Compare numeric count addresses with for_each keys for a changing set.",
+      "Write an upgrade checklist covering provider selection and module constraints."
+    ],
+    "example": {
+      "situation": "A team removes the first item from a count-indexed list and sees unexpected instance address changes.",
+      "reasoning": "Index-based identity follows positions rather than business names.",
+      "result": "Review whether stable for_each keys better express the intended identities."
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Removing the first count-indexed list entry changes later identities. What design should be considered?",
+        "options": [
+          "for_each with stable meaningful keys",
+          "Random keys on every run",
+          "Deleting all outputs",
+          "Disabling plan review"
+        ],
+        "answer": 0,
+        "explanation": "Key-based addressing can better match stable resource identities.",
+        "tier": 3
+      },
+      {
+        "prompt": "A team commits the provider lock file and assumes remote module versions are fixed too. What is missing?",
+        "options": [
+          "A longer lock filename",
+          "An output named secure",
+          "A network firewall rule",
+          "Deliberate module version constraints and upgrade review"
+        ],
+        "answer": 3,
+        "explanation": "Provider locking is not a universal lock of remote module versions.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-1",
+    "key": "decisions",
+    "title": "Use Linux ownership and permissions deliberately — worked decisions",
+    "explanation": "Linux file access depends on identity, ownership, permission bits, and potentially additional controls such as ACLs and SELinux. Basic mode bits distinguish owner, group, and others. Read, write, and execute have context-specific meaning: execute on a directory allows traversal, while read allows listing its entries. A process may need traversal permission on every parent directory before it can open a file. Avoid changing everything to mode 777 to hide an access problem.\n\nUse commands such as id, ls -l, and namei -l to inspect the actor and path. chmod changes mode bits, while chown changes ownership. A umask influences permission bits removed from the defaults used when creating new objects; it does not retroactively rewrite existing files. Additional security controls can still deny access when ordinary mode bits look correct. RHCSA is a practical exam, so explain and perform tasks in a disposable Linux VM and verify results as a non-root test user. Work only inside a dedicated lab directory and retain a way to restore the starting state.",
+    "distinctions": [
+      "Directory read lists names; directory execute permits traversal.",
+      "Mode bits are not the only possible access control."
+    ],
+    "diagram": [
+      "Identify user",
+      "Inspect path ownership",
+      "Check parent traversal",
+      "Change narrow permissions",
+      "Test as intended user"
+    ],
+    "lab": [
+      "In a disposable Linux VM, create a dedicated lab directory and harmless text file.",
+      "Record id and ls -l output and explain owner, group, and other permissions.",
+      "Compare directory modes with and without execute using a non-root test identity.",
+      "Restore the lab permissions and document why chmod 777 was unnecessary."
+    ],
+    "example": {
+      "situation": "A test user has file read permission but cannot open it through a parent directory.",
+      "reasoning": "Parent-directory traversal may be denied even when the file itself is readable.",
+      "result": "Inspect each path component and grant only the intended traversal access."
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A readable file cannot be opened by a non-root user through its parent path. What should be checked?",
+        "options": [
+          "Traversal permission on each parent directory",
+          "Only the terminal font",
+          "Only the file extension",
+          "Whether chmod 777 can be applied globally"
+        ],
+        "answer": 0,
+        "explanation": "Directory access is a dependency of opening the file.",
+        "tier": 3
+      },
+      {
+        "prompt": "Mode bits appear correct but access is still denied on RHEL. Which additional controls may matter?",
+        "options": [
+          "Only the hostname spelling",
+          "Only the disk label color",
+          "Only the shell prompt",
+          "ACLs and SELinux context or policy"
+        ],
+        "answer": 3,
+        "explanation": "Access can depend on more than ordinary owner/group/other bits.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-2",
+    "key": "decisions",
+    "title": "Verify Linux services now and after reboot — worked decisions",
+    "explanation": "A systemd service has both current runtime state and enablement behavior. Starting a service affects the running system; enabling it arranges startup according to its unit installation configuration. Enabling alone does not necessarily start it immediately, and starting alone does not guarantee startup after reboot. Inspect the unit with systemctl status and relevant properties, and review logs with journalctl for the service. Use a harmless existing service in a disposable VM rather than changing a production host.\n\nTroubleshooting follows evidence. A failed service may have a syntax error, missing file, occupied port, wrong permissions, or unmet dependency. Check the specific error before changing security policy. A listening socket does not prove that a remote client has a permitted network path, and a firewall opening does not create a listener. Verify the service locally, then test the intended client path. For exam-style practice, make the required state persistent and reboot the disposable VM to confirm it. Keep notes describing the observed failure and the exact change that corrected it.",
+    "distinctions": [
+      "Start affects current runtime; enable affects configured startup behavior.",
+      "A firewall opening and an application listener are different requirements."
+    ],
+    "diagram": [
+      "Inspect service",
+      "Read unit logs",
+      "Identify cause",
+      "Apply narrow correction",
+      "Verify now and after reboot"
+    ],
+    "lab": [
+      "Choose a harmless service in a disposable VM and record its current state and enablement.",
+      "Explain the effects of start, stop, enable, and disable before any change.",
+      "Inspect service-specific logs and write a targeted diagnosis of a fictional failed start.",
+      "Verify the intended startup behavior after a controlled VM reboot, then restore the starting settings."
+    ],
+    "example": {
+      "situation": "A service works after systemctl start but is absent after a reboot.",
+      "reasoning": "The runtime change may not have established startup enablement.",
+      "result": "Inspect enablement and unit configuration, then verify persistence with a controlled reboot."
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A service runs after a manual start but not after reboot. What should be checked?",
+        "options": [
+          "Unit enablement and startup dependencies",
+          "Only the terminal colors",
+          "Only the user avatar",
+          "Whether every firewall rule can be deleted"
+        ],
+        "answer": 0,
+        "explanation": "Persistent startup requires the appropriate unit configuration and dependencies.",
+        "tier": 3
+      },
+      {
+        "prompt": "A service log reports a configuration syntax error. What is the focused first repair?",
+        "options": [
+          "Disable SELinux globally without evidence",
+          "Reformat the disk",
+          "Open all network ports",
+          "Correct and validate the configuration, then restart and verify"
+        ],
+        "answer": 3,
+        "explanation": "Use the concrete error to choose a targeted correction.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-3",
+    "key": "decisions",
+    "title": "Plan persistent Linux mounts and storage verification — worked decisions",
+    "explanation": "Linux storage involves several layers: a block device or logical volume, a file system, a mount point, and mount configuration. Formatting creates a file system and can destroy existing contents, so the introductory exercise should use a disposable VM disk or a paper plan, never an unidentified host disk. lsblk and blkid help inspect devices, file systems, and identifiers. A directory existing does not prove that the intended file system is mounted there; inspect mount information and capacity.\n\nA temporary mount may disappear after reboot unless startup configuration establishes it. Entries in /etc/fstab can identify file systems by UUID, avoiding assumptions that a device name will always be assigned the same way. Incorrect entries can disrupt startup, so preserve the original file, validate syntax and mount behavior, and retain VM recovery access. Logical volume growth and file-system growth are separate steps whose commands depend on the file system. Do not assume all file systems support shrinking. The practical goal is to verify the correct backing storage, read/write behavior, and persistence after a controlled reboot.",
+    "distinctions": [
+      "A mount-point directory can exist without its intended file system mounted.",
+      "Logical-volume size and file-system size are separate layers."
+    ],
+    "diagram": [
+      "Identify disposable device",
+      "Inspect file system",
+      "Plan mount",
+      "Validate persistent configuration",
+      "Reboot and verify"
+    ],
+    "lab": [
+      "Use a paper device table or a disposable VM disk clearly marked for this exercise.",
+      "Record the intended device, file-system type, UUID, and mount point.",
+      "Draft an fstab entry and a recovery plan without formatting any existing disk.",
+      "Define checks for actual backing storage, a harmless test file, and mount persistence after reboot."
+    ],
+    "example": {
+      "situation": "A mount directory exists after reboot, but data is written to the root file system instead.",
+      "reasoning": "Directory existence did not prove the intended volume was mounted.",
+      "result": "Inspect the actual mount source and correct the persistent mount configuration."
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A logical volume was enlarged but the file system still reports its old capacity. What distinction matters?",
+        "options": [
+          "The file system may need a supported separate growth operation",
+          "The hostname must change",
+          "Every file system automatically shrinks first",
+          "A new user password is required"
+        ],
+        "answer": 0,
+        "explanation": "Block-layer growth and file-system resizing are distinct operations.",
+        "tier": 3
+      },
+      {
+        "prompt": "After reboot, writes under a mount directory consume root capacity. What should be checked first?",
+        "options": [
+          "Only the filename extension",
+          "Whether the terminal is fullscreen",
+          "Whether all disks can be reformatted",
+          "Whether the intended file system actually mounted and its fstab configuration"
+        ],
+        "answer": 3,
+        "explanation": "Verify the backing mount before writing more data or making destructive changes.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-4-1",
+    "key": "decisions",
+    "title": "Deploy and inspect ARM and Bicep — worked decisions",
+    "explanation": "Bicep compiles to an ARM template. Both describe desired Azure resources, while the deployment command supplies a target scope and parameters. Use symbolic resource references to express dependencies. Secure parameters should not appear in ordinary outputs or source control. What-if previews intended changes, but can report unresolved properties and cannot prove application health. Inspect the actual deployment operations and validate the resulting resources.\n\nA Bicep change moves a resource to another region. Review the what-if result for replacement and assess migration before deploying. A location change can require a new resource and a planned migration.\n\nA secret parameter must be passed without displaying its value in deployment output. Declare it secure and keep it out of outputs. Protecting inputs is separate from deciding what a template publishes.",
+    "distinctions": [
+      "A location change can require a new resource and a planned migration.",
+      "Protecting inputs is separate from deciding what a template publishes."
+    ],
+    "diagram": [
+      "A Bicep change moves a resource to another region",
+      "Review the what-if result for replacement and assess migration before deploying",
+      "A location change can require a new resource and a planned migration."
+    ],
+    "lab": [
+      "Write a Bicep storage declaration with a location parameter",
+      "Build it locally with az bicep build and inspect generated ARM JSON",
+      "Mark a fictional secret input secure and ensure no output references it",
+      "Compare an intended location change with the existing resource properties"
+    ],
+    "example": {
+      "situation": "A Bicep change moves a resource to another region",
+      "reasoning": "A location change can require a new resource and a planned migration.",
+      "result": "Review the what-if result for replacement and assess migration before deploying"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A Bicep change moves a resource to another region. Which explanation supports the best decision?",
+        "options": [
+          "A location change can require a new resource and a planned migration.",
+          "The appropriate approach is to run an incremental deployment because it guarantees zero downtime.",
+          "The appropriate approach is to change the resource group tag to force in-place relocation."
+        ],
+        "answer": 0,
+        "explanation": "A location change can require a new resource and a planned migration. Recommended action: Review the what-if result for replacement and assess migration before deploying.",
+        "tier": 3
+      },
+      {
+        "prompt": "A secret parameter must be passed without displaying its value in deployment output. Which explanation supports the best decision?",
+        "options": [
+          "Protecting inputs is separate from deciding what a template publishes.",
+          "The appropriate approach is to store it in a normal output for debugging.",
+          "The appropriate approach is to commit it to the template as a default."
+        ],
+        "answer": 0,
+        "explanation": "Protecting inputs is separate from deciding what a template publishes. Recommended action: Declare it secure and keep it out of outputs.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-4-2",
+    "key": "decisions",
+    "title": "Choose and operate Azure virtual machines — worked decisions",
+    "explanation": "VM sizing, disk type, and placement are separate choices. Availability zones isolate zone-level failures. Availability sets spread machines across fault and update domains within the supported design. A scale set manages a pool of VM instances and can scale against metrics. An attached managed disk is distinct from a temporary disk. Before resizing or moving a VM, check SKU availability, dependencies, disk limits, and disruption.\n\nA service must continue during a zone failure. Distribute healthy instances across availability zones. Zone diversity and resilient application state are separate requirements.\n\nAn application writes durable uploads to the VM temporary disk. Move uploads to persistent storage with a recovery plan. Temporary storage can be lost during lifecycle operations.",
+    "distinctions": [
+      "Zone diversity and resilient application state are separate requirements.",
+      "Temporary storage can be lost during lifecycle operations."
+    ],
+    "diagram": [
+      "A service must continue during a zone failure",
+      "Distribute healthy instances across availability zones",
+      "Zone diversity and resilient application state are separate requirements."
+    ],
+    "lab": [
+      "Sketch a two-zone VM deployment",
+      "Record which disks contain OS, temporary data and durable app data",
+      "Choose a health probe and a scaling threshold",
+      "Write the verification steps for removing one unhealthy instance"
+    ],
+    "example": {
+      "situation": "A service must continue during a zone failure",
+      "reasoning": "Zone diversity and resilient application state are separate requirements.",
+      "result": "Distribute healthy instances across availability zones"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A service must continue during a zone failure. Which explanation supports the best decision?",
+        "options": [
+          "Zone diversity and resilient application state are separate requirements.",
+          "The appropriate approach is to place both instances in a single availability set and assume zone separation.",
+          "The appropriate approach is to store all session data on one VM temporary disk."
+        ],
+        "answer": 0,
+        "explanation": "Zone diversity and resilient application state are separate requirements. Recommended action: Distribute healthy instances across availability zones.",
+        "tier": 3
+      },
+      {
+        "prompt": "An application writes durable uploads to the VM temporary disk. Which explanation supports the best decision?",
+        "options": [
+          "Temporary storage can be lost during lifecycle operations.",
+          "The appropriate approach is to add autoscaling to preserve the local files.",
+          "The appropriate approach is to resize the VM to extend file retention."
+        ],
+        "answer": 0,
+        "explanation": "Temporary storage can be lost during lifecycle operations. Recommended action: Move uploads to persistent storage with a recovery plan.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-4-3",
+    "key": "decisions",
+    "title": "Run containers and stage App Service releases — worked decisions",
+    "explanation": "Azure Container Registry stores images. Container Instances runs containers for simple tasks, while Container Apps supports app revisions, ingress and event-driven scaling. App Service hosts web applications on a plan. Deployment slots allow staging and traffic changes where supported. Mark environment-specific settings as slot settings and verify identity, networking and certificates independently of the code deployment.\n\nA team needs to test a web release before promoting it. Use an App Service staging slot and verify slot-specific settings before swapping. A slot provides a separate target for verification before a swap.\n\nAn event-driven container worker needs scaling and revisions. Evaluate Azure Container Apps. A registry stores images. Container Apps runs and scales workloads.",
+    "distinctions": [
+      "A slot provides a separate target for verification before a swap.",
+      "A registry stores images. Container Apps runs and scales workloads."
+    ],
+    "diagram": [
+      "A team needs to test a web release before promoting it",
+      "Use an App Service staging slot and verify slot-specific settings before swapping",
+      "A slot provides a separate target for verification before a swap."
+    ],
+    "lab": [
+      "Create a table comparing ACR, ACI, Container Apps and App Service",
+      "Draw a staging and production slot with a different database setting in each",
+      "Record a readiness check and a rollback decision",
+      "List DNS and TLS checks for the production hostname"
+    ],
+    "example": {
+      "situation": "A team needs to test a web release before promoting it",
+      "reasoning": "A slot provides a separate target for verification before a swap.",
+      "result": "Use an App Service staging slot and verify slot-specific settings before swapping"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A team needs to test a web release before promoting it. Which explanation supports the best decision?",
+        "options": [
+          "A slot provides a separate target for verification before a swap.",
+          "The appropriate approach is to replace production DNS before testing the app.",
+          "The appropriate approach is to store the release in Azure Container Registry and assume it is running."
+        ],
+        "answer": 0,
+        "explanation": "A slot provides a separate target for verification before a swap. Recommended action: Use an App Service staging slot and verify slot-specific settings before swapping.",
+        "tier": 3
+      },
+      {
+        "prompt": "An event-driven container worker needs scaling and revisions. Which explanation supports the best decision?",
+        "options": [
+          "A registry stores images. Container Apps runs and scales workloads.",
+          "The appropriate approach is to use Container Registry as the worker runtime.",
+          "The appropriate approach is to create an NSG as the scaling controller."
+        ],
+        "answer": 0,
+        "explanation": "A registry stores images. Container Apps runs and scales workloads. Recommended action: Evaluate Azure Container Apps.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-5-1",
+    "key": "decisions",
+    "title": "Plan Azure Backup and Site Recovery — worked decisions",
+    "explanation": "A backup gives restore points. Replication and Site Recovery support failover to a recovery environment. Vault choice depends on workload support. Configure retention against the required recovery point, and test the recovery time with a restore. Test failover in an isolated network so the recovered systems cannot collide with production names or addresses. Validate dependencies, data integrity, and client routing before declaring recovery.\n\nA regional disaster requires bringing replicated workloads online elsewhere. Use a tested Site Recovery failover plan. Failover requires recoverable workloads, networking and tested procedures.\n\nA file was corrupted yesterday and replication copied the corruption. Restore a known-good historical recovery point. Replication can copy corruption. A historical recovery point addresses a different failure.",
+    "distinctions": [
+      "Failover requires recoverable workloads, networking and tested procedures.",
+      "Replication can copy corruption. A historical recovery point addresses a different failure."
+    ],
+    "diagram": [
+      "A regional disaster requires bringing replicated workloads online elsewhere",
+      "Use a tested Site Recovery failover plan",
+      "Failover requires recoverable workloads, networking and tested procedures."
+    ],
+    "lab": [
+      "Define RPO and RTO for a fictional workload",
+      "Choose a backup retention policy and document restore dependencies",
+      "Draft an isolated test-failover network",
+      "Record a checksum and application transaction as recovery evidence"
+    ],
+    "example": {
+      "situation": "A regional disaster requires bringing replicated workloads online elsewhere",
+      "reasoning": "Failover requires recoverable workloads, networking and tested procedures.",
+      "result": "Use a tested Site Recovery failover plan"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A regional disaster requires bringing replicated workloads online elsewhere. Which explanation supports the best decision?",
+        "options": [
+          "Failover requires recoverable workloads, networking and tested procedures.",
+          "The appropriate approach is to assume a delete lock recreates a failed region.",
+          "The appropriate approach is to use only a resource group budget alert."
+        ],
+        "answer": 0,
+        "explanation": "Failover requires recoverable workloads, networking and tested procedures. Recommended action: Use a tested Site Recovery failover plan.",
+        "tier": 3
+      },
+      {
+        "prompt": "A file was corrupted yesterday and replication copied the corruption. Which explanation supports the best decision?",
+        "options": [
+          "Replication can copy corruption. A historical recovery point addresses a different failure.",
+          "The appropriate approach is to fail over only to the most recent replica.",
+          "The appropriate approach is to increase the NSG priority number."
+        ],
+        "answer": 0,
+        "explanation": "Replication can copy corruption. A historical recovery point addresses a different failure. Recommended action: Restore a known-good historical recovery point.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-4-1",
+    "key": "decisions",
+    "title": "Match compute and data services to a workload — worked decisions",
+    "explanation": "Select compute from runtime constraints and traffic shape. EC2 exposes host-level control, Fargate runs supported container workloads without managing hosts, and Lambda fits event-driven functions within its execution limits. DynamoDB benefits from partition keys that distribute access. RDS supports relational queries and transactions. CloudFront caches content at edge locations while ElastiCache accelerates application data access. Measure p95 latency and throttling before changing services.\n\nA key-value table throttles on a single popular partition key. Redesign key distribution and check access patterns. A hot key can concentrate work despite spare aggregate capacity.\n\nGlobal users repeatedly download the same versioned static assets. Serve cacheable objects through CloudFront. Edge caching reduces repeated origin work and client latency.",
+    "distinctions": [
+      "A hot key can concentrate work despite spare aggregate capacity.",
+      "Edge caching reduces repeated origin work and client latency."
+    ],
+    "diagram": [
+      "A key-value table throttles on a single popular partition key",
+      "Redesign key distribution and check access patterns",
+      "A hot key can concentrate work despite spare aggregate capacity."
+    ],
+    "lab": [
+      "List read/write patterns and traffic bursts",
+      "Choose compute, data store and cache independently",
+      "Calculate origin requests with a stated cache hit rate",
+      "Define a load test including p95 latency and cache misses"
+    ],
+    "example": {
+      "situation": "A key-value table throttles on a single popular partition key",
+      "reasoning": "A hot key can concentrate work despite spare aggregate capacity.",
+      "result": "Redesign key distribution and check access patterns"
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A key-value table throttles on a single popular partition key. Which explanation supports the best decision?",
+        "options": [
+          "A hot key can concentrate work despite spare aggregate capacity.",
+          "The appropriate approach is to move static images into the same hot partition.",
+          "The appropriate approach is to add a CloudFront distribution and assume it changes table partitioning."
+        ],
+        "answer": 0,
+        "explanation": "A hot key can concentrate work despite spare aggregate capacity. Recommended action: Redesign key distribution and check access patterns.",
+        "tier": 3
+      },
+      {
+        "prompt": "Global users repeatedly download the same versioned static assets. Which explanation supports the best decision?",
+        "options": [
+          "Edge caching reduces repeated origin work and client latency.",
+          "The appropriate approach is to route every download through a primary database.",
+          "The appropriate approach is to use IAM policies to reduce physical network distance."
+        ],
+        "answer": 0,
+        "explanation": "Edge caching reduces repeated origin work and client latency. Recommended action: Serve cacheable objects through CloudFront.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-1-2",
+    "key": "decisions",
+    "title": "Design AWS network isolation — worked decisions",
+    "explanation": "A VPC subnet is public when its route table has a route to an internet gateway, but IPv4 internet access also needs an appropriate public address and allowed traffic. Private workloads may use a NAT gateway for outbound internet access or service endpoints for supported APIs. Security groups are stateful. Network ACLs are stateless and require matching return paths. Keep the database reachable from the application security group only.\n\nPrivate workloads need S3 access without internet egress. Use an S3 gateway endpoint and restrict access with applicable policies. A gateway endpoint supplies a private VPC path to S3.\n\nA stateless ACL allows a request but drops the response. Inspect return-direction ephemeral-port rules. Stateless network ACL evaluation applies independently to each direction.",
+    "distinctions": [
+      "A gateway endpoint supplies a private VPC path to S3.",
+      "Stateless network ACL evaluation applies independently to each direction."
+    ],
+    "diagram": [
+      "Private workloads need S3 access without internet egress",
+      "Use an S3 gateway endpoint and restrict access with applicable policies",
+      "A gateway endpoint supplies a private VPC path to S3."
+    ],
+    "lab": [
+      "Draw public load balancer and private application/database subnets",
+      "Write route tables and the two security group relationships",
+      "Trace return traffic through both ACLs",
+      "Add a private S3 path and identify its policy boundaries"
+    ],
+    "example": {
+      "situation": "Private workloads need S3 access without internet egress",
+      "reasoning": "A gateway endpoint supplies a private VPC path to S3.",
+      "result": "Use an S3 gateway endpoint and restrict access with applicable policies"
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Private workloads need S3 access without internet egress. Which explanation supports the best decision?",
+        "options": [
+          "A gateway endpoint supplies a private VPC path to S3.",
+          "The appropriate approach is to assign public IP addresses to the database tier.",
+          "The appropriate approach is to add a public DNS record for the bucket and remove all route rules."
+        ],
+        "answer": 0,
+        "explanation": "A gateway endpoint supplies a private VPC path to S3. Recommended action: Use an S3 gateway endpoint and restrict access with applicable policies.",
+        "tier": 3
+      },
+      {
+        "prompt": "A stateless ACL allows a request but drops the response. Which explanation supports the best decision?",
+        "options": [
+          "Stateless network ACL evaluation applies independently to each direction.",
+          "The appropriate approach is to assume all ACLs track established connections.",
+          "The appropriate approach is to add an IAM role to reopen the network path."
+        ],
+        "answer": 0,
+        "explanation": "Stateless network ACL evaluation applies independently to each direction. Recommended action: Inspect return-direction ephemeral-port rules.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-2-2",
+    "key": "decisions",
+    "title": "Compare AWS disaster recovery designs — worked decisions",
+    "explanation": "Backup and restore, pilot light, warm standby and active-active represent different recovery commitments. A pilot light keeps critical components ready while a warm standby keeps a scaled-down working environment. Multi-AZ protects against some local failures, while multi-region design can address regional outages. Establish RPO and RTO by business impact, and test client routing, data consistency and capacity during recovery.\n\nThe recovery region must already serve a small live workload. Use a warm standby design. Warm standby keeps a functional scaled-down environment.\n\nA design replicates every minute but restoration takes an hour. Compare the one-minute recovery point and one-hour recovery time independently. RPO concerns acceptable loss. RTO concerns acceptable outage.",
+    "distinctions": [
+      "Warm standby keeps a functional scaled-down environment.",
+      "RPO concerns acceptable loss. RTO concerns acceptable outage."
+    ],
+    "diagram": [
+      "The recovery region must already serve a small live workload",
+      "Use a warm standby design",
+      "Warm standby keeps a functional scaled-down environment."
+    ],
+    "lab": [
+      "Rank four DR strategies for a fictional billing system",
+      "Estimate data loss and restoration time",
+      "Document how to route traffic and prevent conflicting writes",
+      "Perform a tabletop failover and revise the estimate"
+    ],
+    "example": {
+      "situation": "The recovery region must already serve a small live workload",
+      "reasoning": "Warm standby keeps a functional scaled-down environment.",
+      "result": "Use a warm standby design"
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "The recovery region must already serve a small live workload. Which explanation supports the best decision?",
+        "options": [
+          "Warm standby keeps a functional scaled-down environment.",
+          "The appropriate approach is to use cold backup only.",
+          "The appropriate approach is to use an empty DNS zone as a pilot light."
+        ],
+        "answer": 0,
+        "explanation": "Warm standby keeps a functional scaled-down environment. Recommended action: Use a warm standby design.",
+        "tier": 3
+      },
+      {
+        "prompt": "A design replicates every minute but restoration takes an hour. Which explanation supports the best decision?",
+        "options": [
+          "RPO concerns acceptable loss. RTO concerns acceptable outage.",
+          "The appropriate approach is to treat RTO as the interval between replica updates.",
+          "The appropriate approach is to assume a successful backup meets both objectives."
+        ],
+        "answer": 0,
+        "explanation": "RPO concerns acceptable loss. RTO concerns acceptable outage. Recommended action: Compare the one-minute recovery point and one-hour recovery time independently.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-4-1",
+    "key": "decisions",
+    "title": "Distinguish trust, encryption, hashing and governance — worked decisions",
+    "explanation": "Zero Trust uses explicit verification, least privilege and an assume-breach mindset. Defense in depth applies independent protections at multiple layers. Encryption provides confidentiality when keys are protected. Hashing produces a digest useful for integrity checks, but an attacker able to change the file and the published digest can defeat a naive comparison. Governance assigns decisions and accountability, risk evaluates uncertainty, and compliance assesses obligations.\n\nA recipient needs to detect tampering with a download. Compare a digest obtained from an authenticated source. A trustworthy expected digest lets the recipient detect alteration.\n\nAn administrator is inside the corporate network and requests privileged access. Verify explicitly and grant only necessary privilege. A trusted network location does not establish identity or authorization.",
+    "distinctions": [
+      "A trustworthy expected digest lets the recipient detect alteration.",
+      "A trusted network location does not establish identity or authorization."
+    ],
+    "diagram": [
+      "A recipient needs to detect tampering with a download",
+      "Compare a digest obtained from an authenticated source",
+      "A trustworthy expected digest lets the recipient detect alteration."
+    ],
+    "lab": [
+      "Build a control matrix for an internal payroll app",
+      "Assign owners to identity, network, data and audit controls",
+      "Compare encryption, digest verification and a digital signature",
+      "Run an assume-breach tabletop with a stolen password"
+    ],
+    "example": {
+      "situation": "A recipient needs to detect tampering with a download",
+      "reasoning": "A trustworthy expected digest lets the recipient detect alteration.",
+      "result": "Compare a digest obtained from an authenticated source"
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A recipient needs to detect tampering with a download. Which explanation supports the best decision?",
+        "options": [
+          "A trustworthy expected digest lets the recipient detect alteration.",
+          "The appropriate approach is to encrypt the file with a key published beside it and assume authenticity.",
+          "The appropriate approach is to compare filenames only."
+        ],
+        "answer": 0,
+        "explanation": "A trustworthy expected digest lets the recipient detect alteration. Recommended action: Compare a digest obtained from an authenticated source.",
+        "tier": 3
+      },
+      {
+        "prompt": "An administrator is inside the corporate network and requests privileged access. Which explanation supports the best decision?",
+        "options": [
+          "A trusted network location does not establish identity or authorization.",
+          "The appropriate approach is to grant permanent admin based on network location.",
+          "The appropriate approach is to skip logging for internal identities."
+        ],
+        "answer": 0,
+        "explanation": "A trusted network location does not establish identity or authorization. Recommended action: Verify explicitly and grant only necessary privilege.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-1-2",
+    "key": "decisions",
+    "title": "Govern privileged and guest access with Entra — worked decisions",
+    "explanation": "Conditional Access evaluates signals and enforces access decisions such as requiring MFA. Privileged Identity Management supports eligible, time-bound role activation. Access reviews help reassess whether users and guests still need membership. Entitlement management organizes access packages and lifecycle rules. Microsoft Entra ID Protection detects identity risk signals, while external identities can collaborate with their own identity under applicable policies.\n\nAn operator needs admin privileges only during scheduled changes. Use eligible activation with Privileged Identity Management. Eligible activation limits the duration of elevated privileges.\n\nExternal reviewers leave a project and group memberships may linger. Schedule access reviews and act on the results. Access reviews evaluate continued entitlement.",
+    "distinctions": [
+      "Eligible activation limits the duration of elevated privileges.",
+      "Access reviews evaluate continued entitlement."
+    ],
+    "diagram": [
+      "An operator needs admin privileges only during scheduled changes",
+      "Use eligible activation with Privileged Identity Management",
+      "Eligible activation limits the duration of elevated privileges."
+    ],
+    "lab": [
+      "Create fictional operator and guest identities on paper",
+      "Draw the approval and activation flow for privileged work",
+      "Set the review frequency and reviewer for a guest group",
+      "Predict access decisions for a risky and a normal sign-in"
+    ],
+    "example": {
+      "situation": "An operator needs admin privileges only during scheduled changes",
+      "reasoning": "Eligible activation limits the duration of elevated privileges.",
+      "result": "Use eligible activation with Privileged Identity Management"
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "An operator needs admin privileges only during scheduled changes. Which explanation supports the best decision?",
+        "options": [
+          "Eligible activation limits the duration of elevated privileges.",
+          "The appropriate approach is to give the operator a permanent global admin assignment.",
+          "The appropriate approach is to use a retention label to expire the admin role."
+        ],
+        "answer": 0,
+        "explanation": "Eligible activation limits the duration of elevated privileges. Recommended action: Use eligible activation with Privileged Identity Management.",
+        "tier": 3
+      },
+      {
+        "prompt": "External reviewers leave a project and group memberships may linger. Which explanation supports the best decision?",
+        "options": [
+          "Access reviews evaluate continued entitlement.",
+          "The appropriate approach is to reset the tenant signing domain.",
+          "The appropriate approach is to turn off MFA to remove old users."
+        ],
+        "answer": 0,
+        "explanation": "Access reviews evaluate continued entitlement. Recommended action: Schedule access reviews and act on the results.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-2-2",
+    "key": "decisions",
+    "title": "Select Azure infrastructure security controls — worked decisions",
+    "explanation": "NSGs filter traffic at supported network scopes. Azure Firewall centralizes network filtering, and WAF evaluates supported web requests for application-layer threats. DDoS Protection addresses volumetric attacks against supported public resources. Bastion provides managed remote administration access to VMs without requiring direct public VM management ports. Key Vault protects secrets, keys and certificates, while Defender for Cloud reports posture and provides workload protection capabilities.\n\nA public web application needs filtering for malicious HTTP requests. Use a web application firewall. WAF inspects application-layer web traffic.\n\nA VM needs private-IP administrative access through a managed service. Use Azure Bastion. Bastion provides an administration path without direct public VM management ports.",
+    "distinctions": [
+      "WAF inspects application-layer web traffic.",
+      "Bastion provides an administration path without direct public VM management ports."
+    ],
+    "diagram": [
+      "A public web application needs filtering for malicious HTTP requests",
+      "Use a web application firewall",
+      "WAF inspects application-layer web traffic."
+    ],
+    "lab": [
+      "Draw the edge, subnet, VM and secret-store boundaries",
+      "Match six attack or access cases to a control",
+      "Identify which evidence shows the control actually worked",
+      "Document one remaining risk after each mitigation"
+    ],
+    "example": {
+      "situation": "A public web application needs filtering for malicious HTTP requests",
+      "reasoning": "WAF inspects application-layer web traffic.",
+      "result": "Use a web application firewall"
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A public web application needs filtering for malicious HTTP requests. Which explanation supports the best decision?",
+        "options": [
+          "WAF inspects application-layer web traffic.",
+          "The appropriate approach is to use Key Vault as an HTTP request filter.",
+          "The appropriate approach is to assign a storage retention label."
+        ],
+        "answer": 0,
+        "explanation": "WAF inspects application-layer web traffic. Recommended action: Use a web application firewall.",
+        "tier": 3
+      },
+      {
+        "prompt": "A VM needs private-IP administrative access through a managed service. Which explanation supports the best decision?",
+        "options": [
+          "Bastion provides an administration path without direct public VM management ports.",
+          "The appropriate approach is to publish RDP to all source addresses.",
+          "The appropriate approach is to use a compliance score as a tunnel."
+        ],
+        "answer": 0,
+        "explanation": "Bastion provides an administration path without direct public VM management ports. Recommended action: Use Azure Bastion.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist11-3-2",
+    "key": "decisions",
+    "title": "Handle audit, discovery and compliance evidence — worked decisions",
+    "explanation": "Service Trust Portal provides Microsoft assurance materials. Compliance Manager helps track assessment actions and progress. A compliance score reflects tracked improvements and evidence, rather than a universal compliance decision. Purview Audit records supported activity. eDiscovery supports identifying and preserving relevant material within an authorized investigation. Insider Risk Management correlates supported signals and needs careful privacy, role and workflow design.\n\nAn authorized investigation needs relevant records preserved and reviewed. Use the appropriate eDiscovery case and hold workflow. Preservation and review are discovery activities.\n\nA risk owner needs Microsoft cloud assurance reports. Check the Service Trust Portal. Service Trust Portal provides assurance documentation.",
+    "distinctions": [
+      "Preservation and review are discovery activities.",
+      "Service Trust Portal provides assurance documentation."
+    ],
+    "diagram": [
+      "An authorized investigation needs relevant records preserved and reviewed",
+      "Use the appropriate eDiscovery case and hold workflow",
+      "Preservation and review are discovery activities."
+    ],
+    "lab": [
+      "Build a fictional case with a defined scope and custodian list",
+      "Separate preservation, audit evidence and review actions",
+      "Assign permissions to reviewers and log their access",
+      "Record one compliance improvement with accountable evidence"
+    ],
+    "example": {
+      "situation": "An authorized investigation needs relevant records preserved and reviewed",
+      "reasoning": "Preservation and review are discovery activities.",
+      "result": "Use the appropriate eDiscovery case and hold workflow"
+    },
+    "sources": [
+      {
+        "title": "Security, Compliance, and Identity Fundamentals official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-900"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "An authorized investigation needs relevant records preserved and reviewed. Which explanation supports the best decision?",
+        "options": [
+          "Preservation and review are discovery activities.",
+          "The appropriate approach is to delete all older records before review.",
+          "The appropriate approach is to raise the compliance score and assume the content is preserved."
+        ],
+        "answer": 0,
+        "explanation": "Preservation and review are discovery activities. Recommended action: Use the appropriate eDiscovery case and hold workflow.",
+        "tier": 3
+      },
+      {
+        "prompt": "A risk owner needs Microsoft cloud assurance reports. Which explanation supports the best decision?",
+        "options": [
+          "Service Trust Portal provides assurance documentation.",
+          "The appropriate approach is to search VM activity logs for a certification report.",
+          "The appropriate approach is to assign a sensitivity label to the subscription."
+        ],
+        "answer": 0,
+        "explanation": "Service Trust Portal provides assurance documentation. Recommended action: Check the Service Trust Portal.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-4-1",
+    "key": "decisions",
+    "title": "Choose a Google Cloud modernization path — worked decisions",
+    "explanation": "Compute Engine provides VMs and OS control. GKE provides managed Kubernetes for applications that need Kubernetes scheduling and APIs. Cloud Run runs containers without managing clusters and is useful when teams want a simpler deployment surface. Migration can rehost existing workloads or refactor them where value justifies the change. APIs, CI/CD and observability help teams deploy changes safely.\n\nA team has a stateless HTTP container and wants minimal cluster administration. Evaluate Cloud Run. Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.\n\nA legacy workload needs a custom OS dependency during an initial move. Consider rehosting on Compute Engine. VMs preserve more control over the runtime during rehosting.",
+    "distinctions": [
+      "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.",
+      "VMs preserve more control over the runtime during rehosting."
+    ],
+    "diagram": [
+      "A team has a stateless HTTP container and wants minimal cluster administration",
+      "Evaluate Cloud Run",
+      "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster."
+    ],
+    "lab": [
+      "Inventory an application and its external dependencies",
+      "Compare rehost, replatform and refactor using cost and operational effort",
+      "Pick Compute Engine, GKE or Cloud Run for each component",
+      "Write a rollout and rollback plan with a test transaction"
+    ],
+    "example": {
+      "situation": "A team has a stateless HTTP container and wants minimal cluster administration",
+      "reasoning": "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.",
+      "result": "Evaluate Cloud Run"
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A team has a stateless HTTP container and wants minimal cluster administration. Which explanation supports the best decision?",
+        "options": [
+          "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster.",
+          "The appropriate approach is to choose GKE solely to avoid using a container.",
+          "The appropriate approach is to store the image in BigQuery and assume it will execute."
+        ],
+        "answer": 0,
+        "explanation": "Cloud Run runs containers without requiring the team to manage a Kubernetes cluster. Recommended action: Evaluate Cloud Run.",
+        "tier": 3
+      },
+      {
+        "prompt": "A legacy workload needs a custom OS dependency during an initial move. Which explanation supports the best decision?",
+        "options": [
+          "VMs preserve more control over the runtime during rehosting.",
+          "The appropriate approach is to force a rewrite before any migration assessment.",
+          "The appropriate approach is to use Cloud Storage to run the OS process."
+        ],
+        "answer": 0,
+        "explanation": "VMs preserve more control over the runtime during rehosting. Recommended action: Consider rehosting on Compute Engine.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-5-1",
+    "key": "decisions",
+    "title": "Assign Google Cloud security responsibilities — worked decisions",
+    "explanation": "IAM grants roles to principals at scopes in the resource hierarchy. Cloud Audit Logs provide evidence about supported actions. Encryption and key management address different needs from identity and network access. Organizations still determine who should see data and verify that their application configures access appropriately. Compliance decisions need a clear data location, documented responsibilities and service-specific evidence.\n\nA workload needs read access only to one bucket. Grant a narrowly scoped reader role to the workload identity. Least privilege limits what an identity can do and where.\n\nAn investigator needs evidence of a supported administrative change. Review the relevant Cloud Audit Logs. Audit logs and billing records serve different purposes.",
+    "distinctions": [
+      "Least privilege limits what an identity can do and where.",
+      "Audit logs and billing records serve different purposes."
+    ],
+    "diagram": [
+      "A workload needs read access only to one bucket",
+      "Grant a narrowly scoped reader role to the workload identity",
+      "Least privilege limits what an identity can do and where."
+    ],
+    "lab": [
+      "Draw organization, folder, project and resource boundaries",
+      "Assign a fictional workload identity a narrow role",
+      "Define a negative access test and the audit evidence to retain",
+      "Write a data-location requirement and its verification method"
+    ],
+    "example": {
+      "situation": "A workload needs read access only to one bucket",
+      "reasoning": "Least privilege limits what an identity can do and where.",
+      "result": "Grant a narrowly scoped reader role to the workload identity"
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A workload needs read access only to one bucket. Which explanation supports the best decision?",
+        "options": [
+          "Least privilege limits what an identity can do and where.",
+          "The appropriate approach is to grant organization administrator to every developer.",
+          "The appropriate approach is to store a shared permanent credential in code."
+        ],
+        "answer": 0,
+        "explanation": "Least privilege limits what an identity can do and where. Recommended action: Grant a narrowly scoped reader role to the workload identity.",
+        "tier": 3
+      },
+      {
+        "prompt": "An investigator needs evidence of a supported administrative change. Which explanation supports the best decision?",
+        "options": [
+          "Audit logs and billing records serve different purposes.",
+          "The appropriate approach is to assume billing data includes every change request.",
+          "The appropriate approach is to rotate a key to reconstruct the original event."
+        ],
+        "answer": 0,
+        "explanation": "Audit logs and billing records serve different purposes. Recommended action: Review the relevant Cloud Audit Logs.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-6-1",
+    "key": "decisions",
+    "title": "Manage Google Cloud cost and continuity — worked decisions",
+    "explanation": "Budgets and alerts help monitor spending but do not directly cap usage. Labels and billing exports help allocate costs. An SLI measures service behavior and an SLO sets a target. A recovery plan states the acceptable outage and data loss, who owns failover and how the restored service is validated. Sustainability discussions should distinguish regional energy characteristics from workload efficiency and resource utilization.\n\nA cost alert fires after an unexpected batch workload. Identify the cost driver and take an explicit remediation action. An alert informs action but does not itself stop all costs.\n\nA customer wants a target for successful requests. Define an SLO using an observable success-rate SLI. An SLO ties a target to a measurable service indicator.",
+    "distinctions": [
+      "An alert informs action but does not itself stop all costs.",
+      "An SLO ties a target to a measurable service indicator."
+    ],
+    "diagram": [
+      "A cost alert fires after an unexpected batch workload",
+      "Identify the cost driver and take an explicit remediation action",
+      "An alert informs action but does not itself stop all costs."
+    ],
+    "lab": [
+      "Define a service SLI and an error budget",
+      "Create a fictional billing breakdown using labels",
+      "Write a recovery runbook with RTO and RPO",
+      "Explain which utilization changes reduce wasted capacity"
+    ],
+    "example": {
+      "situation": "A cost alert fires after an unexpected batch workload",
+      "reasoning": "An alert informs action but does not itself stop all costs.",
+      "result": "Identify the cost driver and take an explicit remediation action"
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A cost alert fires after an unexpected batch workload. Which explanation supports the best decision?",
+        "options": [
+          "An alert informs action but does not itself stop all costs.",
+          "The appropriate approach is to assume the alert stopped the job.",
+          "The appropriate approach is to disable the billing export before investigation."
+        ],
+        "answer": 0,
+        "explanation": "An alert informs action but does not itself stop all costs. Recommended action: Identify the cost driver and take an explicit remediation action.",
+        "tier": 3
+      },
+      {
+        "prompt": "A customer wants a target for successful requests. Which explanation supports the best decision?",
+        "options": [
+          "An SLO ties a target to a measurable service indicator.",
+          "The appropriate approach is to use a backup retention period as the success-rate measure.",
+          "The appropriate approach is to treat a logo change as evidence of reliability."
+        ],
+        "answer": 0,
+        "explanation": "An SLO ties a target to a measurable service indicator. Recommended action: Define an SLO using an observable success-rate SLI.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-4-1",
+    "key": "decisions",
+    "title": "Operate HCP Terraform workspaces and runs — worked decisions",
+    "explanation": "HCP Terraform workspaces organize configuration, variables, state and runs for a deployment. Projects group workspaces. Version-control-driven runs respond to changes in connected repositories, while other workflows can initiate runs through the CLI or API. Plan review, approval, and policy checks govern change. Distinguish a workspace in HCP Terraform from a CLI workspace backed by a separate state instance.\n\nA team wants production changes reviewed before execution. Require reviewed plans and approval in the production workspace workflow. Approval gates provide a deliberate control before applying.\n\nSeveral workspaces belong to a single product team. Group them under an appropriate HCP Terraform project. Projects group workspaces and support administration at that boundary.",
+    "distinctions": [
+      "Approval gates provide a deliberate control before applying.",
+      "Projects group workspaces and support administration at that boundary."
+    ],
+    "diagram": [
+      "A team wants production changes reviewed before execution",
+      "Require reviewed plans and approval in the production workspace workflow",
+      "Approval gates provide a deliberate control before applying."
+    ],
+    "lab": [
+      "Sketch dev and production workspaces with different variables",
+      "Choose a run trigger and reviewer for each",
+      "Predict what happens after a pull request and after merge",
+      "Record one policy check and its evidence"
+    ],
+    "example": {
+      "situation": "A team wants production changes reviewed before execution",
+      "reasoning": "Approval gates provide a deliberate control before applying.",
+      "result": "Require reviewed plans and approval in the production workspace workflow"
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A team wants production changes reviewed before execution. Which explanation supports the best decision?",
+        "options": [
+          "Approval gates provide a deliberate control before applying.",
+          "The appropriate approach is to share the production state with every repository contributor.",
+          "The appropriate approach is to turn off all run history."
+        ],
+        "answer": 0,
+        "explanation": "Approval gates provide a deliberate control before applying. Recommended action: Require reviewed plans and approval in the production workspace workflow.",
+        "tier": 3
+      },
+      {
+        "prompt": "Several workspaces belong to a single product team. Which explanation supports the best decision?",
+        "options": [
+          "Projects group workspaces and support administration at that boundary.",
+          "The appropriate approach is to use a provider lock file as the team permission boundary.",
+          "The appropriate approach is to merge all environments into one state file."
+        ],
+        "answer": 0,
+        "explanation": "Projects group workspaces and support administration at that boundary. Recommended action: Group them under an appropriate HCP Terraform project.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-3-2",
+    "key": "decisions",
+    "title": "Control lifecycle, validation and sensitive values — worked decisions",
+    "explanation": "Resource references form dependencies. Explicit depends_on can model dependencies Terraform cannot infer. create_before_destroy can reduce disruption where both resources can coexist and names and quotas permit it. Preconditions and postconditions enforce assumptions at different points. Sensitive marking hides ordinary output. Ephemeral values and write-only arguments can avoid persistence where the language and provider support them.\n\nA replacement must exist before the old object disappears. Evaluate create_before_destroy and verify naming and quota constraints. Overlapping lifetime is useful only when both instances can exist.\n\nAn operator wants to keep a value out of state. Use supported ephemeral or write-only mechanisms where appropriate. Display redaction and state persistence differ.",
+    "distinctions": [
+      "Overlapping lifetime is useful only when both instances can exist.",
+      "Display redaction and state persistence differ."
+    ],
+    "diagram": [
+      "A replacement must exist before the old object disappears",
+      "Evaluate create_before_destroy and verify naming and quota constraints",
+      "Overlapping lifetime is useful only when both instances can exist."
+    ],
+    "lab": [
+      "Diagram a producer and dependent consumer",
+      "Predict replacement order with and without create_before_destroy",
+      "Write a precondition with a test case",
+      "List which values must be kept out of plan and state"
+    ],
+    "example": {
+      "situation": "A replacement must exist before the old object disappears",
+      "reasoning": "Overlapping lifetime is useful only when both instances can exist.",
+      "result": "Evaluate create_before_destroy and verify naming and quota constraints"
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A replacement must exist before the old object disappears. Which explanation supports the best decision?",
+        "options": [
+          "Overlapping lifetime is useful only when both instances can exist.",
+          "The appropriate approach is to use sensitive=true as a lifecycle setting.",
+          "The appropriate approach is to delete state before generating a plan."
+        ],
+        "answer": 0,
+        "explanation": "Overlapping lifetime is useful only when both instances can exist. Recommended action: Evaluate create_before_destroy and verify naming and quota constraints.",
+        "tier": 3
+      },
+      {
+        "prompt": "An operator wants to keep a value out of state. Which explanation supports the best decision?",
+        "options": [
+          "Display redaction and state persistence differ.",
+          "The appropriate approach is to mark a normal persisted output sensitive and assume it disappears.",
+          "The appropriate approach is to print the value to CI logs for verification."
+        ],
+        "answer": 0,
+        "explanation": "Display redaction and state persistence differ. Recommended action: Use supported ephemeral or write-only mechanisms where appropriate.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist13-2-2",
+    "key": "decisions",
+    "title": "Adopt existing infrastructure and reconcile drift — worked decisions",
+    "explanation": "Import binds an existing remote object to a resource address. Configuration must describe the intended object and the plan must be reviewed for unwanted changes. A moved block records an address change so Terraform can retain identity across a refactor. A refresh-only plan reviews external changes reflected in state without proposing ordinary configuration changes to infrastructure. Treat drift as evidence to investigate.\n\nA resource changes address during a refactor but should keep the same remote object. Use a moved block and inspect the plan. Recording the address migration preserves identity.\n\nAn existing object should be managed without recreating it. Import it at the intended address and review configuration alignment. Import establishes the binding. The subsequent plan reveals mismatches.",
+    "distinctions": [
+      "Recording the address migration preserves identity.",
+      "Import establishes the binding. The subsequent plan reveals mismatches."
+    ],
+    "diagram": [
+      "A resource changes address during a refactor but should keep the same remote object",
+      "Use a moved block and inspect the plan",
+      "Recording the address migration preserves identity."
+    ],
+    "lab": [
+      "Use a disposable configuration with a local provider",
+      "Record the resource address and actual file",
+      "Refactor the address with a moved block and inspect plan actions",
+      "Edit the file outside Terraform and explain the detected difference"
+    ],
+    "example": {
+      "situation": "A resource changes address during a refactor but should keep the same remote object",
+      "reasoning": "Recording the address migration preserves identity.",
+      "result": "Use a moved block and inspect the plan"
+    },
+    "sources": [
+      {
+        "title": "Terraform Associate official certification guide",
+        "url": "https://developer.hashicorp.com/terraform/tutorials/certification-004/associate-review-004"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A resource changes address during a refactor but should keep the same remote object. Which explanation supports the best decision?",
+        "options": [
+          "Recording the address migration preserves identity.",
+          "The appropriate approach is to create a duplicate at the new address and ignore the old object.",
+          "The appropriate approach is to delete remote state and apply blindly."
+        ],
+        "answer": 0,
+        "explanation": "Recording the address migration preserves identity. Recommended action: Use a moved block and inspect the plan.",
+        "tier": 3
+      },
+      {
+        "prompt": "An existing object should be managed without recreating it. Which explanation supports the best decision?",
+        "options": [
+          "Import establishes the binding. The subsequent plan reveals mismatches.",
+          "The appropriate approach is to rename its cloud tag and assume state discovers it.",
+          "The appropriate approach is to destroy the object and skip configuration."
+        ],
+        "answer": 0,
+        "explanation": "Import establishes the binding. The subsequent plan reveals mismatches. Recommended action: Import it at the intended address and review configuration alignment.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-4-1",
+    "key": "decisions",
+    "title": "Manage RPM, Flatpak and shell automation — worked decisions",
+    "explanation": "DNF resolves RPM packages from enabled repositories. Query package ownership with rpm -qf and verify package metadata before changing repository settings. Flatpak remotes and installed apps form a separate application ecosystem. Bash scripts should quote variables, validate argument counts and report failure with a nonzero exit status. Use redirection and pipelines deliberately so expected output and diagnostic output remain distinguishable.\n\nA command fails because a script argument contains spaces. Quote the expansion when passing it to a command. Quoting preserves the argument as a single shell word.\n\nAn RPM-managed file needs to be traced back to its package. Run rpm -qf on the path. rpm -qf queries ownership in the RPM database.",
+    "distinctions": [
+      "Quoting preserves the argument as a single shell word.",
+      "rpm -qf queries ownership in the RPM database."
+    ],
+    "diagram": [
+      "A command fails because a script argument contains spaces",
+      "Quote the expansion when passing it to a command",
+      "Quoting preserves the argument as a single shell word."
+    ],
+    "lab": [
+      "Run dnf repolist and inspect an installed RPM with rpm -qi",
+      "Compare the output of flatpak remotes if available",
+      "Write a script that validates a file argument and counts matching lines",
+      "Test a valid path, a path with spaces and a missing file"
+    ],
+    "example": {
+      "situation": "A command fails because a script argument contains spaces",
+      "reasoning": "Quoting preserves the argument as a single shell word.",
+      "result": "Quote the expansion when passing it to a command"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A command fails because a script argument contains spaces. Which explanation supports the best decision?",
+        "options": [
+          "Quoting preserves the argument as a single shell word.",
+          "The appropriate approach is to split every argument on whitespace.",
+          "The appropriate approach is to disable error handling to hide the problem."
+        ],
+        "answer": 0,
+        "explanation": "Quoting preserves the argument as a single shell word. Recommended action: Quote the expansion when passing it to a command.",
+        "tier": 3
+      },
+      {
+        "prompt": "An RPM-managed file needs to be traced back to its package. Which explanation supports the best decision?",
+        "options": [
+          "rpm -qf queries ownership in the RPM database.",
+          "The appropriate approach is to inspect Flatpak remotes only.",
+          "The appropriate approach is to run chmod to query package metadata."
+        ],
+        "answer": 0,
+        "explanation": "rpm -qf queries ownership in the RPM database. Recommended action: Run rpm -qf on the path.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-5-1",
+    "key": "decisions",
+    "title": "Configure persistent Linux network access — worked decisions",
+    "explanation": "NetworkManager connection profiles describe persistent interface settings. Use nmcli to inspect the active profile and distinguish DNS, routing and link failure. firewalld applies rules through zones and distinguishes runtime from permanent configuration. SSH key authentication requires an authorized public key for the target account and correct file permissions. Test new access before closing a recovery console.\n\nA firewall change works until reboot. Inspect permanent configuration in the interface’s active zone. Persistent firewalld changes require correct permanent zone configuration.\n\nName lookups fail but direct IP connections work. Check resolver configuration and test the hostname separately. Name resolution can fail while IP routing works.",
+    "distinctions": [
+      "Persistent firewalld changes require correct permanent zone configuration.",
+      "Name resolution can fail while IP routing works."
+    ],
+    "diagram": [
+      "A firewall change works until reboot",
+      "Inspect permanent configuration in the interface’s active zone",
+      "Persistent firewalld changes require correct permanent zone configuration."
+    ],
+    "lab": [
+      "Use a disposable VM and keep console access",
+      "Record nmcli connection show, ip route and active firewall zones",
+      "Permit a lab service in the correct zone and verify from a second isolated host",
+      "Reboot and repeat both a permitted and denied test"
+    ],
+    "example": {
+      "situation": "A firewall change works until reboot",
+      "reasoning": "Persistent firewalld changes require correct permanent zone configuration.",
+      "result": "Inspect permanent configuration in the interface’s active zone"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A firewall change works until reboot. Which explanation supports the best decision?",
+        "options": [
+          "Persistent firewalld changes require correct permanent zone configuration.",
+          "The appropriate approach is to repeat only the runtime command after every reboot.",
+          "The appropriate approach is to change SSH file ownership to root for every user."
+        ],
+        "answer": 0,
+        "explanation": "Persistent firewalld changes require correct permanent zone configuration. Recommended action: Inspect permanent configuration in the interface’s active zone.",
+        "tier": 3
+      },
+      {
+        "prompt": "Name lookups fail but direct IP connections work. Which explanation supports the best decision?",
+        "options": [
+          "Name resolution can fail while IP routing works.",
+          "The appropriate approach is to assume the network interface is down.",
+          "The appropriate approach is to rebuild the entire VM network."
+        ],
+        "answer": 0,
+        "explanation": "Name resolution can fail while IP routing works. Recommended action: Check resolver configuration and test the hostname separately.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-6-1",
+    "key": "decisions",
+    "title": "Manage identity, sudo and SELinux context — worked decisions",
+    "explanation": "Local account settings include primary and supplementary groups, password aging and login shell. Use visudo to validate scoped privilege rules. SELinux type enforcement can reject access even when Unix permissions allow it. Inspect labels with ls -Z and restore expected labels with restorecon. For persistent custom labeling use appropriate policy configuration, then relabel. Investigate AVC denials before changing enforcement.\n\nFiles copied into a service directory have an unexpected SELinux type. Inspect the expected context and apply restorecon where appropriate. Mode bits and SELinux labels are different checks.\n\nA support group needs one privileged task. Use a narrowly scoped sudo rule validated with visudo. Scoped elevation limits privilege to the required task.",
+    "distinctions": [
+      "Mode bits and SELinux labels are different checks.",
+      "Scoped elevation limits privilege to the required task."
+    ],
+    "diagram": [
+      "Files copied into a service directory have an unexpected SELinux type",
+      "Inspect the expected context and apply restorecon where appropriate",
+      "Mode bits and SELinux labels are different checks."
+    ],
+    "lab": [
+      "Create a disposable lab user and group",
+      "Set and inspect password aging with chage",
+      "Validate a narrow sudoers entry with visudo",
+      "Compare ls -Z before and after restoring a known default context"
+    ],
+    "example": {
+      "situation": "Files copied into a service directory have an unexpected SELinux type",
+      "reasoning": "Mode bits and SELinux labels are different checks.",
+      "result": "Inspect the expected context and apply restorecon where appropriate"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Files copied into a service directory have an unexpected SELinux type. Which explanation supports the best decision?",
+        "options": [
+          "Mode bits and SELinux labels are different checks.",
+          "The appropriate approach is to disable SELinux permanently.",
+          "The appropriate approach is to set mode 777 on every file."
+        ],
+        "answer": 0,
+        "explanation": "Mode bits and SELinux labels are different checks. Recommended action: Inspect the expected context and apply restorecon where appropriate.",
+        "tier": 3
+      },
+      {
+        "prompt": "A support group needs one privileged task. Which explanation supports the best decision?",
+        "options": [
+          "Scoped elevation limits privilege to the required task.",
+          "The appropriate approach is to share the root password.",
+          "The appropriate approach is to make every member a full administrator."
+        ],
+        "answer": 0,
+        "explanation": "Scoped elevation limits privilege to the required task. Recommended action: Use a narrowly scoped sudo rule validated with visudo.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-2-2",
+    "key": "decisions",
+    "title": "Schedule jobs and verify boot behavior — worked decisions",
+    "explanation": "Systemd timers activate service units, cron runs recurring jobs and at schedules a one-time command. Identify the execution account and environment because an interactive shell can differ from a scheduler. Inspect default and active targets separately. journalctl can filter by boot and unit. Use chrony tooling to confirm synchronization instead of trusting that a process merely started.\n\nA recurring job needs unit-based logs and activation history. Use a systemd timer paired with a service. A timer activates a service that can be inspected through systemd and journal logs.\n\nA job works interactively but fails under its scheduler. Inspect the execution account, environment and absolute paths. Schedulers can use different users, directories and environment variables.",
+    "distinctions": [
+      "A timer activates a service that can be inspected through systemd and journal logs.",
+      "Schedulers can use different users, directories and environment variables."
+    ],
+    "diagram": [
+      "A recurring job needs unit-based logs and activation history",
+      "Use a systemd timer paired with a service",
+      "A timer activates a service that can be inspected through systemd and journal logs."
+    ],
+    "lab": [
+      "Write a harmless oneshot unit that appends a timestamp in a lab directory",
+      "Create a timer and inspect it with systemctl list-timers",
+      "Verify the unit journal and the file output",
+      "Reboot and verify the intended startup behavior"
+    ],
+    "example": {
+      "situation": "A recurring job needs unit-based logs and activation history",
+      "reasoning": "A timer activates a service that can be inspected through systemd and journal logs.",
+      "result": "Use a systemd timer paired with a service"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A recurring job needs unit-based logs and activation history. Which explanation supports the best decision?",
+        "options": [
+          "A timer activates a service that can be inspected through systemd and journal logs.",
+          "The appropriate approach is to use at as a perpetual scheduler without further configuration.",
+          "The appropriate approach is to start the job manually once."
+        ],
+        "answer": 0,
+        "explanation": "A timer activates a service that can be inspected through systemd and journal logs. Recommended action: Use a systemd timer paired with a service.",
+        "tier": 3
+      },
+      {
+        "prompt": "A job works interactively but fails under its scheduler. Which explanation supports the best decision?",
+        "options": [
+          "Schedulers can use different users, directories and environment variables.",
+          "The appropriate approach is to assume all shells supply identical configuration.",
+          "The appropriate approach is to replace every unit with a root login."
+        ],
+        "answer": 0,
+        "explanation": "Schedulers can use different users, directories and environment variables. Recommended action: Inspect the execution account, environment and absolute paths.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-3-2",
+    "key": "decisions",
+    "title": "Practice LVM, swap and network mounts — worked decisions",
+    "explanation": "LVM groups physical volumes into volume groups and allocates logical volumes. Growing a logical volume and growing its filesystem are distinct operations. XFS can grow while mounted but cannot be shrunk with the ordinary filesystem tools. Swap activation and persistence require separate verification. NFS mounting and autofs address remote filesystems. A timed-out remote mount can delay boot if configured carelessly.\n\nAn LV has grown but df still shows the previous XFS capacity. Grow the mounted filesystem with the appropriate XFS command. Logical capacity and filesystem capacity are separate layers.\n\nA network share should mount only when accessed. Configure an autofs map for the share. Autofs supports demand-driven mounts.",
+    "distinctions": [
+      "Logical capacity and filesystem capacity are separate layers.",
+      "Autofs supports demand-driven mounts."
+    ],
+    "diagram": [
+      "An LV has grown but df still shows the previous XFS capacity",
+      "Grow the mounted filesystem with the appropriate XFS command",
+      "Logical capacity and filesystem capacity are separate layers."
+    ],
+    "lab": [
+      "Attach a disposable lab disk and identify it by size and serial",
+      "Create a PV, VG and LV on that disk and verify with pvs, vgs and lvs",
+      "Mount a lab filesystem and verify source with findmnt",
+      "Extend the LV and filesystem separately, then verify after reboot"
+    ],
+    "example": {
+      "situation": "An LV has grown but df still shows the previous XFS capacity",
+      "reasoning": "Logical capacity and filesystem capacity are separate layers.",
+      "result": "Grow the mounted filesystem with the appropriate XFS command"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "An LV has grown but df still shows the previous XFS capacity. Which explanation supports the best decision?",
+        "options": [
+          "Logical capacity and filesystem capacity are separate layers.",
+          "The appropriate approach is to shrink XFS with resize2fs.",
+          "The appropriate approach is to edit only the mount-point directory name."
+        ],
+        "answer": 0,
+        "explanation": "Logical capacity and filesystem capacity are separate layers. Recommended action: Grow the mounted filesystem with the appropriate XFS command.",
+        "tier": 3
+      },
+      {
+        "prompt": "A network share should mount only when accessed. Which explanation supports the best decision?",
+        "options": [
+          "Autofs supports demand-driven mounts.",
+          "The appropriate approach is to mount the share on the root filesystem device directly.",
+          "The appropriate approach is to use a swap partition for NFS."
+        ],
+        "answer": 0,
+        "explanation": "Autofs supports demand-driven mounts. Recommended action: Configure an autofs map for the share.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-1-2",
+    "key": "decisions",
+    "title": "Administer Entra users, groups and password recovery — worked decisions",
+    "explanation": "Entra users may be members or external guests. Groups support repeatable access assignments and can help administer licenses, subject to service requirements. Self-service password reset requires eligible users and registered verification methods. Tenant roles govern identity tasks, while Azure resource roles govern Azure resources. Separate tenant directory administration from subscription access, and test user onboarding and removal as distinct flows.\n\nA licensed user cannot use password reset. Check whether the user is in scope and has registered the required methods. SSPR depends on policy scope, licensing and registration.\n\nA vendor needs temporary collaboration. Invite a guest and scope access to the necessary group. Separate identities support narrower access and clearer accountability.",
+    "distinctions": [
+      "SSPR depends on policy scope, licensing and registration.",
+      "Separate identities support narrower access and clearer accountability."
+    ],
+    "diagram": [
+      "A licensed user cannot use password reset",
+      "Check whether the user is in scope and has registered the required methods",
+      "SSPR depends on policy scope, licensing and registration."
+    ],
+    "lab": [
+      "Draw a user and group onboarding matrix",
+      "Record where a license and access assignment are applied",
+      "Model SSPR for a registered and unregistered account",
+      "Write an offboarding verification checklist"
+    ],
+    "example": {
+      "situation": "A licensed user cannot use password reset",
+      "reasoning": "SSPR depends on policy scope, licensing and registration.",
+      "result": "Check whether the user is in scope and has registered the required methods"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A licensed user cannot use password reset. Which explanation supports the best decision?",
+        "options": [
+          "SSPR depends on policy scope, licensing and registration.",
+          "The appropriate approach is to assign subscription Contributor.",
+          "The appropriate approach is to disable all verification requirements."
+        ],
+        "answer": 0,
+        "explanation": "SSPR depends on policy scope, licensing and registration. Recommended action: Check whether the user is in scope and has registered the required methods.",
+        "tier": 3
+      },
+      {
+        "prompt": "A vendor needs temporary collaboration. Which explanation supports the best decision?",
+        "options": [
+          "Separate identities support narrower access and clearer accountability.",
+          "The appropriate approach is to give the vendor permanent Global Administrator.",
+          "The appropriate approach is to share an existing staff account."
+        ],
+        "answer": 0,
+        "explanation": "Separate identities support narrower access and clearer accountability. Recommended action: Invite a guest and scope access to the necessary group.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-2-2",
+    "key": "decisions",
+    "title": "Delegate and manage Azure Storage access — worked decisions",
+    "explanation": "A shared access signature delegates limited access to supported storage resources. Scope permissions, target, and lifetime to the task. A stored access policy can govern supported service SAS tokens, while user delegation SAS uses Entra credentials to obtain a delegation key. Storage firewall rules remain a separate gate. Azure Files identity authentication depends on the chosen integration and has both share and file-level permission considerations. Use AzCopy or Storage Explorer to verify transfers with a test identity.\n\nA contractor needs temporary read access to one blob. Issue a scoped short-lived read SAS using a suitable authorization method. A narrow SAS limits the permitted operation, target and duration.\n\nA valid storage credential is denied from an unapproved network. Check storage networking independently of authorization. A credential does not override network access rules.",
+    "distinctions": [
+      "A narrow SAS limits the permitted operation, target and duration.",
+      "A credential does not override network access rules."
+    ],
+    "diagram": [
+      "A contractor needs temporary read access to one blob",
+      "Issue a scoped short-lived read SAS using a suitable authorization method",
+      "A narrow SAS limits the permitted operation, target and duration."
+    ],
+    "lab": [
+      "Write permissions and expiry for a mock read SAS",
+      "Predict failures for expired, wrong-network and wrong-operation requests",
+      "Compare a service SAS and a user delegation SAS",
+      "Plan an AzCopy transfer and checksum verification using test data"
+    ],
+    "example": {
+      "situation": "A contractor needs temporary read access to one blob",
+      "reasoning": "A narrow SAS limits the permitted operation, target and duration.",
+      "result": "Issue a scoped short-lived read SAS using a suitable authorization method"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A contractor needs temporary read access to one blob. Which explanation supports the best decision?",
+        "options": [
+          "A narrow SAS limits the permitted operation, target and duration.",
+          "The appropriate approach is to hand over the account key.",
+          "The appropriate approach is to make all containers public."
+        ],
+        "answer": 0,
+        "explanation": "A narrow SAS limits the permitted operation, target and duration. Recommended action: Issue a scoped short-lived read SAS using a suitable authorization method.",
+        "tier": 3
+      },
+      {
+        "prompt": "A valid storage credential is denied from an unapproved network. Which explanation supports the best decision?",
+        "options": [
+          "A credential does not override network access rules.",
+          "The appropriate approach is to increase the SAS expiry to bypass the firewall.",
+          "The appropriate approach is to change every blob to Archive."
+        ],
+        "answer": 0,
+        "explanation": "A credential does not override network access rules. Recommended action: Check storage networking independently of authorization.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist9-3-2",
+    "key": "decisions",
+    "title": "Route and balance Azure network traffic — worked decisions",
+    "explanation": "Peering connects compatible virtual networks, but it is not transitive by default. A route table can send selected prefixes through a network virtual appliance when forwarding and return paths are correctly designed. Azure Load Balancer uses layer-four flows and health probes. A private endpoint relies on correct name resolution to direct clients to its private IP. Use effective routes, effective rules and connectivity diagnostics before changing a working network.\n\nTwo spokes peer only with a hub and cannot reach one another. Design explicit routing through the hub or an appropriate direct peer. Spoke-to-spoke reachability requires an intended forwarding path.\n\nA healthy application is removed from a load balancer backend. Verify that the configured health probe can reach its expected port and endpoint. Backend health depends on the configured probe, not solely on the process state.",
+    "distinctions": [
+      "Spoke-to-spoke reachability requires an intended forwarding path.",
+      "Backend health depends on the configured probe, not solely on the process state."
+    ],
+    "diagram": [
+      "Two spokes peer only with a hub and cannot reach one another",
+      "Design explicit routing through the hub or an appropriate direct peer",
+      "Spoke-to-spoke reachability requires an intended forwarding path."
+    ],
+    "lab": [
+      "Sketch a hub and two spoke networks with nonoverlapping prefixes",
+      "Predict effective routes for one packet in each direction",
+      "Trace a private endpoint name resolution path",
+      "Write a load balancer probe failure and verification checklist"
+    ],
+    "example": {
+      "situation": "Two spokes peer only with a hub and cannot reach one another",
+      "reasoning": "Spoke-to-spoke reachability requires an intended forwarding path.",
+      "result": "Design explicit routing through the hub or an appropriate direct peer"
+    },
+    "sources": [
+      {
+        "title": "Azure Administrator official certification guide",
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Two spokes peer only with a hub and cannot reach one another. Which explanation supports the best decision?",
+        "options": [
+          "Spoke-to-spoke reachability requires an intended forwarding path.",
+          "The appropriate approach is to assume peering automatically creates transitive routes.",
+          "The appropriate approach is to change the VM size to fix route selection."
+        ],
+        "answer": 0,
+        "explanation": "Spoke-to-spoke reachability requires an intended forwarding path. Recommended action: Design explicit routing through the hub or an appropriate direct peer.",
+        "tier": 3
+      },
+      {
+        "prompt": "A healthy application is removed from a load balancer backend. Which explanation supports the best decision?",
+        "options": [
+          "Backend health depends on the configured probe, not solely on the process state.",
+          "The appropriate approach is to publish a new DNS name before inspecting health.",
+          "The appropriate approach is to add more storage replicas."
+        ],
+        "answer": 0,
+        "explanation": "Backend health depends on the configured probe, not solely on the process state. Recommended action: Verify that the configured health probe can reach its expected port and endpoint.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist10-3-2",
+    "key": "decisions",
+    "title": "Optimize AWS spend by workload behavior — worked decisions",
+    "explanation": "Compute pricing models trade predictability and flexibility. On-Demand avoids a long commitment. Savings Plans exchange a usage commitment for eligible discounts. Spot capacity can be interrupted and is appropriate for workloads that tolerate it. S3 lifecycle decisions depend on object size, age, access frequency and retrieval requirements. Network paths can incur data processing and transfer charges. Use observed utilization and cost allocation before purchasing commitments.\n\nA fault-tolerant job can checkpoint and retry interrupted workers. Evaluate Spot for the flexible workers. Interruptible compute can reduce cost when workloads recover from interruption.\n\nA stable baseline runs every day and the team has measured expected usage. Evaluate a suitable commitment while retaining flexibility for bursts. Commitments are most useful against predictable eligible usage.",
+    "distinctions": [
+      "Interruptible compute can reduce cost when workloads recover from interruption.",
+      "Commitments are most useful against predictable eligible usage."
+    ],
+    "diagram": [
+      "A fault-tolerant job can checkpoint and retry interrupted workers",
+      "Evaluate Spot for the flexible workers",
+      "Interruptible compute can reduce cost when workloads recover from interruption."
+    ],
+    "lab": [
+      "Split a fictional workload into baseline and burst capacity",
+      "Model the impact of worker interruption and checkpointing",
+      "List retrieval and transfer costs for the data flow",
+      "Record one rightsizing change and the measurement that supports it"
+    ],
+    "example": {
+      "situation": "A fault-tolerant job can checkpoint and retry interrupted workers",
+      "reasoning": "Interruptible compute can reduce cost when workloads recover from interruption.",
+      "result": "Evaluate Spot for the flexible workers"
+    },
+    "sources": [
+      {
+        "title": "AWS Solutions Architect Associate official certification guide",
+        "url": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03.html"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A fault-tolerant job can checkpoint and retry interrupted workers. Which explanation supports the best decision?",
+        "options": [
+          "Interruptible compute can reduce cost when workloads recover from interruption.",
+          "The appropriate approach is to purchase a long commitment before measuring the load.",
+          "The appropriate approach is to move the job to an archival storage class."
+        ],
+        "answer": 0,
+        "explanation": "Interruptible compute can reduce cost when workloads recover from interruption. Recommended action: Evaluate Spot for the flexible workers.",
+        "tier": 3
+      },
+      {
+        "prompt": "A stable baseline runs every day and the team has measured expected usage. Which explanation supports the best decision?",
+        "options": [
+          "Commitments are most useful against predictable eligible usage.",
+          "The appropriate approach is to put every mission-critical instance on interruptible capacity.",
+          "The appropriate approach is to assume a budget notification discounts the bill."
+        ],
+        "answer": 0,
+        "explanation": "Commitments are most useful against predictable eligible usage. Recommended action: Evaluate a suitable commitment while retaining flexibility for bursts.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist12-2-2",
+    "key": "decisions",
+    "title": "Design a Google Cloud analytics pipeline — worked decisions",
+    "explanation": "Cloud Storage holds objects, BigQuery provides analytical SQL, and Cloud SQL serves relational transactional use cases. Pub/Sub decouples event producers and consumers, while Dataflow runs stream or batch processing pipelines. Data governance includes metadata, access boundaries, quality and lineage. A pipeline needs explicit handling for late data and duplicated events. Test with synthetic records before using customer data.\n\nA team needs analytical SQL over large event history. Evaluate BigQuery for the analytical workload. The warehouse is suited to large-scale analytics.\n\nProducers must send events independently of processing availability. Use Pub/Sub with a consumer that can handle redelivery. Messaging decouples producers and consumers, while redelivery needs deliberate handling.",
+    "distinctions": [
+      "The warehouse is suited to large-scale analytics.",
+      "Messaging decouples producers and consumers, while redelivery needs deliberate handling."
+    ],
+    "diagram": [
+      "A team needs analytical SQL over large event history",
+      "Evaluate BigQuery for the analytical workload",
+      "The warehouse is suited to large-scale analytics."
+    ],
+    "lab": [
+      "Draw an event flow from producers through messaging and processing to analytics",
+      "Define an event ID and a deduplication rule",
+      "Specify where schema validation and access controls apply",
+      "Test late and duplicated synthetic events on paper"
+    ],
+    "example": {
+      "situation": "A team needs analytical SQL over large event history",
+      "reasoning": "The warehouse is suited to large-scale analytics.",
+      "result": "Evaluate BigQuery for the analytical workload"
+    },
+    "sources": [
+      {
+        "title": "Google Cloud Digital Leader official certification guide",
+        "url": "https://cloud.google.com/learn/certification/cloud-digital-leader"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A team needs analytical SQL over large event history. Which explanation supports the best decision?",
+        "options": [
+          "The warehouse is suited to large-scale analytics.",
+          "The appropriate approach is to use an application load balancer to aggregate rows.",
+          "The appropriate approach is to use a DNS zone as the storage layer."
+        ],
+        "answer": 0,
+        "explanation": "The warehouse is suited to large-scale analytics. Recommended action: Evaluate BigQuery for the analytical workload.",
+        "tier": 3
+      },
+      {
+        "prompt": "Producers must send events independently of processing availability. Which explanation supports the best decision?",
+        "options": [
+          "Messaging decouples producers and consumers, while redelivery needs deliberate handling.",
+          "The appropriate approach is to write all events to a VM boot disk and require synchronous reads.",
+          "The appropriate approach is to remove duplicate handling to increase throughput."
+        ],
+        "answer": 0,
+        "explanation": "Messaging decouples producers and consumers, while redelivery needs deliberate handling. Recommended action: Use Pub/Sub with a consumer that can handle redelivery.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-1-2",
+    "key": "decisions",
+    "title": "Work with Linux archives, links and text filters — worked decisions",
+    "explanation": "Hard links name the same inode and generally cannot cross filesystems. Symbolic links reference paths and can dangle if the target moves. Use tar to bundle files and verify archive contents before extraction. grep filters by patterns, and pipelines carry command output to another process. Shell redirection handles standard output and standard error separately. Use local manual pages to check options and practice in a disposable directory.\n\nA pathname should reference a target on another filesystem. Create a symbolic link. A symbolic link stores a pathname rather than sharing an inode across filesystems.\n\nA script must keep normal output and diagnostics in separate files. Redirect stdout and stderr separately. File descriptor 1 is standard output and 2 is standard error.",
+    "distinctions": [
+      "A symbolic link stores a pathname rather than sharing an inode across filesystems.",
+      "File descriptor 1 is standard output and 2 is standard error."
+    ],
+    "diagram": [
+      "A pathname should reference a target on another filesystem",
+      "Create a symbolic link",
+      "A symbolic link stores a pathname rather than sharing an inode across filesystems."
+    ],
+    "lab": [
+      "Create a harmless file plus hard and symbolic links",
+      "Compare inode numbers using ls -li and observe what happens after renaming the original",
+      "Archive only the lab files and inspect tar output before extracting into a new directory",
+      "Use grep and redirection to capture matching lines and errors separately"
+    ],
+    "example": {
+      "situation": "A pathname should reference a target on another filesystem",
+      "reasoning": "A symbolic link stores a pathname rather than sharing an inode across filesystems.",
+      "result": "Create a symbolic link"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A pathname should reference a target on another filesystem. Which explanation supports the best decision?",
+        "options": [
+          "A symbolic link stores a pathname rather than sharing an inode across filesystems.",
+          "The appropriate approach is to create a hard link across the filesystem boundary.",
+          "The appropriate approach is to copy the file and assume edits stay linked."
+        ],
+        "answer": 0,
+        "explanation": "A symbolic link stores a pathname rather than sharing an inode across filesystems. Recommended action: Create a symbolic link.",
+        "tier": 3
+      },
+      {
+        "prompt": "A script must keep normal output and diagnostics in separate files. Which explanation supports the best decision?",
+        "options": [
+          "File descriptor 1 is standard output and 2 is standard error.",
+          "The appropriate approach is to use only a pipe and assume stderr follows stdout.",
+          "The appropriate approach is to overwrite the source file with both streams."
+        ],
+        "answer": 0,
+        "explanation": "File descriptor 1 is standard output and 2 is standard error. Recommended action: Redirect stdout and stderr separately.",
+        "tier": 3
+      }
+    ]
+  },
+  {
+    "topic": "specialist14-2-3",
+    "key": "decisions",
+    "title": "Investigate processes and system boot — worked decisions",
+    "explanation": "Use ps and top to identify CPU or memory consumers and check ownership before acting. SIGTERM allows a process to handle orderly shutdown, while SIGKILL cannot be caught. Nice values influence ordinary process scheduling priority. Use journalctl with a boot or unit filter to scope evidence. Boot target selection and bootloader changes require a recovery path. Keep a VM snapshot before experimenting with startup recovery.\n\nA background task must stop and can clean up on exit. Send SIGTERM first and verify termination. A graceful signal gives a cooperative process a chance to release resources.\n\nAn error occurred during the prior boot. Query the previous boot journal if it is retained. Boot filtering isolates records from the relevant boot.",
+    "distinctions": [
+      "A graceful signal gives a cooperative process a chance to release resources.",
+      "Boot filtering isolates records from the relevant boot."
+    ],
+    "diagram": [
+      "A background task must stop and can clean up on exit",
+      "Send SIGTERM first and verify termination",
+      "A graceful signal gives a cooperative process a chance to release resources."
+    ],
+    "lab": [
+      "Launch a harmless sleep process and identify its PID and parent",
+      "Inspect priority and send SIGTERM to that specific lab process",
+      "Compare current and previous boot records in a disposable VM",
+      "Record the default systemd target and write a recovery plan"
+    ],
+    "example": {
+      "situation": "A background task must stop and can clean up on exit",
+      "reasoning": "A graceful signal gives a cooperative process a chance to release resources.",
+      "result": "Send SIGTERM first and verify termination"
+    },
+    "sources": [
+      {
+        "title": "RHCSA · Red Hat System Administrator official certification guide",
+        "url": "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A background task must stop and can clean up on exit. Which explanation supports the best decision?",
+        "options": [
+          "A graceful signal gives a cooperative process a chance to release resources.",
+          "The appropriate approach is to send SIGKILL to every process owned by the user.",
+          "The appropriate approach is to reboot the whole host without inspecting the process."
+        ],
+        "answer": 0,
+        "explanation": "A graceful signal gives a cooperative process a chance to release resources. Recommended action: Send SIGTERM first and verify termination.",
+        "tier": 3
+      },
+      {
+        "prompt": "An error occurred during the prior boot. Which explanation supports the best decision?",
+        "options": [
+          "Boot filtering isolates records from the relevant boot.",
+          "The appropriate approach is to search only the live process list.",
+          "The appropriate approach is to clear persistent logs first."
+        ],
+        "answer": 0,
+        "explanation": "Boot filtering isolates records from the relevant boot. Recommended action: Query the previous boot journal if it is retained.",
+        "tier": 3
+      }
+    ]
+  }
+]

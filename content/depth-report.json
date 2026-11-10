@@ -1,0 +1,72 @@
+{
+  "1": {
+    "chapters": 31,
+    "explanationWords": 4554,
+    "exercises": 62
+  },
+  "2": {
+    "chapters": 41,
+    "explanationWords": 6148,
+    "exercises": 84
+  },
+  "3": {
+    "chapters": 67,
+    "explanationWords": 9715,
+    "exercises": 135
+  },
+  "4": {
+    "chapters": 76,
+    "explanationWords": 12664,
+    "exercises": 153
+  },
+  "5": {
+    "chapters": 38,
+    "explanationWords": 5991,
+    "exercises": 76
+  },
+  "6": {
+    "chapters": 30,
+    "explanationWords": 4950,
+    "exercises": 60
+  },
+  "7": {
+    "chapters": 6,
+    "explanationWords": 945,
+    "exercises": 12
+  },
+  "8": {
+    "chapters": 4,
+    "explanationWords": 644,
+    "exercises": 8
+  },
+  "9": {
+    "chapters": 10,
+    "explanationWords": 1330,
+    "exercises": 20
+  },
+  "10": {
+    "chapters": 7,
+    "explanationWords": 958,
+    "exercises": 14
+  },
+  "11": {
+    "chapters": 7,
+    "explanationWords": 934,
+    "exercises": 14
+  },
+  "12": {
+    "chapters": 7,
+    "explanationWords": 935,
+    "exercises": 14
+  },
+  "13": {
+    "chapters": 6,
+    "explanationWords": 825,
+    "exercises": 12
+  },
+  "14": {
+    "chapters": 10,
+    "explanationWords": 1296,
+    "exercises": 20
+  }
+}

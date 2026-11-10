@@ -1,0 +1,1110 @@
+[
+  {
+    "id": "advanced7-1.6",
+    "core": 7,
+    "domain": 1,
+    "objective": "1.6",
+    "title": "Plan and verify IPv4 subnets",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "An IPv4 prefix divides an address into network and host bits. A /26 leaves six host bits: 64 addresses, normally 62 usable host addresses. Find the containing block before choosing a gateway. Private addressing does not itself provide authentication or encryption.",
+    "flow": [
+      "Read address and prefix",
+      "Calculate network and broadcast",
+      "Check usable range",
+      "Verify gateway and VLAN"
+    ],
+    "example": "A host uses 192.168.50.70/26 with gateway 192.168.50.1. The host belongs to the .64/26 block; .1 is outside its local subnet. Assign the intended router interface a usable address in .65-.126 and verify the host configuration.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "On paper, split 192.168.50.0/24 into four /26 networks and list each usable range.",
+      "In an isolated VM network, compare the configured prefix and gateway with your plan. Predict whether each test destination is local.",
+      "Change only the lab host prefix, compare ARP and ping behavior, then restore the original settings."
+    ],
+    "questions": [
+      {
+        "prompt": "How many ordinary usable host addresses are in an IPv4 /26 subnet?",
+        "options": [
+          "62",
+          "64",
+          "30",
+          "126"
+        ],
+        "answer": 0,
+        "explanation": "Six host bits give 64 addresses. Reserving network and broadcast leaves 62.",
+        "tier": 1,
+        "id": "advanced7-1.6:q1"
+      },
+      {
+        "prompt": "Which address is within RFC 1918 private space?",
+        "options": [
+          "172.40.4.8",
+          "192.0.2.8",
+          "169.254.4.8",
+          "172.20.4.8"
+        ],
+        "answer": 3,
+        "explanation": "172.20.4.8 is inside 172.16.0.0/12. Link-local and documentation blocks are different categories.",
+        "tier": 1,
+        "id": "advanced7-1.6:q2"
+      },
+      {
+        "prompt": "What is the network address for 192.168.50.70/26?",
+        "options": [
+          "192.168.50.70",
+          "192.168.50.128",
+          "192.168.50.64",
+          "192.168.50.0"
+        ],
+        "answer": 2,
+        "explanation": "/26 boundaries occur every 64 addresses. 70 falls in the 64-127 block.",
+        "tier": 2,
+        "id": "advanced7-1.6:q3"
+      },
+      {
+        "prompt": "A /27 LAN needs 29 workstations plus one gateway. Does its ordinary usable range fit?",
+        "options": [
+          "Only if the broadcast address is assigned",
+          "Yes, exactly 30 usable addresses",
+          "No, there are only 28",
+          "Yes, with 32 spare addresses"
+        ],
+        "answer": 1,
+        "explanation": "Five host bits give 32 total and 30 usable addresses. This leaves no spare capacity.",
+        "tier": 2,
+        "id": "advanced7-1.6:q4"
+      },
+      {
+        "prompt": "A host 10.1.1.10/24 repeatedly ARPs for 10.1.1.200, which the design puts behind a router in another /25. What should be checked first?",
+        "options": [
+          "The host prefix against the intended /25 design",
+          "The public DNS server",
+          "The Ethernet source port number",
+          "The browser certificate store"
+        ],
+        "answer": 0,
+        "explanation": "The /24 mask incorrectly makes .200 appear local. Correct the boundary before changing unrelated services.",
+        "tier": 3,
+        "id": "advanced7-1.6:q5"
+      },
+      {
+        "prompt": "Two lab LANs need 60 hosts each from 192.168.8.0/24. Which allocation avoids overlap?",
+        "options": [
+          "192.168.8.0/25 and 192.168.8.64/26",
+          "192.168.8.0/27 and 192.168.8.32/27",
+          "192.168.8.1/26 and 192.168.8.2/26",
+          "192.168.8.0/26 and 192.168.8.64/26"
+        ],
+        "answer": 3,
+        "explanation": "Each /26 supports 62 hosts. The second choice overlaps, /27 is too small, and .1/.2 are in the same block.",
+        "tier": 3,
+        "id": "advanced7-1.6:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced7-2.2",
+    "core": 7,
+    "domain": 2,
+    "objective": "2.2",
+    "title": "Trace VLAN traffic across trunks",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "An access port normally carries one data VLAN. An 802.1Q trunk carries multiple VLANs, subject to its allowed list. Matching VLAN IDs alone do not prove end-to-end forwarding. Check the VLAN database, port mode, allowed VLANs, native VLAN, and spanning-tree state.",
+    "flow": [
+      "Source access VLAN",
+      "Trunk allowed list",
+      "Spanning-tree forwarding",
+      "Destination access VLAN"
+    ],
+    "example": "VLAN 10 works across a trunk but VLAN 20 fails. The allowed list contains only 10. The physical trunk is working; the VLAN-specific forwarding condition is missing. Allow VLAN 20 on the required trunk path and verify both ends.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "In Packet Tracer or a lab design, connect two switches and create VLANs 10 and 20 on both.",
+      "Place hosts in VLAN 20, allow only VLAN 10 on the interswitch trunk, and predict the failed path.",
+      "Restore VLAN 20 to the allowed list, verify connectivity, and record trunk and VLAN output."
+    ],
+    "questions": [
+      {
+        "prompt": "Which link type normally carries several VLANs between switches?",
+        "options": [
+          "An 802.1Q trunk",
+          "A single data-VLAN access port",
+          "A console cable",
+          "A DNS zone transfer"
+        ],
+        "answer": 0,
+        "explanation": "802.1Q trunks distinguish traffic from multiple VLANs.",
+        "tier": 1,
+        "id": "advanced7-2.2:q1"
+      },
+      {
+        "prompt": "What is needed for hosts in different VLAN IP subnets to communicate?",
+        "options": [
+          "Only identical switch model numbers",
+          "Only a native VLAN change",
+          "A larger MAC address table",
+          "A routing function and permitted path"
+        ],
+        "answer": 3,
+        "explanation": "A Layer 3 device routes between subnets; trunking alone does not.",
+        "tier": 1,
+        "id": "advanced7-2.2:q2"
+      },
+      {
+        "prompt": "Which Cisco command most directly shows operational trunk VLAN information?",
+        "options": [
+          "show clock",
+          "show users",
+          "show interfaces trunk",
+          "show ip dhcp binding"
+        ],
+        "answer": 2,
+        "explanation": "The trunk command reports trunk operation and VLAN lists.",
+        "tier": 2,
+        "id": "advanced7-2.2:q3"
+      },
+      {
+        "prompt": "A frame is untagged on a trunk using default native-tagging behavior. How is it classified?",
+        "options": [
+          "It is always VLAN 4094",
+          "Into the receiving port native VLAN",
+          "Into every allowed VLAN",
+          "Into whichever VLAN has most hosts"
+        ],
+        "answer": 1,
+        "explanation": "Untagged trunk frames are associated with the local native VLAN.",
+        "tier": 2,
+        "id": "advanced7-2.2:q4"
+      },
+      {
+        "prompt": "VLAN 30 exists on both switches; hosts work locally but not across the trunk. VLAN 30 is absent from the allowed list. What is the targeted correction?",
+        "options": [
+          "Add VLAN 30 to the required trunk allowed list",
+          "Disable spanning tree globally",
+          "Delete the default route",
+          "Change DNS search suffixes"
+        ],
+        "answer": 0,
+        "explanation": "An absent allowed VLAN prevents that traffic crossing the trunk even when VLAN databases are correct.",
+        "tier": 3,
+        "id": "advanced7-2.2:q5"
+      },
+      {
+        "prompt": "A redundant switch link is alternate/discarding for VLAN 20 while another path forwards. What is the appropriate initial interpretation?",
+        "options": [
+          "The link must be physically broken",
+          "VLAN 20 cannot use any redundant design",
+          "The switch has stopped learning all MAC addresses",
+          "Spanning tree may be preventing a Layer 2 loop"
+        ],
+        "answer": 3,
+        "explanation": "An alternate path can intentionally discard traffic while the active path forwards. Verify topology before changing it.",
+        "tier": 3,
+        "id": "advanced7-2.2:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced7-3.2",
+    "core": 7,
+    "domain": 3,
+    "objective": "3.2",
+    "title": "Choose routes using longest-prefix matching",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "Forwarding selects the most specific matching installed route. Administrative distance helps choose between sources for the same prefix; a routing protocol metric compares its own candidate paths. These are different stages, not interchangeable rankings.",
+    "flow": [
+      "Destination address",
+      "Matching installed prefixes",
+      "Choose longest prefix",
+      "Resolve next hop",
+      "Verify path"
+    ],
+    "example": "10.20.3.8 matches a static /8 and an OSPF /16. Both are installed; /16 matches more destination bits. Forward using the /16 route regardless of the /8 route lower administrative distance.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "Write a table containing default, /8, /16, and /24 routes with different next hops. Predict five destinations.",
+      "In a lab router, compare show ip route with your predictions and test traceroute.",
+      "Remove a more specific lab route, predict the fallback, verify it, then restore the configuration."
+    ],
+    "questions": [
+      {
+        "prompt": "What normally determines which installed route forwards a packet?",
+        "options": [
+          "Longest matching destination prefix",
+          "Lowest interface number",
+          "Shortest command text",
+          "Newest ARP entry"
+        ],
+        "answer": 0,
+        "explanation": "The most specific installed matching prefix is selected.",
+        "tier": 1,
+        "id": "advanced7-3.2:q1"
+      },
+      {
+        "prompt": "What does an IPv4 default route use as its prefix?",
+        "options": [
+          "255.255.255.255/32",
+          "127.0.0.0/8",
+          "224.0.0.0/4",
+          "0.0.0.0/0"
+        ],
+        "answer": 3,
+        "explanation": "A /0 route matches any IPv4 destination and is used when no more-specific route matches.",
+        "tier": 1,
+        "id": "advanced7-3.2:q2"
+      },
+      {
+        "prompt": "A table has 10.0.0.0/8 and 10.5.6.0/24. Which matches 10.5.6.7 most specifically?",
+        "options": [
+          "Both must be used equally",
+          "Neither can match a host address",
+          "10.5.6.0/24",
+          "10.0.0.0/8"
+        ],
+        "answer": 2,
+        "explanation": "The /24 fixes more destination bits than the /8.",
+        "tier": 2,
+        "id": "advanced7-3.2:q3"
+      },
+      {
+        "prompt": "Two routing sources offer the same /24 prefix. What helps choose the preferred source?",
+        "options": [
+          "TCP window size",
+          "Administrative distance",
+          "DNS TTL",
+          "VLAN name length"
+        ],
+        "answer": 1,
+        "explanation": "Administrative distance ranks routing-source trust for the same prefix.",
+        "tier": 2,
+        "id": "advanced7-3.2:q4"
+      },
+      {
+        "prompt": "A static /16 has distance 1 and an installed OSPF /24 has distance 110. A destination matches both. Which route forwards?",
+        "options": [
+          "The /24",
+          "The /16 because 1 is lower",
+          "Neither until both distances match",
+          "The default route"
+        ],
+        "answer": 0,
+        "explanation": "Longest-prefix forwarding comes first among installed entries; administrative distance does not make a less-specific route win.",
+        "tier": 3,
+        "id": "advanced7-3.2:q5"
+      },
+      {
+        "prompt": "A backup static route for the same prefix should wait behind OSPF. How should its distance compare with OSPF?",
+        "options": [
+          "Lower than OSPF",
+          "Always zero",
+          "It should be encoded in the DNS record",
+          "Higher than OSPF"
+        ],
+        "answer": 3,
+        "explanation": "A higher distance makes the static route less preferred while the OSPF route is present.",
+        "tier": 3,
+        "id": "advanced7-3.2:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced7-4.6",
+    "core": 7,
+    "domain": 4,
+    "objective": "4.6",
+    "title": "Diagnose DHCP relay and address assignment",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "DHCP can supply addresses, prefixes, routers, and DNS settings. Initial client broadcasts normally stay within a broadcast domain. A relay forwards requests toward a remote DHCP server and identifies the client subnet so the server can choose the correct pool.",
+    "flow": [
+      "Client VLAN",
+      "Relay interface",
+      "Routed server path",
+      "Matching address pool",
+      "Lease and options"
+    ],
+    "example": "VLAN 20 cannot obtain leases, while VLAN 10 uses the same remote server successfully. The common server is partly functional; the VLAN 20 relay and pool are stronger initial suspects. Verify its relay interface, route, policy, and matching pool.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "Draw two VLANs and one DHCP server on a third network; identify where each relay belongs.",
+      "In an isolated simulation, configure the correct pools and client-facing relay addresses.",
+      "Remove one relay setting, compare affected and unaffected VLANs, restore it, and record a lease."
+    ],
+    "questions": [
+      {
+        "prompt": "Why is a relay useful when DHCP clients and server are separated by a router?",
+        "options": [
+          "Initial client broadcasts do not normally cross routers",
+          "It encrypts all DNS traffic",
+          "It removes the need for IP routes",
+          "It turns DHCP into TCP"
+        ],
+        "answer": 0,
+        "explanation": "A relay carries the request beyond the local broadcast domain.",
+        "tier": 1,
+        "id": "advanced7-4.6:q1"
+      },
+      {
+        "prompt": "Which service supplies a host address and network configuration automatically?",
+        "options": [
+          "NTP",
+          "SNMP",
+          "SSH",
+          "DHCP"
+        ],
+        "answer": 3,
+        "explanation": "DHCP can lease addresses and supply options such as router and DNS settings.",
+        "tier": 1,
+        "id": "advanced7-4.6:q2"
+      },
+      {
+        "prompt": "Where is a client VLAN DHCP relay normally configured?",
+        "options": [
+          "On every printer USB port",
+          "In the browser proxy setting",
+          "On its client-facing Layer 3 interface",
+          "Only on a distant DNS server"
+        ],
+        "answer": 2,
+        "explanation": "The relay must receive the client broadcasts on that network.",
+        "tier": 2,
+        "id": "advanced7-4.6:q3"
+      },
+      {
+        "prompt": "What does giaddr commonly help a DHCP server determine?",
+        "options": [
+          "The Ethernet duplex setting",
+          "The client subnet for pool selection",
+          "The client browser version",
+          "The Wi-Fi password"
+        ],
+        "answer": 1,
+        "explanation": "The relay address identifies the originating client network.",
+        "tier": 2,
+        "id": "advanced7-4.6:q4"
+      },
+      {
+        "prompt": "Clients obtain valid addresses and can reach numeric IPs but cannot resolve names. Which leased setting deserves attention?",
+        "options": [
+          "DNS server option",
+          "The relay hostname spelling",
+          "The switch console timeout",
+          "The NTP stratum"
+        ],
+        "answer": 0,
+        "explanation": "Working IP connectivity with failing names points toward DNS configuration or service reachability.",
+        "tier": 3,
+        "id": "advanced7-4.6:q5"
+      },
+      {
+        "prompt": "A remote DHCP server works for three VLANs but a fourth has no relay. What is the smallest relevant repair?",
+        "options": [
+          "Reinstall every client",
+          "Delete all working scopes",
+          "Replace DHCP with static routes",
+          "Add the approved relay configuration on the fourth VLAN interface"
+        ],
+        "answer": 3,
+        "explanation": "The failed VLAN lacks a mechanism to forward its broadcasts to the server.",
+        "tier": 3,
+        "id": "advanced7-4.6:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced7-5.6",
+    "core": 7,
+    "domain": 5,
+    "objective": "5.6",
+    "title": "Apply access lists without breaking required traffic",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "An IPv4 ACL is an ordered list of permit and deny rules. The first matching rule decides the result, and unmatched traffic meets an implicit deny. Direction is relative to the interface. Extended ACLs can match protocol, source, destination, and transport ports.",
+    "flow": [
+      "State required flow",
+      "Order narrow rules",
+      "Apply interface and direction",
+      "Test permitted flow",
+      "Test denied flow and counters"
+    ],
+    "example": "A broad permit appears before a deny for a sensitive server. Packets match the permit before reaching the deny. Reorder the policy with the intended specific restriction before broader permission, then test both outcomes.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "Write an extended ACL policy allowing a lab subnet to reach one HTTPS server while denying its other traffic.",
+      "In a simulator, apply it on the chosen interface and test HTTPS and a prohibited service.",
+      "Inspect counters, explain any implicit denial, and retain a console rollback method."
+    ],
+    "questions": [
+      {
+        "prompt": "Which ACL rule controls a packet when several entries could match?",
+        "options": [
+          "The first matching entry",
+          "The last matching entry",
+          "The longest comment",
+          "All entries vote"
+        ],
+        "answer": 0,
+        "explanation": "ACLs are evaluated in order and stop at the first match.",
+        "tier": 1,
+        "id": "advanced7-5.6:q1"
+      },
+      {
+        "prompt": "What happens to unmatched traffic at the end of a normal IPv4 ACL?",
+        "options": [
+          "Implicit permit",
+          "Automatic encryption",
+          "Automatic DNS lookup",
+          "Implicit deny"
+        ],
+        "answer": 3,
+        "explanation": "Traffic without a matching permit is denied.",
+        "tier": 1,
+        "id": "advanced7-5.6:q2"
+      },
+      {
+        "prompt": "Which wildcard mask matches the host portion of a /24 network?",
+        "options": [
+          "0.0.255.255",
+          "255.255.255.255",
+          "0.0.0.255",
+          "255.255.255.0"
+        ],
+        "answer": 2,
+        "explanation": "Zero bits must match; the last eight one bits allow host variation.",
+        "tier": 2,
+        "id": "advanced7-5.6:q3"
+      },
+      {
+        "prompt": "An ACL is inbound on an interface. Which packets does it evaluate there?",
+        "options": [
+          "Every packet on every interface",
+          "Packets entering the router through that interface",
+          "Only packets leaving that interface",
+          "Only traffic created by the router console"
+        ],
+        "answer": 1,
+        "explanation": "Direction is relative to the interface and router.",
+        "tier": 2,
+        "id": "advanced7-5.6:q4"
+      },
+      {
+        "prompt": "A deny for one server follows permit ip any any. Why does it fail to block that server?",
+        "options": [
+          "The earlier broad permit matches first",
+          "Deny rules require TCP only",
+          "The ACL is automatically sorted by specificity",
+          "Server IPs cannot be matched"
+        ],
+        "answer": 0,
+        "explanation": "The first match ends evaluation, so the later deny is unreachable for these packets.",
+        "tier": 3,
+        "id": "advanced7-5.6:q5"
+      },
+      {
+        "prompt": "An admin permits HTTPS to one host and finds unrelated traffic blocked too. What explains it?",
+        "options": [
+          "HTTPS rules disable DNS globally",
+          "An ACL always shuts down a port",
+          "All hosts must use the same subnet",
+          "The unmatched traffic hits the implicit deny"
+        ],
+        "answer": 3,
+        "explanation": "A narrow permit does not implicitly allow other traffic; add only the additional permissions the policy requires.",
+        "tier": 3,
+        "id": "advanced7-5.6:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced7-6.5",
+    "core": 7,
+    "domain": 6,
+    "objective": "6.5",
+    "title": "Interpret REST requests and structured network data",
+    "type": "network",
+    "requires": [
+      "safety"
+    ],
+    "lore": "Network automation uses APIs to read and modify controller or device state. REST interfaces commonly use HTTP methods and structured data such as JSON. Authentication identifies a caller; authorization decides what that caller may do. Treat a successful response as evidence to inspect, not proof that the desired network state exists.",
+    "flow": [
+      "Read API contract",
+      "Authenticate with scoped access",
+      "Inspect planned change",
+      "Submit request",
+      "Verify resource or job result"
+    ],
+    "example": "A controller returns 202 and a job URL after a configuration request. The controller accepted the job but has not confirmed the desired state. Check the job status and resulting device configuration before reporting completion.",
+    "sources": [
+      {
+        "title": "CCNA v1.1 official exam topics",
+        "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf"
+      }
+    ],
+    "lab": [
+      "Use a local mock API or paper responses containing JSON objects and arrays; identify each field type.",
+      "Compare sample 200, 202, 401, and 403 responses and choose the next diagnostic action.",
+      "Write a retry plan for a timed-out create request that first checks whether the resource was created."
+    ],
+    "questions": [
+      {
+        "prompt": "Which HTTP method normally retrieves a resource representation?",
+        "options": [
+          "GET",
+          "DELETE",
+          "POST exclusively",
+          "PATCH exclusively"
+        ],
+        "answer": 0,
+        "explanation": "GET is normally used to retrieve resource information.",
+        "tier": 1,
+        "id": "advanced7-6.5:q1"
+      },
+      {
+        "prompt": "Which JSON value is a boolean rather than a string?",
+        "options": [
+          "\"true\"",
+          "\"enabled\"",
+          "\"1\"",
+          "true"
+        ],
+        "answer": 3,
+        "explanation": "Unquoted true is a JSON boolean; quoted values are strings.",
+        "tier": 1,
+        "id": "advanced7-6.5:q2"
+      },
+      {
+        "prompt": "An API returns 401. Which issue should be checked first?",
+        "options": [
+          "The controller rack location",
+          "Whether all VLANs are numbered alike",
+          "Missing, expired, or invalid authentication",
+          "The device fan speed"
+        ],
+        "answer": 2,
+        "explanation": "401 typically points to authentication; use the response and API documentation to diagnose.",
+        "tier": 2,
+        "id": "advanced7-6.5:q3"
+      },
+      {
+        "prompt": "An authenticated account can read inventory but receives 403 when changing it. What is a likely cause?",
+        "options": [
+          "GET has deleted the inventory",
+          "Insufficient permission for that operation",
+          "JSON arrays cannot be sent over HTTPS",
+          "The route table is always full"
+        ],
+        "answer": 1,
+        "explanation": "403 indicates the action is forbidden, often because the identity lacks the required permission.",
+        "tier": 2,
+        "id": "advanced7-6.5:q4"
+      },
+      {
+        "prompt": "A controller returns 202 with a job identifier for a deployment. What should the automation report now?",
+        "options": [
+          "Accepted; check job and resource state before calling it complete",
+          "The network is definitely configured",
+          "The request was definitely rejected",
+          "Credentials must be printed to the log"
+        ],
+        "answer": 0,
+        "explanation": "Asynchronous acceptance is not successful completion.",
+        "tier": 3,
+        "id": "advanced7-6.5:q5"
+      },
+      {
+        "prompt": "A create request times out after submission. Which retry strategy reduces duplicate resources?",
+        "options": [
+          "Retry repeatedly with new random names",
+          "Assume nothing happened",
+          "Delete the entire controller inventory",
+          "Check operation status or existing resource identity before retrying per API contract"
+        ],
+        "answer": 3,
+        "explanation": "The server may have completed the request even if the response was lost.",
+        "tier": 3,
+        "id": "advanced7-6.5:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced8-1.2",
+    "core": 8,
+    "domain": 1,
+    "objective": "1.2",
+    "title": "Correlate suspicious activity before declaring an incident",
+    "type": "security",
+    "requires": [
+      "safety"
+    ],
+    "lore": "A security alert is a lead that needs context. Correlate identity, endpoint, network, and application evidence. Establish a baseline, normalize timestamps, and separate observed facts from hypotheses. One unusual IP address or tool name is not enough to prove compromise.",
+    "flow": [
+      "Detection claim",
+      "Identity and host evidence",
+      "Normalized timeline",
+      "Alternative explanations",
+      "Escalation and confidence"
+    ],
+    "example": "An overseas login is followed by a new mailbox forwarding rule and unusual downloads. The activity after login gives stronger evidence than location alone. Correlate the session and device, preserve relevant events, and escalate under the response plan.",
+    "sources": [
+      {
+        "title": "CySA+ CS0-004 official objectives",
+        "url": "https://lecbyo.files.cmp.optimizely.com/download/68b1eae88e5011f08868a275d699e612"
+      }
+    ],
+    "lab": [
+      "Create a synthetic timeline of five identity and endpoint events with two time zones. Normalize them without discarding original timestamps.",
+      "Add a VPN login and a suspicious mailbox-rule change. Explain which event changes your confidence and why.",
+      "Write a short incident handoff separating observations, hypotheses, gaps, and the next collection task."
+    ],
+    "questions": [
+      {
+        "prompt": "What is the best description of a SIEM alert?",
+        "options": [
+          "A signal to investigate using evidence and context",
+          "Proof of compromise in every case",
+          "An automatic legal notification",
+          "A replacement for all endpoint logs"
+        ],
+        "answer": 0,
+        "explanation": "Alerts identify possible conditions; analysts validate them against context.",
+        "tier": 1,
+        "id": "advanced8-1.2:q1"
+      },
+      {
+        "prompt": "Why normalize timestamps when combining logs?",
+        "options": [
+          "To remove the need to preserve originals",
+          "To guarantee all events are malicious",
+          "To increase the number of alerts",
+          "To compare event order across time zones and clock differences"
+        ],
+        "answer": 3,
+        "explanation": "Normalization supports correlation; preserve original timestamps and the conversion method.",
+        "tier": 1,
+        "id": "advanced8-1.2:q2"
+      },
+      {
+        "prompt": "An impossible-travel alert involves a known corporate VPN exit. What should be checked next?",
+        "options": [
+          "Whether the user likes travel",
+          "Nothing; VPNs guarantee safety",
+          "Session, device, authentication, and post-login behavior",
+          "Only the country name"
+        ],
+        "answer": 2,
+        "explanation": "VPN use can explain location but does not prove the account is safe. Corroborate the session.",
+        "tier": 2,
+        "id": "advanced8-1.2:q3"
+      },
+      {
+        "prompt": "Which endpoint evidence helps interpret an unexpected PowerShell execution?",
+        "options": [
+          "Only the number of CPU cores",
+          "Parent process, command line, user, and connections",
+          "Only the executable filename",
+          "Only the desktop wallpaper"
+        ],
+        "answer": 1,
+        "explanation": "Process ancestry and behavior provide context that the tool name lacks.",
+        "tier": 2,
+        "id": "advanced8-1.2:q4"
+      },
+      {
+        "prompt": "An alert cites data exfiltration but endpoint logs are missing for the period. What is the defensible conclusion?",
+        "options": [
+          "The telemetry gap limits confidence; gather alternative evidence",
+          "No logs proves no exfiltration",
+          "The alert is definitely true",
+          "All network evidence must be deleted"
+        ],
+        "answer": 0,
+        "explanation": "Absence of required telemetry is a limitation. Seek proxy, identity, storage, and other relevant records.",
+        "tier": 3,
+        "id": "advanced8-1.2:q5"
+      },
+      {
+        "prompt": "An AI summary claims a user disabled logging, but provides no event identifier and raw logs show no such entry. What should the analyst do?",
+        "options": [
+          "Escalate the claim as a confirmed fact",
+          "Delete the raw logs to match the summary",
+          "Allow the assistant to change the production policy",
+          "Treat the claim as unverified and check authoritative artifacts"
+        ],
+        "answer": 3,
+        "explanation": "Generated analysis can be wrong. Conclusions need source evidence and traceable reasoning.",
+        "tier": 3,
+        "id": "advanced8-1.2:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced8-2.3",
+    "core": 8,
+    "domain": 2,
+    "objective": "2.3",
+    "title": "Prioritize vulnerabilities using exposure and business impact",
+    "type": "security",
+    "requires": [
+      "safety"
+    ],
+    "lore": "A severity score is one input to prioritization. Consider exploitability, evidence of active exploitation, internet exposure, asset importance, compensating controls, and the reliability of the finding. A scanner result should lead to validation, ownership, remediation, and verification.",
+    "flow": [
+      "Validate finding",
+      "Assess exposure and exploitation",
+      "Identify service impact",
+      "Assign action and owner",
+      "Verify correction"
+    ],
+    "example": "An actively exploited flaw affects an internet gateway while a higher-scoring issue affects an isolated test VM. Exposure, exploitation, and business consequences change remediation urgency. Prioritize the gateway with its owner and verify any temporary mitigation while preparing a tested fix.",
+    "sources": [
+      {
+        "title": "CySA+ CS0-004 official objectives",
+        "url": "https://lecbyo.files.cmp.optimizely.com/download/68b1eae88e5011f08868a275d699e612"
+      }
+    ],
+    "lab": [
+      "Create a synthetic backlog containing an exposed gateway flaw, an isolated lab flaw, and a possible banner false positive.",
+      "Rank the findings and record the evidence that would change each priority.",
+      "Write a remediation verification checklist that checks scan credentials, patch evidence, and service health."
+    ],
+    "questions": [
+      {
+        "prompt": "Which factor adds context beyond a vulnerability severity score?",
+        "options": [
+          "Whether the affected service is exposed and business-critical",
+          "The analyst favorite color",
+          "The ticket font",
+          "The scanner logo"
+        ],
+        "answer": 0,
+        "explanation": "Exposure and business impact affect risk and prioritization.",
+        "tier": 1,
+        "id": "advanced8-2.3:q1"
+      },
+      {
+        "prompt": "What should follow a claimed remediation?",
+        "options": [
+          "Automatic closure with no evidence",
+          "Deletion of the asset inventory",
+          "Disabling all future scans",
+          "Verification of the affected condition and required service health"
+        ],
+        "answer": 3,
+        "explanation": "A fix should be validated technically and operationally.",
+        "tier": 1,
+        "id": "advanced8-2.3:q2"
+      },
+      {
+        "prompt": "An unauthenticated version banner suggests a flaw on a system with backported fixes. What is appropriate?",
+        "options": [
+          "Ignore all scanner findings forever",
+          "Remove the host from inventory",
+          "Check package and vendor patch evidence before confirming applicability",
+          "Treat every old banner as definitive proof"
+        ],
+        "answer": 2,
+        "explanation": "Backported fixes can leave version strings that need additional interpretation.",
+        "tier": 2,
+        "id": "advanced8-2.3:q3"
+      },
+      {
+        "prompt": "What distinguishes risk acceptance from a false positive?",
+        "options": [
+          "A false positive always requires a reboot",
+          "Acceptance acknowledges a real risk; a false positive is an incorrect finding",
+          "Both mean the flaw was patched",
+          "Acceptance is always decided by the scanner"
+        ],
+        "answer": 1,
+        "explanation": "These are different dispositions and require different evidence and authorization.",
+        "tier": 2,
+        "id": "advanced8-2.3:q4"
+      },
+      {
+        "prompt": "An exploited internet gateway flaw scores 8.1; an unreachable test-host flaw scores 9.8. What is the better initial priority?",
+        "options": [
+          "Assess and address the exposed exploited gateway urgently",
+          "Always sort only by the larger score",
+          "Ignore any score below 9",
+          "Wait until both have identical exposure"
+        ],
+        "answer": 0,
+        "explanation": "Active exploitation and reachable business impact can outweigh the numerical severity ordering.",
+        "tier": 3,
+        "id": "advanced8-2.3:q5"
+      },
+      {
+        "prompt": "A rescan reports no findings, but its credentialed checks failed. What can be concluded?",
+        "options": [
+          "All vulnerabilities are fixed",
+          "Credentials are unnecessary for every check",
+          "The asset must be decommissioned",
+          "The clean result is insufficient to prove remediation"
+        ],
+        "answer": 3,
+        "explanation": "The rescan lost visibility. Restore appropriate verification coverage or use equivalent evidence.",
+        "tier": 3,
+        "id": "advanced8-2.3:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced8-3.2",
+    "core": 8,
+    "domain": 3,
+    "objective": "3.2",
+    "title": "Contain incidents while preserving useful evidence",
+    "type": "security",
+    "requires": [
+      "safety"
+    ],
+    "lore": "Containment limits harm; eradication removes the cause; recovery restores trusted operation. Actions depend on the response plan, authority, evidence, and service impact. Preserve evidence and document decisions while coordinating identity, endpoint, network, and business owners.",
+    "flow": [
+      "Validate incident and authority",
+      "Limit ongoing harm",
+      "Preserve evidence",
+      "Remove cause and persistence",
+      "Restore and monitor"
+    ],
+    "example": "An account remains active in a stolen session after its password is reset. Changing the password may not revoke existing sessions or delegated access. Use the identity platform response procedure to revoke sessions and review grants, then verify containment.",
+    "sources": [
+      {
+        "title": "CySA+ CS0-004 official objectives",
+        "url": "https://lecbyo.files.cmp.optimizely.com/download/68b1eae88e5011f08868a275d699e612"
+      }
+    ],
+    "lab": [
+      "Run a paper tabletop for a synthetic compromised workstation and identify who can approve isolation.",
+      "Record a mock evidence item with collection time, source, hash placeholder, handler, and transfer record.",
+      "Write recovery criteria covering the initial weakness, trusted restore, application testing, and recurrence monitoring."
+    ],
+    "questions": [
+      {
+        "prompt": "What is the main purpose of containment?",
+        "options": [
+          "Limit ongoing damage and spread",
+          "Guarantee the root cause is removed",
+          "Replace all recovery testing",
+          "Publish every artifact externally"
+        ],
+        "answer": 0,
+        "explanation": "Containment reduces harm while further investigation and eradication proceed.",
+        "tier": 1,
+        "id": "advanced8-3.2:q1"
+      },
+      {
+        "prompt": "Which action is most directly associated with eradication?",
+        "options": [
+          "Only drafting a press release",
+          "Only restoring user access",
+          "Only counting alerts",
+          "Removing confirmed persistence and correcting the entry weakness"
+        ],
+        "answer": 3,
+        "explanation": "Eradication addresses malicious artifacts and causes, not just symptoms.",
+        "tier": 1,
+        "id": "advanced8-3.2:q2"
+      },
+      {
+        "prompt": "Why might immediate power-off complicate investigation?",
+        "options": [
+          "It automatically decrypts disks",
+          "It guarantees malware attribution",
+          "It can destroy volatile memory evidence",
+          "It always preserves every session"
+        ],
+        "answer": 2,
+        "explanation": "Volatile memory can be lost on shutdown. Balance this with urgent safety and impact considerations.",
+        "tier": 2,
+        "id": "advanced8-3.2:q3"
+      },
+      {
+        "prompt": "What is the purpose of a chain-of-custody record?",
+        "options": [
+          "Authorize any public disclosure",
+          "Document evidence handling and transfers",
+          "Replace all evidence integrity checks",
+          "Guarantee the suspect identity"
+        ],
+        "answer": 1,
+        "explanation": "Custody records track who handled evidence and when; they complement other integrity controls.",
+        "tier": 2,
+        "id": "advanced8-3.2:q4"
+      },
+      {
+        "prompt": "A stolen session remains usable after a password reset. What response area was likely missed?",
+        "options": [
+          "Session and token revocation plus review of delegated access",
+          "Monitor brightness",
+          "DNS TTL alone",
+          "Disk defragmentation"
+        ],
+        "answer": 0,
+        "explanation": "Existing sessions and application grants may survive a password change and need targeted response.",
+        "tier": 3,
+        "id": "advanced8-3.2:q5"
+      },
+      {
+        "prompt": "An isolated endpoint still has a management channel for the response team. Does that alone mean isolation failed?",
+        "options": [
+          "Yes; every byte must be blocked in all cases",
+          "No; no verification is needed",
+          "Yes; delete the investigation logs",
+          "No; verify whether the approved isolation policy intentionally permits management"
+        ],
+        "answer": 3,
+        "explanation": "Isolation products may preserve responder connectivity. Verify prohibited traffic is blocked as designed.",
+        "tier": 3,
+        "id": "advanced8-3.2:q6"
+      }
+    ]
+  },
+  {
+    "id": "advanced8-4.2",
+    "core": 8,
+    "domain": 4,
+    "objective": "4.2",
+    "title": "Turn investigation evidence into actionable reporting",
+    "type": "security",
+    "requires": [
+      "safety"
+    ],
+    "lore": "A useful report connects findings to impact, evidence, recommended action, ownership, and verification. Executives need decision-relevant summaries; technical teams need reproducible details. Label uncertainty and define metrics consistently before comparing performance.",
+    "flow": [
+      "Verified evidence",
+      "Impact and uncertainty",
+      "Audience-specific summary",
+      "Owner and action",
+      "Acceptance criteria and follow-up"
+    ],
+    "example": "Alerts fall by 80% after a collector configuration change. The apparent improvement could be reduced visibility rather than reduced threats. Verify ingestion and detection coverage before reporting a security improvement.",
+    "sources": [
+      {
+        "title": "CySA+ CS0-004 official objectives",
+        "url": "https://lecbyo.files.cmp.optimizely.com/download/68b1eae88e5011f08868a275d699e612"
+      }
+    ],
+    "lab": [
+      "Write a five-sentence executive summary of a synthetic phishing incident without including credentials or personal data.",
+      "Add a technical appendix with a timeline, evidence references, affected assets, and limitations.",
+      "Define detection-time start/end events and calculate the mean for 10, 20, and 90 minutes; explain what the mean hides."
+    ],
+    "questions": [
+      {
+        "prompt": "What should an executive incident summary emphasize?",
+        "options": [
+          "Business impact, current status, uncertainty, and needed decisions",
+          "Every raw log line with no explanation",
+          "Only command syntax",
+          "Only the analyst work schedule"
+        ],
+        "answer": 0,
+        "explanation": "The summary should support business decisions while technical detail remains available separately.",
+        "tier": 1,
+        "id": "advanced8-4.2:q1"
+      },
+      {
+        "prompt": "What makes a remediation recommendation actionable?",
+        "options": [
+          "A vague request to improve security",
+          "A larger slide deck",
+          "Removal of all caveats",
+          "An owner, due date, and verifiable acceptance criteria"
+        ],
+        "answer": 3,
+        "explanation": "Assigned accountability and measurable completion make follow-up possible.",
+        "tier": 1,
+        "id": "advanced8-4.2:q2"
+      },
+      {
+        "prompt": "Detection times are 10, 20, and 90 minutes. What is their arithmetic mean?",
+        "options": [
+          "60 minutes",
+          "120 minutes",
+          "40 minutes",
+          "20 minutes"
+        ],
+        "answer": 2,
+        "explanation": "The total is 120 minutes across three incidents, giving a mean of 40.",
+        "tier": 2,
+        "id": "advanced8-4.2:q3"
+      },
+      {
+        "prompt": "Why define the start and end events for response-time metrics?",
+        "options": [
+          "To guarantee compliance",
+          "To make comparisons consistent and interpretable",
+          "To make every incident take equal time",
+          "To remove outliers automatically"
+        ],
+        "answer": 1,
+        "explanation": "Changing definitions or populations can change the metric without changing actual performance.",
+        "tier": 2,
+        "id": "advanced8-4.2:q4"
+      },
+      {
+        "prompt": "Alert volume falls sharply after a logging change. Which check should precede a success claim?",
+        "options": [
+          "Confirm ingestion health and detection coverage",
+          "Assume attackers have stopped",
+          "Delete previous baselines",
+          "Compare only chart colors"
+        ],
+        "answer": 0,
+        "explanation": "Lost telemetry can reduce alerts while increasing blind spots.",
+        "tier": 3,
+        "id": "advanced8-4.2:q5"
+      },
+      {
+        "prompt": "Evidence confirms unauthorized access but not the amount of data taken. How should a report describe impact?",
+        "options": [
+          "Claim every record was stolen",
+          "Claim no data was affected",
+          "Omit the incident entirely",
+          "State confirmed access and explicitly identify the unresolved exfiltration question"
+        ],
+        "answer": 3,
+        "explanation": "Separate established facts from unknown impact so decision-makers understand both evidence and uncertainty.",
+        "tier": 3,
+        "id": "advanced8-4.2:q6"
+      }
+    ]
+  }
+]
